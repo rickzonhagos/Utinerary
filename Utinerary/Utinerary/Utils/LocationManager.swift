@@ -54,7 +54,7 @@ class LocationManager: NSObject {
     func startGeoCodeWithLocation(location : CLLocation , completionHandler : GeoCodeCompletionHandler){
         geoCode.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
             
-            if error == nil {
+            if error != nil {
                 completionHandler(placemarks: nil, success: false)
             }
             

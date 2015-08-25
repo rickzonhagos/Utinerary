@@ -108,7 +108,7 @@ class MapViewController: UIViewController{
     }
     
     func createAnotationWithTitle(title : String? , coordinate : CLLocationCoordinate2D! , subTitle : String?, shouldZoom : Bool){
-        let anotation : MKAnnotation = LocationManager.createMapAnotationWithTitle(nil, coordinate: coordinate , subTitle : nil)
+        let anotation : MKAnnotation = LocationManager.createMapAnotationWithTitle(title, coordinate: coordinate , subTitle : subTitle)
         mapView.addAnnotation(anotation)
         mapView.selectAnnotation(anotation, animated: true)
         mapView.centerCoordinate = coordinate

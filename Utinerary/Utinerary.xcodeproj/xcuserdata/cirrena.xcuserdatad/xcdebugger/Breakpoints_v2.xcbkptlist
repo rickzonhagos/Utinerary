@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Utinerary/ViewController/MapView/MapViewController.swift"
-            timestampString = "462185268.509432"
+            filePath = "Utinerary/Utils/LocationManager.swift"
+            timestampString = "462185457.377613"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "longPress(_:)"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "startGeoCodeWithLocation(_:completionHandler:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
