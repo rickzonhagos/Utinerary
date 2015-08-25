@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A0722791B87F4BB0047E82C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0722781B87F4BB0047E82C /* MapViewController.swift */; };
+		1A07227B1B87F5AB0047E82C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A07227A1B87F5AB0047E82C /* MapKit.framework */; };
+		1A07227E1B89BCF30047E82C /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A07227D1B89BCF30047E82C /* Utils.swift */; };
+		1A0722801B8AF1FB0047E82C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A07227F1B8AF1FB0047E82C /* LocationManager.swift */; };
+		9557A92A1B8C217A00144E79 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9557A9281B8C217A00144E79 /* SearchTableViewCell.swift */; };
+		9557A92B1B8C217A00144E79 /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9557A9291B8C217A00144E79 /* SearchTableViewCell.xib */; };
 		955914F71B8315670007D860 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955914F61B8315670007D860 /* AppDelegate.swift */; };
 		955914FA1B8315670007D860 /* Utinerary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 955914F81B8315670007D860 /* Utinerary.xcdatamodeld */; };
 		955914FC1B8315670007D860 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955914FB1B8315670007D860 /* ViewController.swift */; };
@@ -18,6 +24,10 @@
 		955915241B83174B0007D860 /* ItineraryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955915231B83174B0007D860 /* ItineraryListViewController.swift */; };
 		955915261B831AF30007D860 /* ItineraryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955915251B831AF30007D860 /* ItineraryTableViewCell.swift */; };
 		955915281B831FD90007D860 /* ItineraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955915271B831FD90007D860 /* ItineraryViewController.swift */; };
+		956167951B8C44B3002F3B87 /* HTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956167941B8C44B3002F3B87 /* HTTPRequest.swift */; };
+		956167971B8C44D6002F3B87 /* UtineraryModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956167961B8C44D6002F3B87 /* UtineraryModelData.swift */; };
+		956167991B8C4A6E002F3B87 /* SearchModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956167981B8C4A6E002F3B87 /* SearchModelData.swift */; };
+		9561679B1B8C4BD0002F3B87 /* SearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9561679A1B8C4BD0002F3B87 /* SearchItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +41,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A0722781B87F4BB0047E82C /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		1A07227A1B87F5AB0047E82C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		1A07227D1B89BCF30047E82C /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		1A07227F1B8AF1FB0047E82C /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		9557A9281B8C217A00144E79 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		9557A9291B8C217A00144E79 /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 		955914F11B8315670007D860 /* Utinerary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Utinerary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		955914F51B8315670007D860 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		955914F61B8315670007D860 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -46,6 +62,10 @@
 		955915231B83174B0007D860 /* ItineraryListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryListViewController.swift; sourceTree = "<group>"; };
 		955915251B831AF30007D860 /* ItineraryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryTableViewCell.swift; sourceTree = "<group>"; };
 		955915271B831FD90007D860 /* ItineraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryViewController.swift; sourceTree = "<group>"; };
+		956167941B8C44B3002F3B87 /* HTTPRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPRequest.swift; sourceTree = "<group>"; };
+		956167961B8C44D6002F3B87 /* UtineraryModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtineraryModelData.swift; sourceTree = "<group>"; };
+		956167981B8C4A6E002F3B87 /* SearchModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchModelData.swift; sourceTree = "<group>"; };
+		9561679A1B8C4BD0002F3B87 /* SearchItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A07227B1B87F5AB0047E82C /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,9 +87,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A0722771B87F4870047E82C /* MapView */ = {
+			isa = PBXGroup;
+			children = (
+				9557A9281B8C217A00144E79 /* SearchTableViewCell.swift */,
+				9557A9291B8C217A00144E79 /* SearchTableViewCell.xib */,
+				1A0722781B87F4BB0047E82C /* MapViewController.swift */,
+			);
+			path = MapView;
+			sourceTree = "<group>";
+		};
+		1A07227C1B89BCD80047E82C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1A07227D1B89BCF30047E82C /* Utils.swift */,
+				1A07227F1B8AF1FB0047E82C /* LocationManager.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		955914E81B8315670007D860 = {
 			isa = PBXGroup;
 			children = (
+				1A07227A1B87F5AB0047E82C /* MapKit.framework */,
 				955914F31B8315670007D860 /* Utinerary */,
 				9559150C1B8315670007D860 /* UtineraryTests */,
 				955914F21B8315670007D860 /* Products */,
@@ -87,6 +128,8 @@
 		955914F31B8315670007D860 /* Utinerary */ = {
 			isa = PBXGroup;
 			children = (
+				956167931B8C44B3002F3B87 /* Service */,
+				1A07227C1B89BCD80047E82C /* Utils */,
 				9559151D1B8316860007D860 /* ViewController */,
 				955914F61B8315670007D860 /* AppDelegate.swift */,
 				955914FB1B8315670007D860 /* ViewController.swift */,
@@ -127,6 +170,7 @@
 		9559151D1B8316860007D860 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				1A0722771B87F4870047E82C /* MapView */,
 				955915201B8316C50007D860 /* BaseView */,
 				9559151F1B8316B00007D860 /* Itinerary */,
 				9559151E1B8316960007D860 /* ItineraryList */,
@@ -157,6 +201,17 @@
 				955915211B8316D90007D860 /* BaseViewController.swift */,
 			);
 			path = BaseView;
+			sourceTree = "<group>";
+		};
+		956167931B8C44B3002F3B87 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				956167941B8C44B3002F3B87 /* HTTPRequest.swift */,
+				956167961B8C44D6002F3B87 /* UtineraryModelData.swift */,
+				956167981B8C4A6E002F3B87 /* SearchModelData.swift */,
+				9561679A1B8C4BD0002F3B87 /* SearchItem.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,6 +297,7 @@
 				955914FF1B8315670007D860 /* Main.storyboard in Resources */,
 				955915041B8315670007D860 /* LaunchScreen.xib in Resources */,
 				955915011B8315670007D860 /* Images.xcassets in Resources */,
+				9557A92B1B8C217A00144E79 /* SearchTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,11 +317,19 @@
 			files = (
 				955914FC1B8315670007D860 /* ViewController.swift in Sources */,
 				955915241B83174B0007D860 /* ItineraryListViewController.swift in Sources */,
+				1A0722801B8AF1FB0047E82C /* LocationManager.swift in Sources */,
+				1A07227E1B89BCF30047E82C /* Utils.swift in Sources */,
 				955915221B8316D90007D860 /* BaseViewController.swift in Sources */,
 				955915261B831AF30007D860 /* ItineraryTableViewCell.swift in Sources */,
 				955914F71B8315670007D860 /* AppDelegate.swift in Sources */,
+				956167991B8C4A6E002F3B87 /* SearchModelData.swift in Sources */,
 				955915281B831FD90007D860 /* ItineraryViewController.swift in Sources */,
+				9561679B1B8C4BD0002F3B87 /* SearchItem.swift in Sources */,
+				956167971B8C44D6002F3B87 /* UtineraryModelData.swift in Sources */,
+				9557A92A1B8C217A00144E79 /* SearchTableViewCell.swift in Sources */,
+				956167951B8C44B3002F3B87 /* HTTPRequest.swift in Sources */,
 				955914FA1B8315670007D860 /* Utinerary.xcdatamodeld in Sources */,
+				1A0722791B87F4BB0047E82C /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
