@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1lg-9d-3Yt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6UZ-6S-LVA">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -20,7 +20,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eDc-ZU-sVc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="42" y="735"/>
+            <point key="canvasLocation" x="-23" y="735"/>
         </scene>
         <!--Itinerary List View Controller-->
         <scene sceneID="sc5-xl-rPC">
@@ -92,7 +92,7 @@
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="compose" id="Qkb-b1-qO5">
                             <connections>
                                 <action selector="addItineraryWith:" destination="6Xl-Ci-2PK" id="WDZ-RE-bMG"/>
-                                <segue destination="683-Rx-3tf" kind="presentation" identifier="goToItinerarySegue" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="bNq-jD-o1i"/>
+                                <segue destination="siz-OD-Ioz" kind="show" identifier="" id="qED-pa-dTJ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -165,14 +165,14 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mBF-ZH-tUe" id="N3l-g2-94j">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Destination" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aiL-xk-qck" userLabel="DestinationLabel">
-                                                    <rect key="frame" x="10" y="5" width="580" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Destination" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aiL-xk-qck" userLabel="DestinationLabel">
+                                                    <rect key="frame" x="10" y="5" width="547" height="20"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dMk-gi-VZU" userLabel="Destination">
-                                                    <rect key="frame" x="10" y="30" width="580" height="34"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dMk-gi-VZU" userLabel="Destination">
+                                                    <rect key="frame" x="10" y="30" width="547" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -252,11 +252,6 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="peZ-xl-lrR">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="bgp-MD-b8f">
-                            <connections>
-                                <action selector="close:" destination="siz-OD-Ioz" id="1Qh-c3-660"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="cZM-xl-9pg"/>
                     </navigationItem>
                     <connections>
@@ -265,25 +260,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xhn-3E-kvU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2265" y="735"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="jK9-pW-ruU">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="683-Rx-3tf" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EOA-dv-MJj">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="siz-OD-Ioz" kind="relationship" relationship="rootViewController" id="WKw-tY-EIl"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MhO-zT-deq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1453" y="735"/>
+            <point key="canvasLocation" x="1406" y="735"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="FJZ-KJ-9lt">
@@ -357,7 +334,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="854" y="1442"/>
+            <point key="canvasLocation" x="2721" y="747"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="quw-Yt-Fwb">
@@ -375,7 +352,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="26W-8k-2va" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="42" y="1442"/>
+            <point key="canvasLocation" x="2074" y="747"/>
         </scene>
     </scenes>
 </document>

@@ -12,6 +12,10 @@ class ItineraryViewController: BaseViewController {
 
     @IBOutlet private weak var myTableView: UITableView!
    
+    private var originLocation : UserLocation?
+    private var destinationLocation : UserLocation?
+    
+    
     // MARK: Life Cycle
     
     override func viewDidLoad() {
@@ -29,10 +33,15 @@ class ItineraryViewController: BaseViewController {
     // MARK: Nav Button
     
     @IBAction func close(sender : AnyObject?){
-        self.dismissViewControllerAnimated(true,completion: nil)
+        self.navigationController?.popToRootViewControllerAnimated(true)
+        
     }
 }
-
+extension ItineraryViewController : MapViewControllerDelegate{
+    func didFinishWithUserLocation(user: UserLocation!) {
+        
+    }
+}
 extension ItineraryViewController : UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let row : NSInteger = indexPath.row
@@ -54,9 +63,13 @@ extension ItineraryViewController : UITableViewDelegate {
         if row == 0 || row == 1 {
             
             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-            let mapView  =   storyBoard.instantiateViewControllerWithIdentifier("MapViewController") as? MapViewController
-            
-            self.navigationController?.pushViewController(mapView!, animated: true)
+            if let mapView  =   storyBoard.instantiateViewControllerWithIdentifier("MapNavigationView") as? UINavigationController{
+                if let controller = mapView.viewControllers[0] as? MapViewController where mapView.viewControllers.count == 1 {
+                    controller.myDelegate  = self
+                }
+                
+                self.navigationController?.presentViewController(mapView, animated: true, completion: nil)
+            }
         }
     }
 }

@@ -26,9 +26,6 @@ class ItineraryListViewController: BaseViewController {
     // MARK: Add Itinerary
     // MARK:
     
-    @IBAction func addItineraryWith(sender : AnyObject!){
-        self.performSegueWithIdentifier("goToItinerarySegue", sender: nil)
-    }
 }
 
 

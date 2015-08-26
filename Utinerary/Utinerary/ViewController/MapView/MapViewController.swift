@@ -13,6 +13,11 @@ import MapKit
 typealias LocationSearchCompletionBlock  =  (mapItems : [MKMapItem]?)->(Void)
 
 
+protocol MapViewControllerDelegate {
+    func didFinishWithUserLocation(user : UserLocation!)
+}
+
+
 class MapViewController: UIViewController{
     
     
@@ -27,6 +32,11 @@ class MapViewController: UIViewController{
     
     private var userLocation : CLLocationCoordinate2D?
     
+    
+    private var selectedAnotation : MKAnnotation?
+    
+    
+     var myDelegate : MapViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,31 +86,10 @@ class MapViewController: UIViewController{
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         
         locationManager?.startGeoCodeWithLocation(location, completionHandler: {
-            [unowned self](placemarks, success) -> Void in
-            
-            
+            [unowned self](address, success) -> Void in
+    
             if success {
-                if placemarks!.count > 0{
-                    let placeMark = placemarks![0]
-                    let location = placeMark.location
-                    
-                    var fullAdress : String = String()
-                    
-                    
-                    if let name = placeMark.name{
-                        fullAdress = name
-                    }
-                    if let locality = placeMark.locality{
-                        fullAdress = fullAdress + " "+locality
-                    }
-                    if let subLocality = placeMark.subLocality{
-                        fullAdress = fullAdress + " "+subLocality
-                    }
-                    if let postalCode = placeMark.postalCode{
-                        fullAdress = fullAdress + " "+postalCode
-                    }
-                    self.createAnotationWithTitle(fullAdress, coordinate: location.coordinate, subTitle: nil, shouldZoom: true)
-                }
+                self.createAnotationWithTitle(address, coordinate: location.coordinate, subTitle: nil, shouldZoom: true)
             }else {
                 self.createAnotationWithTitle(nil, coordinate: location.coordinate, subTitle: nil, shouldZoom: true)
             }
@@ -110,6 +99,10 @@ class MapViewController: UIViewController{
     func createAnotationWithTitle(title : String? , coordinate : CLLocationCoordinate2D! , subTitle : String?, shouldZoom : Bool){
         let anotation : MKAnnotation = LocationManager.createMapAnotationWithTitle(title, coordinate: coordinate , subTitle : subTitle)
         mapView.addAnnotation(anotation)
+        
+        self.selectedAnotation = anotation
+        
+        
         mapView.selectAnnotation(anotation, animated: true)
         mapView.centerCoordinate = coordinate
         if shouldZoom{
@@ -150,21 +143,36 @@ class MapViewController: UIViewController{
     // MARK: Button Event
     
     @IBAction private func navigationButtonEvent(sender : UIBarButtonItem){
-        if let anotations = mapView.annotations {
-            let anotation  = anotations[0] as? MKAnnotation
-            let coordinate : CLLocationCoordinate2D = anotation!.coordinate
-            let location : CLLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        var location : CLLocation?
+        if let anotations = selectedAnotation {
             
-            locationManager?.startGeoCodeWithLocation(location, completionHandler: { (placemarks, success) -> Void in
-                
-            })
+            let coordinate : CLLocationCoordinate2D = anotations.coordinate
+            location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+ 
+        }else{
+            if let currentLocation  = userLocation{
+                location  = CLLocation(latitude: userLocation!.latitude, longitude: userLocation!.longitude)
+            }
         }
         
-        //self.dismissViewControllerAnimated(true, completion: nil)
+        
+        locationManager?.startGeoCodeWithLocation(location!, completionHandler: {
+            [unowned self](address, success) -> Void in
+            var userDesiredLocation : UserLocation?
+            if success {
+                userDesiredLocation  = UserLocation(address: address!, currentLocation: location!)
+            }else{
+                userDesiredLocation  = UserLocation(currentLocation: location!)
+            }
+            
+            self.dismissViewControllerAnimated(true, completion: {
+                [unowned self]() -> Void in
+                self.myDelegate!.didFinishWithUserLocation(userDesiredLocation)
+            })
+        })
+        
+        
     }
-   
-    
-   
 }
 
 extension MapViewController : UITableViewDelegate , UITableViewDataSource{
@@ -222,7 +230,6 @@ extension MapViewController : UISearchDisplayDelegate{
 extension MapViewController : UISearchBarDelegate{
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool{
         
-        mapView.removeAnnotations(mapView.annotations)
         return true
     }
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {

@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-typealias GeoCodeCompletionHandler =  (placemarks :  [CLPlacemark]?, success : Bool)->Void
+typealias GeoCodeCompletionHandler =  (address :  String?, success : Bool)->Void
 
 
 class LocationManager: NSObject {
@@ -55,12 +55,31 @@ class LocationManager: NSObject {
         geoCode.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
             
             if error != nil {
-                completionHandler(placemarks: nil, success: false)
+                completionHandler(address: nil, success: false)
             }
             
             if let pm = placemarks as? [CLPlacemark] where pm.count > 0 {
-
-                completionHandler(placemarks: pm, success: true)
+                
+                let placeMark = pm[0]
+                let location = placeMark.location
+                
+                var fullAdress : String = String()
+                
+                
+                if let name = placeMark.name{
+                    fullAdress = name
+                }
+                if let locality = placeMark.locality{
+                    fullAdress = fullAdress + " "+locality
+                }
+                if let subLocality = placeMark.subLocality{
+                    fullAdress = fullAdress + " "+subLocality
+                }
+                if let postalCode = placeMark.postalCode{
+                    fullAdress = fullAdress + " "+postalCode
+                }
+                
+                completionHandler(address: fullAdress, success: true)
             }
         })
     }
