@@ -22,6 +22,13 @@ class ItineraryListViewController: BaseViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.appDelegate!.fetchItineraryList()
+        
+    }
+    
     // MARK:
     // MARK: Add Itinerary
     // MARK:
