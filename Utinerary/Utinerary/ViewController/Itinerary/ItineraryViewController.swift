@@ -32,14 +32,47 @@ class ItineraryViewController: BaseViewController {
     
     // MARK: Nav Button
     
-    @IBAction func close(sender : AnyObject?){
-        self.navigationController?.popToRootViewControllerAnimated(true)
+    @IBAction func buttonEvent(sender : AnyObject?){
         
+        if let button = sender as? UIBarButtonItem {
+            if button.tag == 3000{
+                //book to Uber
+            }else {
+               
+                if button.tag == 1000 {
+                    //save
+                    if let cell = self.getCellByRow(2) , datePicker = cell.viewWithTag(3000) as? UIDatePicker{
+                        
+                        let itinerary = Itinerary()
+                        itinerary.origin = originLocation
+                        itinerary.destination = destinationLocation
+                        itinerary.dateAndTime = datePicker.date
+                        
+                        self.appDelegate?.insertItinerary(itinerary)
+                    }
+                }else {
+                    //delete 
+                    
+                }
+                self.navigationController?.popToRootViewControllerAnimated(true)
+            }
+        }
     }
 }
 extension ItineraryViewController : MapViewControllerDelegate{
-    func didFinishWithUserLocation(user: UserLocation!) {
-        
+    func didFinishWithUserLocation(user: UserLocation! , locationType : LocationType){
+        if let cell = self.getCellByRow(locationType.rawValue),
+            label = cell.viewWithTag(1) as? UILabel {
+           label.text = user.stringAddress
+        }
+    }
+    
+    func getCellByRow(row : Int)->UITableViewCell?{
+        let indexPath : NSIndexPath =  NSIndexPath(forRow: row, inSection: 0)
+        if let cell = myTableView.cellForRowAtIndexPath(indexPath) {
+            return cell
+        }
+        return nil
     }
 }
 extension ItineraryViewController : UITableViewDelegate {
@@ -66,6 +99,7 @@ extension ItineraryViewController : UITableViewDelegate {
             if let mapView  =   storyBoard.instantiateViewControllerWithIdentifier("MapNavigationView") as? UINavigationController{
                 if let controller = mapView.viewControllers[0] as? MapViewController where mapView.viewControllers.count == 1 {
                     controller.myDelegate  = self
+                    controller.locationType = ((row == 0) ? LocationType.Origin : LocationType.Destination)
                 }
                 
                 self.navigationController?.presentViewController(mapView, animated: true, completion: nil)

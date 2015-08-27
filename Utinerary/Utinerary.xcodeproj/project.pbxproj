@@ -29,6 +29,7 @@
 		956167991B8C4A6E002F3B87 /* SearchModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956167981B8C4A6E002F3B87 /* SearchModelData.swift */; };
 		9561679B1B8C4BD0002F3B87 /* SearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9561679A1B8C4BD0002F3B87 /* SearchItem.swift */; };
 		95666C791B8D505E000C604A /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95666C781B8D505E000C604A /* UserLocation.swift */; };
+		959523801B8EB7610034DFCF /* Itinerary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9595237F1B8EB7610034DFCF /* Itinerary.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		956167981B8C4A6E002F3B87 /* SearchModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchModelData.swift; sourceTree = "<group>"; };
 		9561679A1B8C4BD0002F3B87 /* SearchItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchItem.swift; sourceTree = "<group>"; };
 		95666C781B8D505E000C604A /* UserLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
+		9595237F1B8EB7610034DFCF /* Itinerary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Itinerary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,7 @@
 				956167981B8C4A6E002F3B87 /* SearchModelData.swift */,
 				9561679A1B8C4BD0002F3B87 /* SearchItem.swift */,
 				95666C781B8D505E000C604A /* UserLocation.swift */,
+				9595237F1B8EB7610034DFCF /* Itinerary.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				959523801B8EB7610034DFCF /* Itinerary.swift in Sources */,
 				955914FC1B8315670007D860 /* ViewController.swift in Sources */,
 				955915241B83174B0007D860 /* ItineraryListViewController.swift in Sources */,
 				1A0722801B8AF1FB0047E82C /* LocationManager.swift in Sources */,
@@ -392,6 +396,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rickzon Hagos (4CUM23T45W)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -460,6 +465,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michelle Hagos (92C4S9B99K)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michelle Hagos (92C4S9B99K)";
 				INFOPLIST_FILE = Utinerary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

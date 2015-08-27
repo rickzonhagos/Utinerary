@@ -106,6 +106,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
+    
+    
+    // MARK : Core Data
+    func insertItinerary(user : Itinerary!){
+        if let context : NSManagedObjectContext =  self.managedObjectContext,
+             itineraryEntity  =  NSEntityDescription.insertNewObjectForEntityForName("Itinerary", inManagedObjectContext: context) as? NSManagedObject{
+                
+                itineraryEntity.setValue(user.dateAndTime, forKey: "dateAndTime")
+                itineraryEntity.setValue(user.destination, forKey: "destination")
+                itineraryEntity.setValue(user.origin, forKey: "origin")
+                
+                var error : NSError?
+                if !context.save(&error){
+                    println("save Error \(error?.localizedDescription)")
+                    
+                }
+        }
+    }
+    
+    
+    func fetchItineraryList(){
+        if let context : NSManagedObjectContext =  self.managedObjectContext,
+            fetchRequest = NSFetchRequest(entityName: "Itinerary") as NSFetchRequest?{
+            var error : NSError?
+            if let fetchResult = context.executeFetchRequest(fetchRequest, error: &error) {
+                
+            }
+        }
+        
+    }
 }
 

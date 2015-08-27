@@ -11,10 +11,13 @@ import UIKit
 import MapKit
 
 typealias LocationSearchCompletionBlock  =  (mapItems : [MKMapItem]?)->(Void)
-
+enum LocationType : Int{
+    case Origin = 0
+    case Destination = 1
+}
 
 protocol MapViewControllerDelegate {
-    func didFinishWithUserLocation(user : UserLocation!)
+    func didFinishWithUserLocation(user : UserLocation! , locationType : LocationType)
 }
 
 
@@ -34,6 +37,8 @@ class MapViewController: UIViewController{
     
     
     private var selectedAnotation : MKAnnotation?
+    var locationType : LocationType?
+    
     
     
      var myDelegate : MapViewControllerDelegate?
@@ -167,7 +172,7 @@ class MapViewController: UIViewController{
             
             self.dismissViewControllerAnimated(true, completion: {
                 [unowned self]() -> Void in
-                self.myDelegate!.didFinishWithUserLocation(userDesiredLocation)
+                self.myDelegate!.didFinishWithUserLocation(userDesiredLocation ,locationType : self.locationType!)
             })
         })
         
@@ -274,6 +279,8 @@ extension MapViewController : MKMapViewDelegate {
     }
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
         self.userLocation = userLocation.coordinate
+        let coords = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        self.zoomToLocation(coords)
     }
     
     func mapViewDidFinishLoadingMap(mapView: MKMapView!) {

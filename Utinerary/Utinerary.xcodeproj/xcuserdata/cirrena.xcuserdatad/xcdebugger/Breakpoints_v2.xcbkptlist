@@ -9,13 +9,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Utinerary/ViewController/MapView/MapViewController.swift"
-            timestampString = "462251796.56081"
+            filePath = "Utinerary/AppDelegate.swift"
+            timestampString = "462339069.745177"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
-            landmarkName = "navigationButtonEvent(_:)"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "insertItinerary(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Utinerary/AppDelegate.swift"
+            timestampString = "462339907.053139"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
+            landmarkName = "insertItinerary(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,45 +42,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Utinerary/ViewController/Itinerary/ItineraryViewController.swift"
-            timestampString = "462252621.56392"
+            timestampString = "462339917.752007"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "didFinishWithUserLocation(_:)"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "buttonEvent(_:)"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Utinerary.ItineraryViewController.didFinishWithUserLocation (Utinerary.ItineraryViewController)(Swift.ImplicitlyUnwrappedOptional&lt;Utinerary.UserLocation&gt;) -&gt; ()"
-                  moduleName = "Utinerary"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cirrena/git/Utinerary/Utinerary/Utinerary/ViewController/Itinerary/ItineraryViewController.swift"
-                  timestampString = "462252621.925394"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43"
-                  offsetFromSymbolStart = "36">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "dynamic Utinerary.ItineraryViewController.didFinishWithUserLocation (Utinerary.ItineraryViewController)(Swift.ImplicitlyUnwrappedOptional&lt;Utinerary.UserLocation&gt;) -&gt; ()"
-                  moduleName = "Utinerary"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cirrena/git/Utinerary/Utinerary/Utinerary/ViewController/Itinerary/ItineraryViewController.swift"
-                  timestampString = "462252621.925532"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43"
-                  offsetFromSymbolStart = "108">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
