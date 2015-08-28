@@ -25,8 +25,11 @@ class ItineraryTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setLabelValueForDateAndTime(dateAndTime : String!, destination: String!){
-        dateAndTimeLbl.text = dateAndTime
+    func setLabelValueForDateAndTime(dateAndTime : NSDate!, destination: String!){
+        
+        let sharedInstance = UtinerarySharedInstance.sharedInstance
+        
+        dateAndTimeLbl.text = sharedInstance.reformatDate(dateAndTime)
         destinationLbl.text = destination
     }
 }

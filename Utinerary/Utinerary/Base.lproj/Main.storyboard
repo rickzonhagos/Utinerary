@@ -44,16 +44,16 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SUK-bS-DyU" id="aVI-7x-JVe">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P06-yN-7yf" userLabel="Destination">
-                                                    <rect key="frame" x="0.0" y="23" width="600" height="46"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UIy-dp-zI7" userLabel="Date and Time">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="23"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" text="" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="UIy-dp-zI7" userLabel="Destination">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="P06-yN-7yf" userLabel="Date and Time">
+                                                    <rect key="frame" x="0.0" y="48" width="600" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -61,16 +61,16 @@
                                                 <constraint firstAttribute="trailing" secondItem="P06-yN-7yf" secondAttribute="trailing" id="0Pq-mD-gjq"/>
                                                 <constraint firstItem="UIy-dp-zI7" firstAttribute="leading" secondItem="aVI-7x-JVe" secondAttribute="leading" id="567-0r-f2T"/>
                                                 <constraint firstAttribute="bottom" secondItem="P06-yN-7yf" secondAttribute="bottom" id="RnZ-My-qbF"/>
-                                                <constraint firstItem="P06-yN-7yf" firstAttribute="top" secondItem="UIy-dp-zI7" secondAttribute="bottom" id="V0g-fF-wJf"/>
+                                                <constraint firstItem="P06-yN-7yf" firstAttribute="top" secondItem="UIy-dp-zI7" secondAttribute="bottom" constant="5" id="V0g-fF-wJf"/>
                                                 <constraint firstAttribute="trailing" secondItem="UIy-dp-zI7" secondAttribute="trailing" id="awI-3W-2DC"/>
                                                 <constraint firstItem="P06-yN-7yf" firstAttribute="leading" secondItem="aVI-7x-JVe" secondAttribute="leading" id="rCo-dV-gv5"/>
-                                                <constraint firstItem="UIy-dp-zI7" firstAttribute="height" secondItem="P06-yN-7yf" secondAttribute="height" multiplier="0.5" id="sEt-8N-PHL"/>
+                                                <constraint firstItem="P06-yN-7yf" firstAttribute="height" secondItem="UIy-dp-zI7" secondAttribute="height" multiplier="0.5" id="sEt-8N-PHL"/>
                                                 <constraint firstItem="UIy-dp-zI7" firstAttribute="top" secondItem="aVI-7x-JVe" secondAttribute="top" id="sUY-3U-Z5Q"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="dateAndTimeLbl" destination="UIy-dp-zI7" id="mZh-Tv-wUj"/>
-                                            <outlet property="destinationLbl" destination="P06-yN-7yf" id="c7e-u8-xKF"/>
+                                            <outlet property="dateAndTimeLbl" destination="P06-yN-7yf" id="1Bu-7i-nJQ"/>
+                                            <outlet property="destinationLbl" destination="UIy-dp-zI7" id="czD-TN-d4j"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

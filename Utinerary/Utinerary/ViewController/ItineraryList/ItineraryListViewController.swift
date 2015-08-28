@@ -48,7 +48,11 @@ extension ItineraryListViewController : UITableViewDelegate{
     }
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        
+        if let myCell = cell as? ItineraryTableViewCell {
+            let row : Int = indexPath.row
+            let item = itineraryList![row]
+            myCell.setLabelValueForDateAndTime(item.dateAndTime, destination: item.destination?.stringAddress)
+        }
     }
 }
 extension ItineraryListViewController : UITableViewDataSource{

@@ -24,6 +24,7 @@
 		955915241B83174B0007D860 /* ItineraryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955915231B83174B0007D860 /* ItineraryListViewController.swift */; };
 		955915261B831AF30007D860 /* ItineraryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955915251B831AF30007D860 /* ItineraryTableViewCell.swift */; };
 		955915281B831FD90007D860 /* ItineraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955915271B831FD90007D860 /* ItineraryViewController.swift */; };
+		955F06CA1B90465700BA407A /* UtinerarySharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955F06C91B90465700BA407A /* UtinerarySharedInstance.swift */; };
 		956167951B8C44B3002F3B87 /* HTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956167941B8C44B3002F3B87 /* HTTPRequest.swift */; };
 		956167971B8C44D6002F3B87 /* UtineraryModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956167961B8C44D6002F3B87 /* UtineraryModelData.swift */; };
 		956167991B8C4A6E002F3B87 /* SearchModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956167981B8C4A6E002F3B87 /* SearchModelData.swift */; };
@@ -64,6 +65,7 @@
 		955915231B83174B0007D860 /* ItineraryListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryListViewController.swift; sourceTree = "<group>"; };
 		955915251B831AF30007D860 /* ItineraryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryTableViewCell.swift; sourceTree = "<group>"; };
 		955915271B831FD90007D860 /* ItineraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryViewController.swift; sourceTree = "<group>"; };
+		955F06C91B90465700BA407A /* UtinerarySharedInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtinerarySharedInstance.swift; sourceTree = "<group>"; };
 		956167941B8C44B3002F3B87 /* HTTPRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPRequest.swift; sourceTree = "<group>"; };
 		956167961B8C44D6002F3B87 /* UtineraryModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtineraryModelData.swift; sourceTree = "<group>"; };
 		956167981B8C4A6E002F3B87 /* SearchModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchModelData.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			children = (
 				1A07227D1B89BCF30047E82C /* Utils.swift */,
 				1A07227F1B8AF1FB0047E82C /* LocationManager.swift */,
+				955F06C91B90465700BA407A /* UtinerarySharedInstance.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				959523801B8EB7610034DFCF /* Itinerary.swift in Sources */,
+				955F06CA1B90465700BA407A /* UtinerarySharedInstance.swift in Sources */,
 				955914FC1B8315670007D860 /* ViewController.swift in Sources */,
 				955915241B83174B0007D860 /* ItineraryListViewController.swift in Sources */,
 				1A0722801B8AF1FB0047E82C /* LocationManager.swift in Sources */,
