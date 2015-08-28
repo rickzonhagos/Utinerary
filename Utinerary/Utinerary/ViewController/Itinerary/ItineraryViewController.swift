@@ -15,6 +15,7 @@ class ItineraryViewController: BaseViewController {
     private var originLocation : UserLocation?
     private var destinationLocation : UserLocation?
     
+
     
     // MARK: Life Cycle
     
@@ -29,7 +30,14 @@ class ItineraryViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
+        
+    }
     
+ 
     // MARK: Nav Button
     
     @IBAction func buttonEvent(sender : AnyObject?){
@@ -64,6 +72,12 @@ extension ItineraryViewController : MapViewControllerDelegate{
         if let cell = self.getCellByRow(locationType.rawValue),
             label = cell.viewWithTag(1) as? UILabel {
            label.text = user.stringAddress
+                
+                if locationType == LocationType.Origin{
+                    self.originLocation = user
+                }else{
+                    self.destinationLocation = user
+                }
         }
     }
     

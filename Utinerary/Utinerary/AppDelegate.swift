@@ -114,8 +114,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
              itineraryEntity  =  NSEntityDescription.insertNewObjectForEntityForName("Itinerary", inManagedObjectContext: context) as? NSManagedObject{
                 
                 itineraryEntity.setValue(user.dateAndTime, forKey: "dateAndTime")
-                itineraryEntity.setValue(user.destination, forKey: "destination")
-                itineraryEntity.setValue(user.origin, forKey: "origin")
+                itineraryEntity.setValue(user.destination?.archive(), forKey: "destination")
+                itineraryEntity.setValue(user.origin?.archive(), forKey: "origin")
                 
                 var error : NSError?
                 if !context.save(&error){
@@ -126,15 +126,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    func fetchItineraryList(){
+    func fetchItineraryList()->[Itinerary]?{
         if let context : NSManagedObjectContext =  self.managedObjectContext,
             fetchRequest = NSFetchRequest(entityName: "Itinerary") as NSFetchRequest?{
             var error : NSError?
-            if let fetchResult = context.executeFetchRequest(fetchRequest, error: &error) {
                 
+            
+            if let fetchResult = context.executeFetchRequest(fetchRequest, error: &error) {
+                var items : [Itinerary] = [Itinerary]()
+                for  result in fetchResult {
+                    if result is NSManagedObject {
+                        
+                        
+                        let item = Itinerary()
+                        if let data = result.valueForKey("destination") as? NSData ,
+                            unArchievedData : AnyObject = data.unArchived() ,
+                            destination = unArchievedData as? UserLocation {
+                            item.destination = destination
+                            
+                        }
+                        
+                        if let data = result.valueForKey("origin") as? NSData,
+                            unArchievedData : AnyObject  = data.unArchived(),
+                            origin = unArchievedData as? UserLocation {
+                                item.origin = origin 
+                        }
+                       
+                        item.dateAndTime = result.valueForKey("dateAndTime") as? NSDate
+                        
+                        items.append(item)
+                        
+                    }
+                }
+                return items
             }
+            return nil
         }
-        
+        return nil
     }
 }
 

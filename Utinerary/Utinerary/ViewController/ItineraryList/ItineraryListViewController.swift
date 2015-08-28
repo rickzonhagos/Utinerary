@@ -12,6 +12,8 @@ class ItineraryListViewController: BaseViewController {
 
     @IBOutlet weak var listView: UITableView!
     
+    private var itineraryList : [Itinerary]?
+    
     // MARK:
     // MARK: Life Cycle
     // MARK:
@@ -25,10 +27,14 @@ class ItineraryListViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.appDelegate!.fetchItineraryList()
+        fetchListAndReloadData()
         
     }
     
+    func fetchListAndReloadData(){
+        self.itineraryList =  self.appDelegate!.fetchItineraryList()
+        listView.reloadData()
+    }
     // MARK:
     // MARK: Add Itinerary
     // MARK:
@@ -58,6 +64,9 @@ extension ItineraryListViewController : UITableViewDataSource{
         
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let items = itineraryList {
+            return items.count
+        }
         return 0;
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
