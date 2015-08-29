@@ -29,7 +29,7 @@ class ItineraryTableViewCell: UITableViewCell {
         
         let sharedInstance = UtinerarySharedInstance.sharedInstance
         
-        dateAndTimeLbl.text = sharedInstance.reformatDate(dateAndTime)
+        dateAndTimeLbl.text = sharedInstance.reformatDateToString(dateAndTime)
         destinationLbl.text = destination
     }
 }

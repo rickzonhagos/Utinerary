@@ -12,19 +12,24 @@ class UtinerarySharedInstance: NSObject {
     static let sharedInstance = UtinerarySharedInstance()
     
     
-    var dateFormater : NSDateFormatter?
+    var dateFormaterToString : NSDateFormatter?
     private override init(){
         super.init()
         
-        self.dateFormater = NSDateFormatter()
-        dateFormater?.dateStyle = NSDateFormatterStyle.FullStyle
-        dateFormater?.timeStyle = NSDateFormatterStyle.NoStyle
-     
+        self.dateFormaterToString = NSDateFormatter()
+       // dateFormaterToString?.dateFormat = "EEE, MMM d, yyyy h:mm:aa"
+        dateFormaterToString?.dateStyle = NSDateFormatterStyle.FullStyle
+        dateFormaterToString?.timeStyle = NSDateFormatterStyle.ShortStyle
     }
     
     
     // MARK: Date Formatter
-    func reformatDate(date : NSDate!)->String? {
-        return dateFormater!.stringFromDate(date)
+    func reformatDateToString(date : NSDate!)->String? {
+        return dateFormaterToString!.stringFromDate(date)
+    }
+    
+    func reformatDateString(date : String!)->NSDate{
+        
+        return dateFormaterToString!.dateFromString(date)!
     }
 }

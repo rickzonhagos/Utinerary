@@ -17,6 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        
+        
+        Flurry.startSession("YKTM2HD2H7SPKY57BMWF")
+        Flurry.setCrashReportingEnabled(true)
+        registerNotification()
+        
         return true
     }
 
@@ -109,34 +116,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     // MARK : Core Data
-    func insertItinerary(user : Itinerary!){
+    func insertItinerary(user : Itinerary!, notifID : String!, completionHandler : completionBlock){
         if let context : NSManagedObjectContext =  self.managedObjectContext,
              itineraryEntity  =  NSEntityDescription.insertNewObjectForEntityForName("Itinerary", inManagedObjectContext: context) as? NSManagedObject{
                 
                 itineraryEntity.setValue(user.dateAndTime, forKey: "dateAndTime")
                 itineraryEntity.setValue(user.destination?.archive(), forKey: "destination")
                 itineraryEntity.setValue(user.origin?.archive(), forKey: "origin")
-                
+                itineraryEntity.setValue(notifID, forKey: "notifID")
                 var error : NSError?
                 if !context.save(&error){
                     println("save Error \(error?.localizedDescription)")
-                    
+                    completionHandler(success: false);
+                    return;
                 }
+                
+                
+                self.scheduleNotificationWithFireDate(user.dateAndTime, notifID: notifID)
+                
+                completionHandler(success: true)
         }
     }
     
     
-    func fetchItineraryList()->[Itinerary]?{
+    func fetchItineraryList()->[[AnyObject]]?{
         if let context : NSManagedObjectContext =  self.managedObjectContext,
             fetchRequest = NSFetchRequest(entityName: "Itinerary") as NSFetchRequest?{
             var error : NSError?
                 
             
             if let fetchResult = context.executeFetchRequest(fetchRequest, error: &error) {
-                var items : [Itinerary] = [Itinerary]()
+                var items  = [[AnyObject]]()
+                
                 for  result in fetchResult {
                     if result is NSManagedObject {
-                        
                         
                         let item = Itinerary()
                         if let data = result.valueForKey("destination") as? NSData ,
@@ -154,7 +167,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                        
                         item.dateAndTime = result.valueForKey("dateAndTime") as? NSDate
                         
-                        items.append(item)
+                        items.append([item, result])
                         
                     }
                 }
@@ -163,6 +176,215 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return nil
         }
         return nil
+    }
+    
+    func updateItinerary(managedObject : NSManagedObject! ,  completionHandler : completionBlock){
+        if let context  : NSManagedObjectContext = self.managedObjectContext {
+            var error : NSError?
+            
+            
+            if !context.save(&error){
+                println("Update Error \(error?.localizedDescription)")
+                completionHandler(success: false)
+              
+                return
+            }
+            
+            if let notifID = managedObject.valueForKey("notifID") as? String{
+                cancelNotificationWith(notifID)
+                
+                if let date = managedObject.valueForKey("dateAndTime") as? NSDate {
+                    self.scheduleNotificationWithFireDate(date, notifID: notifID)
+                }
+                
+            }
+            completionHandler(success: true)
+        }
+    }
+    
+    func fetchItineraryItemBy(notifID : String! , completionHandler : fetchCompletionBlock){
+        if let context : NSManagedObjectContext =  self.managedObjectContext,
+            fetchRequest = NSFetchRequest(entityName: "Itinerary") as NSFetchRequest?{
+                var error : NSError?
+                
+                
+                let predicate = NSPredicate(format: "notifID == %@",notifID)
+                fetchRequest.predicate = predicate
+                
+                if let fetchResult = context.executeFetchRequest(fetchRequest, error: &error) {
+                    for  result in fetchResult {
+                        if result is NSManagedObject {
+                            let item = Itinerary()
+                            if let data = result.valueForKey("destination") as? NSData ,
+                                unArchievedData : AnyObject = data.unArchived() ,
+                                destination = unArchievedData as? UserLocation {
+                                    item.destination = destination
+                                    
+                            }
+                            
+                            if let data = result.valueForKey("origin") as? NSData,
+                                unArchievedData : AnyObject  = data.unArchived(),
+                                origin = unArchievedData as? UserLocation {
+                                    item.origin = origin
+                            }
+                            
+                            item.dateAndTime = result.valueForKey("dateAndTime") as? NSDate
+                            completionHandler(success: true, item: item)
+                        }
+                    }
+                    completionHandler(success: false, item: nil)
+                }
+                completionHandler(success: false, item: nil)
+        }
+        completionHandler(success: false, item: nil)
+    }
+    
+    func deleteItineraryItem(object : NSManagedObject! , completionHandler : completionBlock){
+        if let context  : NSManagedObjectContext = self.managedObjectContext {
+            
+            let notifID = object.valueForKey("notifID") as? String
+                
+            
+            
+            context.deleteObject(object)
+            var error : NSError?
+            if !context.save(&error){
+                println("Delete Error \(error?.localizedDescription)")
+                completionHandler(success: false)
+                
+                return
+                
+            }
+            
+            if let id = notifID {
+                cancelNotificationWith(id)
+            }
+            
+    
+
+            completionHandler(success: true)
+        }
+    }
+    
+    var categoryID:String {
+        get{
+            return "CATEGORY"
+        }
+    }
+    
+    // MARK: Notification
+    func registerNotification() {
+        if objc_getClass("UIMutableUserNotificationAction") != nil {
+            let bookToUber = UIMutableUserNotificationAction()
+            bookToUber.identifier = LocationNotificationAction.BookToUber.rawValue
+            bookToUber.title = "Book to Uber"
+            bookToUber.activationMode = UIUserNotificationActivationMode.Foreground
+            bookToUber.destructive = true
+            
+            let view = UIMutableUserNotificationAction()
+            view.identifier = LocationNotificationAction.View.rawValue
+            view.title = "View"
+            view.activationMode = UIUserNotificationActivationMode.Foreground
+            view.destructive = true
+            
+            
+            let category = UIMutableUserNotificationCategory()
+            category.identifier = categoryID
+            
+            // A. Set actions for the default context
+            category.setActions([bookToUber, view], forContext: UIUserNotificationActionContext.Default)
+            
+            // B. Set actions for the minimal context
+            category.setActions([bookToUber, view],
+                forContext: UIUserNotificationActionContext.Minimal)
+            
+            
+            
+            let types = UIUserNotificationType.Alert | UIUserNotificationType.Sound
+            let settings = UIUserNotificationSettings(forTypes: types, categories: NSSet(object: category) as Set<NSObject>)
+            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        }
+    }
+    
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        //will trigger when 
+        // 1. clicked 
+        // 2. received a notification when app is active
+
+        self.navigateToNotificationPage(notification , action : nil)
+    }
+    
+    
+    func navigateToNotificationPage(notification: UILocalNotification , action : String?){
+        
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyBoard.instantiateViewControllerWithIdentifier("NotificationViewController") as? NotificationViewController
+        
+        if let rootView = self.window?.rootViewController as? UINavigationController{
+            
+            
+            if viewController!.isBeingPresented() {
+                viewController!.dismissViewControllerAnimated(true, completion: nil)
+            }
+            
+            rootView.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
+            
+            if let info = notification.userInfo! as? [String:AnyObject] , notifID = info["notifID"] as? String{
+                viewController?.notifID = notifID
+                if action != nil{
+                    viewController?.actionType = action
+                }
+            }
+            
+            rootView.presentViewController(viewController!, animated: true, completion: nil)
+        }
+    }
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        
+    }
+    
+    func scheduleNotificationWithFireDate(fireDate : NSDate!, notifID : String!) {
+        //UIApplication.sharedApplication().cancelAllLocalNotifications()
+        
+        // Schedule the notification ********************************************
+        let notification = UILocalNotification()
+        notification.alertBody = "Notification ;) \(notifID)"
+        notification.soundName = UILocalNotificationDefaultSoundName
+        notification.fireDate = fireDate
+        
+        if (UIDevice.currentDevice().systemVersion as? NSString)?.floatValue >= 8.0 {
+            notification.category = categoryID
+        }
+        
+        notification.userInfo = ["notifID":notifID]
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+
+    }
+    
+    func cancelNotificationWith(notifID : String!){
+        var app:UIApplication = UIApplication.sharedApplication()
+        for oneEvent in app.scheduledLocalNotifications {
+            var notification = oneEvent as! UILocalNotification
+            let userInfoCurrent = notification.userInfo! as! [String:AnyObject]
+            let uid = userInfoCurrent["notifID"]! as! String
+            if uid == notifID {
+                //Cancelling local notification
+                app.cancelLocalNotification(notification)
+                break;
+            }
+        }
+    }
+    
+    
+    func application(application: UIApplication,
+        handleActionWithIdentifier identifier: String?,
+        forLocalNotification notification: UILocalNotification,
+        completionHandler: () -> Void) {
+            
+            
+            self.navigateToNotificationPage(notification, action : identifier)
+            completionHandler()
     }
 }
 

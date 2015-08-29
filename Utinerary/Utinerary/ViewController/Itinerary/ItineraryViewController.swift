@@ -1,4 +1,4 @@
-//
+///
 //  ItineraryViewController.swift
 //  Utinerary
 //
@@ -7,6 +7,15 @@
 //
 
 import UIKit
+import CoreData
+
+enum ItineraryActionType {
+    case CreateItinerary
+    case ViewItinerary
+}
+
+typealias  completionBlock  = (success : Bool)->Void
+typealias  fetchCompletionBlock  = (success : Bool , item : Itinerary?)->Void
 
 class ItineraryViewController: BaseViewController {
 
@@ -15,13 +24,23 @@ class ItineraryViewController: BaseViewController {
     private var originLocation : UserLocation?
     private var destinationLocation : UserLocation?
     
-
+    var itineraryAction : ItineraryActionType?
+    var itineraryItem : (item : Itinerary! , managedObject : NSManagedObject!)?
     
+
+    @IBOutlet private weak var deleteItineraryButton: UIBarButtonItem!
+    
+    private var deleteButtonHasBeenHidden : Bool = false
+    
+    @IBOutlet weak var myToolBar: UIToolbar!
     // MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        if let datePicker = self.getDatePicker(){
+            datePicker.timeZone = NSTimeZone(name: "Asia/Manila")
+        }
         // Do any additional setup after loading the view.
     }
 
@@ -34,37 +53,178 @@ class ItineraryViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if itineraryAction == ItineraryActionType.ViewItinerary {
+            if let item = itineraryItem!.item  {
+                let stringAdress : [String] = [(item.origin?.stringAddress)!, (item.destination?.stringAddress)! ]
+                for (index , element) in enumerate(stringAdress) {
+                    if let cell = getCellByRow(index) ,label =  cell.viewWithTag(1) as? UILabel{
+                        label.text = element
+                    }
+                }
+                
+                self.originLocation = itineraryItem!.item.origin
+                self.destinationLocation = itineraryItem!.item.destination
+                
+                if let datePicker = self.getDatePicker(){
+                    datePicker.setDate(itineraryItem!.item.dateAndTime!, animated: true)
+                }
+            }
+        }else {
+            if !deleteButtonHasBeenHidden {
+                if var items : [AnyObject] = myToolBar.items  where items.count > 0{
+                    items.removeAtIndex(0)
+                    self.myToolBar.setItems(items, animated: true)
+                    self.deleteButtonHasBeenHidden = true
+                }
+            }
+        }
         
     }
     
+    func getDatePicker()->UIDatePicker?{
+        if let cell = self.getCellByRow(2) , datePicker = cell.viewWithTag(3000) as? UIDatePicker{
+            
+            return datePicker
+            
+        }
+        return nil
+    }
  
     // MARK: Nav Button
-    
+    func validateLocationFields()->(isSuccess : Bool , message : String?){
+        var message : String?
+        var success : Bool = true
+        if originLocation == nil && destinationLocation == nil{
+            message = "Please enter your desired Destination and Origin Address"
+            success = false
+        }else if originLocation == nil{
+            message = "Please enter your Origin Address"
+            success = false
+        }else if destinationLocation == nil {
+            message = "Please enter your Destination Address"
+            success = false
+        }
+        return (isSuccess : success , message : message)
+    }
     @IBAction func buttonEvent(sender : AnyObject?){
         
         if let button = sender as? UIBarButtonItem {
             if button.tag == 3000{
                 //book to Uber
+                let result = self.validateLocationFields()
+                
+                if !result.isSuccess {
+                    self.showAlertMessageWithAlertAction(nil, delegate: nil, message: result.message, title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel")
+                    return
+                }
+                
+                let itinerary = Itinerary()
+                itinerary.origin = originLocation
+                itinerary.destination = destinationLocation
+                Utils.bookToUber(itinerary, sender : self)
+                
+                
             }else {
                
                 if button.tag == 1000 {
-                    //save
                     if let cell = self.getCellByRow(2) , datePicker = cell.viewWithTag(3000) as? UIDatePicker{
-                        
-                        let itinerary = Itinerary()
-                        itinerary.origin = originLocation
-                        itinerary.destination = destinationLocation
-                        itinerary.dateAndTime = datePicker.date
-                        
-                        self.appDelegate?.insertItinerary(itinerary)
+                        if let item = itineraryItem , managedObject = item.managedObject {
+                            //update
+                            managedObject.setValue(datePicker.date, forKey: "dateAndTime")
+                            managedObject.setValue(destinationLocation!.archive(), forKey: "destination")
+                            managedObject.setValue(originLocation!.archive(), forKey: "origin")
+                            
+                            
+                            updateItem(managedObject)
+                        }else {
+                            //save
+                            
+                            let result = self.validateLocationFields()
+                            
+                            if !result.isSuccess {
+                                self.showAlertMessageWithAlertAction(nil, delegate: nil, message: result.message, title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel")
+                                return
+                            }
+
+                            let itinerary = Itinerary()
+                            itinerary.origin = originLocation
+                            itinerary.destination = destinationLocation
+                            
+                            let stringedDate = utinerarySharedInstance.reformatDateToString(datePicker.date)
+                            let reformattedDate = utinerarySharedInstance.reformatDateString(stringedDate)
+                            itinerary.dateAndTime = reformattedDate
+                            
+                            self.addItem(itinerary)
+                        }
                     }
                 }else {
                     //delete 
-                    
+                    self.showAlertMessageWithAlertAction({
+                         [unowned self](action) -> Void in
+                        if action == AlertAction.Ok {
+                            self.deleteItem()
+                        }
+                    }, delegate: self, message: "Are you sure you want to delete this item", title: "Delete Confirmation", withCancelButton: true, okButtonTitle: "Proceed", alertTag: AlertTagType.DeleteAlert, cancelTitle: "Cancel")
                 }
-                self.navigationController?.popToRootViewControllerAnimated(true)
+                
             }
         }
+    }
+    
+    
+    // MARK: Core Data Add / Edit / Delete
+    
+    func updateItem(managedObject : NSManagedObject!){
+        self.view.showProgressIndicatorWithLoadingMessage(message: "Updating Data")
+        
+        if let cell = self.getCellByRow(2) , datePicker = cell.viewWithTag(3000) as? UIDatePicker{
+
+            self.appDelegate?.updateItinerary(managedObject,  completionHandler: { (success) -> Void in
+                self.view.hideProgressIndicator()
+                self.showAlertMessageWithAlertAction({
+                    [unowned self](action) -> Void in
+                    if action == AlertAction.Ok {
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    }
+                    }, delegate: self, message: "Item has been Updated", title: "", withCancelButton: false, okButtonTitle: "Done", alertTag: AlertTagType.UpdatedItemAlert, cancelTitle: "")
+            })
+        }
+        
+    }
+    
+    func addItem(item : Itinerary!){
+        self.view.showProgressIndicatorWithLoadingMessage(message: "Saving Data")
+        
+        self.appDelegate?.insertItinerary(item, notifID: Utils.randomStringWithLength() as? String, completionHandler: {
+            [unowned self](success) -> Void in
+            self.view.hideProgressIndicator()
+            self.showAlertMessageWithAlertAction({
+                [unowned self](action) -> Void in
+                if action == AlertAction.Ok {
+                    self.navigationController?.popToRootViewControllerAnimated(true)
+                }
+                }, delegate: self, message: "Item has been added", title: "", withCancelButton: false, okButtonTitle: "Done", alertTag: AlertTagType.AddedItemAlert, cancelTitle: "")
+            
+        })
+    }
+    func deleteItem(){
+        self.view.showProgressIndicatorWithLoadingMessage(message: "Deleting Item")
+        self.appDelegate?.deleteItineraryItem(self.itineraryItem!.managedObject , completionHandler: {
+            [unowned self](success) -> Void in
+            self.view.hideProgressIndicator()
+            
+            self.showAlertMessageWithAlertAction({
+                [unowned self](action) -> Void in
+                if action == AlertAction.Ok {
+                    self.navigationController?.popToRootViewControllerAnimated(true)
+                }
+                }, delegate: self, message: "Item has been deleted", title: "", withCancelButton: false, okButtonTitle: "Done", alertTag: AlertTagType.DeletedItemAlert, cancelTitle: "")
+        })
     }
 }
 extension ItineraryViewController : MapViewControllerDelegate{
@@ -144,5 +304,21 @@ extension ItineraryViewController : UITableViewDataSource{
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
+    }
+}
+extension ItineraryViewController : UIAlertViewDelegate{
+    override func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        super.alertView(alertView, clickedButtonAtIndex: buttonIndex)
+        if alertView.tag == AlertTagType.DeleteAlert.rawValue {
+            if buttonIndex == 1 {
+                self.deleteItem()
+            }
+            
+        }else if alertView.tag ==  AlertTagType.DeletedItemAlert.rawValue ||
+            alertView.tag == AlertTagType.AddedItemAlert.rawValue ||
+            alertView.tag == AlertTagType.UpdatedItemAlert.rawValue {
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        }
+        
     }
 }

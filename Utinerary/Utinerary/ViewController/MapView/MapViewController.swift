@@ -21,7 +21,7 @@ protocol MapViewControllerDelegate {
 }
 
 
-class MapViewController: UIViewController{
+class MapViewController: BaseViewController{
     
     
     let cellReuseIdentifier : String = "SearchResultTableCellIdentifier"
@@ -57,6 +57,8 @@ class MapViewController: UIViewController{
         self.searchDisplayController?.searchResultsTableView.registerNib(nib, forCellReuseIdentifier: cellReuseIdentifier)
         
         
+        self.view.showProgressIndicatorWithLoadingMessage(message: "Retrieving Location")
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -90,15 +92,18 @@ class MapViewController: UIViewController{
         
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         
-        locationManager?.startGeoCodeWithLocation(location, completionHandler: {
+        
+        self.startGeoCodeWithLocationManager(locationManager!, location: location) {
             [unowned self](address, success) -> Void in
-    
+
             if success {
                 self.createAnotationWithTitle(address, coordinate: location.coordinate, subTitle: nil, shouldZoom: true)
             }else {
                 self.createAnotationWithTitle(nil, coordinate: location.coordinate, subTitle: nil, shouldZoom: true)
             }
-        })
+            self.view.hideProgressIndicator()
+        }
+        
     }
     
     func createAnotationWithTitle(title : String? , coordinate : CLLocationCoordinate2D! , subTitle : String?, shouldZoom : Bool){
@@ -161,7 +166,7 @@ class MapViewController: UIViewController{
         }
         
         
-        locationManager?.startGeoCodeWithLocation(location!, completionHandler: {
+        self.startGeoCodeWithLocationManager(locationManager!, location: location!) {
             [unowned self](address, success) -> Void in
             var userDesiredLocation : UserLocation?
             if success {
@@ -170,13 +175,13 @@ class MapViewController: UIViewController{
                 userDesiredLocation  = UserLocation(currentLocation: location!)
             }
             
+            self.view.hideProgressIndicator()
+            
             self.dismissViewControllerAnimated(true, completion: {
                 [unowned self]() -> Void in
                 self.myDelegate!.didFinishWithUserLocation(userDesiredLocation ,locationType : self.locationType!)
             })
-        })
-        
-        
+        }
     }
 }
 
@@ -278,6 +283,9 @@ extension MapViewController : MKMapViewDelegate {
         
     }
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
+        
+        self.view.hideProgressIndicator()
+        
         self.userLocation = userLocation.coordinate
         let coords = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
         self.zoomToLocation(coords)

@@ -8,9 +8,26 @@
 
 import UIKit
 
+import MapKit
+
+enum AlertTagType : Int{
+    case DeleteAlert = 0
+    case DeletedItemAlert = 1
+    case AddedItemAlert = 2
+    case UpdatedItemAlert = 3
+    case Nothing = 4
+}
+
+
 class BaseViewController: UIViewController {
 
     let appDelegate  = UIApplication.sharedApplication().delegate as? AppDelegate
+    
+    
+    
+    var myProgressIndicator : MBProgressHUD?
+    
+    let utinerarySharedInstance = UtinerarySharedInstance.sharedInstance
     
     // MARK: Life Cycle
     
@@ -46,8 +63,33 @@ class BaseViewController: UIViewController {
     
     deinit{
         
-        
     }
 
-
+    func getViewController(name : String!)->AnyObject?{
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController : AnyObject = storyBoard.instantiateViewControllerWithIdentifier(name)
+        return viewController
+    }
+    
+    
+    // MARK: Geo Code 
+    func startGeoCodeWithLocationManager(manager : LocationManager! , location : CLLocation!,
+        completionHandler : GeoCodeCompletionHandler){
+            
+        self.view.showProgressIndicatorWithLoadingMessage()
+        manager!.startGeoCodeWithLocation(location, completionHandler:completionHandler)
+    }
+}
+extension BaseViewController : MBProgressHUDDelegate {
+    func hudWasHidden(hud: MBProgressHUD!) {
+        if myProgressIndicator != nil {
+            myProgressIndicator!.removeFromSuperview()
+            myProgressIndicator = nil
+        }
+    }
+}
+extension BaseViewController : UIAlertViewDelegate{
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+       
+    }
 }

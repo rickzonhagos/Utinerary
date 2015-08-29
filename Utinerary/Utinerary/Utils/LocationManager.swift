@@ -36,7 +36,11 @@ class LocationManager: NSObject {
         self.locationManager = CLLocationManager()
         locationManager.delegate = self
         
-        locationManager.requestWhenInUseAuthorization()
+        
+        if (UIDevice.currentDevice().systemVersion as? NSString)?.floatValue >= 8.0 {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        
         locationManager.startUpdatingLocation()
         
         locationManager.distanceFilter = kCLDistanceFilterNone

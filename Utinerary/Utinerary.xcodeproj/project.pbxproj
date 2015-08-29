@@ -11,6 +11,11 @@
 		1A07227B1B87F5AB0047E82C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A07227A1B87F5AB0047E82C /* MapKit.framework */; };
 		1A07227E1B89BCF30047E82C /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A07227D1B89BCF30047E82C /* Utils.swift */; };
 		1A0722801B8AF1FB0047E82C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A07227F1B8AF1FB0047E82C /* LocationManager.swift */; };
+		1A409FAE1B9167EF00971D96 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A409FAD1B9167EF00971D96 /* test.m */; };
+		1A409FB31B9168DA00971D96 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A409FB21B9168DA00971D96 /* Extensions.swift */; };
+		1A9CC8E91B91BCA8001DBC86 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CC8E81B91BCA8001DBC86 /* NotificationViewController.swift */; };
+		1A9CC8EE1B91D425001DBC86 /* libFlurry_6.5.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9CC8ED1B91D425001DBC86 /* libFlurry_6.5.0.a */; };
+		1A9CC8F01B91D606001DBC86 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9CC8EF1B91D606001DBC86 /* SystemConfiguration.framework */; };
 		9557A92A1B8C217A00144E79 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9557A9281B8C217A00144E79 /* SearchTableViewCell.swift */; };
 		9557A92B1B8C217A00144E79 /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9557A9291B8C217A00144E79 /* SearchTableViewCell.xib */; };
 		955914F71B8315670007D860 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955914F61B8315670007D860 /* AppDelegate.swift */; };
@@ -31,6 +36,7 @@
 		9561679B1B8C4BD0002F3B87 /* SearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9561679A1B8C4BD0002F3B87 /* SearchItem.swift */; };
 		95666C791B8D505E000C604A /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95666C781B8D505E000C604A /* UserLocation.swift */; };
 		959523801B8EB7610034DFCF /* Itinerary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9595237F1B8EB7610034DFCF /* Itinerary.swift */; };
+		967B95E72DCDFF6E8E7E4176 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F65B08F642D2F6132D99F7 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +54,15 @@
 		1A07227A1B87F5AB0047E82C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		1A07227D1B89BCF30047E82C /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		1A07227F1B8AF1FB0047E82C /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		1A409FAB1B9167EF00971D96 /* Utinerary-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Utinerary-Bridging-Header.h"; sourceTree = "<group>"; };
+		1A409FAC1B9167EF00971D96 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
+		1A409FAD1B9167EF00971D96 /* test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
+		1A409FB21B9168DA00971D96 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		1A9CC8E81B91BCA8001DBC86 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		1A9CC8EB1B91D425001DBC86 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		1A9CC8EC1B91D425001DBC86 /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
+		1A9CC8ED1B91D425001DBC86 /* libFlurry_6.5.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_6.5.0.a; sourceTree = "<group>"; };
+		1A9CC8EF1B91D606001DBC86 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9557A9281B8C217A00144E79 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		9557A9291B8C217A00144E79 /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 		955914F11B8315670007D860 /* Utinerary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Utinerary.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +87,10 @@
 		9561679A1B8C4BD0002F3B87 /* SearchItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchItem.swift; sourceTree = "<group>"; };
 		95666C781B8D505E000C604A /* UserLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
 		9595237F1B8EB7610034DFCF /* Itinerary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Itinerary.swift; sourceTree = "<group>"; };
+		B783FF075100A2EEF482D7CA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		D3F65B08F642D2F6132D99F7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1D668224E6726C49D9EB6EF /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
+		E5B1521FB82A5A9A4A6E0A19 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +98,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A9CC8F01B91D606001DBC86 /* SystemConfiguration.framework in Frameworks */,
 				1A07227B1B87F5AB0047E82C /* MapKit.framework in Frameworks */,
+				1A9CC8EE1B91D425001DBC86 /* libFlurry_6.5.0.a in Frameworks */,
+				967B95E72DCDFF6E8E7E4176 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +115,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		036D6442F6A7D547DCBB5D9F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B783FF075100A2EEF482D7CA /* Pods.debug.xcconfig */,
+				E5B1521FB82A5A9A4A6E0A19 /* Pods.release.xcconfig */,
+				E1D668224E6726C49D9EB6EF /* Pods.adhoc.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		1A0722771B87F4870047E82C /* MapView */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,8 +141,36 @@
 				1A07227D1B89BCF30047E82C /* Utils.swift */,
 				1A07227F1B8AF1FB0047E82C /* LocationManager.swift */,
 				955F06C91B90465700BA407A /* UtinerarySharedInstance.swift */,
+				1A409FB21B9168DA00971D96 /* Extensions.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		1A9CC8E71B91BC97001DBC86 /* NotificationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1A9CC8E81B91BCA8001DBC86 /* NotificationViewController.swift */,
+			);
+			path = NotificationViewController;
+			sourceTree = "<group>";
+		};
+		1A9CC8EA1B91D425001DBC86 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				1A9CC8EB1B91D425001DBC86 /* Flurry.h */,
+				1A9CC8EC1B91D425001DBC86 /* FlurryWatch.h */,
+				1A9CC8ED1B91D425001DBC86 /* libFlurry_6.5.0.a */,
+			);
+			path = Flurry;
+			sourceTree = "<group>";
+		};
+		31A35114B7F592351C4F3566 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1A9CC8EF1B91D606001DBC86 /* SystemConfiguration.framework */,
+				D3F65B08F642D2F6132D99F7 /* libPods.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		955914E81B8315670007D860 = {
@@ -120,6 +180,8 @@
 				955914F31B8315670007D860 /* Utinerary */,
 				9559150C1B8315670007D860 /* UtineraryTests */,
 				955914F21B8315670007D860 /* Products */,
+				036D6442F6A7D547DCBB5D9F /* Pods */,
+				31A35114B7F592351C4F3566 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -135,6 +197,7 @@
 		955914F31B8315670007D860 /* Utinerary */ = {
 			isa = PBXGroup;
 			children = (
+				1A9CC8EA1B91D425001DBC86 /* Flurry */,
 				956167931B8C44B3002F3B87 /* Service */,
 				1A07227C1B89BCD80047E82C /* Utils */,
 				9559151D1B8316860007D860 /* ViewController */,
@@ -153,6 +216,9 @@
 			isa = PBXGroup;
 			children = (
 				955914F51B8315670007D860 /* Info.plist */,
+				1A409FAC1B9167EF00971D96 /* test.h */,
+				1A409FAD1B9167EF00971D96 /* test.m */,
+				1A409FAB1B9167EF00971D96 /* Utinerary-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -177,9 +243,10 @@
 		9559151D1B8316860007D860 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				1A9CC8E71B91BC97001DBC86 /* NotificationViewController */,
 				1A0722771B87F4870047E82C /* MapView */,
 				955915201B8316C50007D860 /* BaseView */,
-				9559151F1B8316B00007D860 /* Itinerary */,
+				9559151F1B8316B00007D860 /* Add Itinerary */,
 				9559151E1B8316960007D860 /* ItineraryList */,
 			);
 			path = ViewController;
@@ -194,11 +261,12 @@
 			path = ItineraryList;
 			sourceTree = "<group>";
 		};
-		9559151F1B8316B00007D860 /* Itinerary */ = {
+		9559151F1B8316B00007D860 /* Add Itinerary */ = {
 			isa = PBXGroup;
 			children = (
 				955915271B831FD90007D860 /* ItineraryViewController.swift */,
 			);
+			name = "Add Itinerary";
 			path = Itinerary;
 			sourceTree = "<group>";
 		};
@@ -230,9 +298,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 955915131B8315670007D860 /* Build configuration list for PBXNativeTarget "Utinerary" */;
 			buildPhases = (
+				84D830B6A450D1510A0CF288 /* Check Pods Manifest.lock */,
 				955914ED1B8315670007D860 /* Sources */,
 				955914EE1B8315670007D860 /* Frameworks */,
 				955914EF1B8315670007D860 /* Resources */,
+				C825710AC00183A05C363BBF /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -319,6 +389,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		84D830B6A450D1510A0CF288 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C825710AC00183A05C363BBF /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		955914ED1B8315670007D860 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -334,11 +437,14 @@
 				95666C791B8D505E000C604A /* UserLocation.swift in Sources */,
 				955915261B831AF30007D860 /* ItineraryTableViewCell.swift in Sources */,
 				955914F71B8315670007D860 /* AppDelegate.swift in Sources */,
+				1A409FAE1B9167EF00971D96 /* test.m in Sources */,
 				956167991B8C4A6E002F3B87 /* SearchModelData.swift in Sources */,
 				955915281B831FD90007D860 /* ItineraryViewController.swift in Sources */,
 				9561679B1B8C4BD0002F3B87 /* SearchItem.swift in Sources */,
 				956167971B8C44D6002F3B87 /* UtineraryModelData.swift in Sources */,
+				1A409FB31B9168DA00971D96 /* Extensions.swift in Sources */,
 				9557A92A1B8C217A00144E79 /* SearchTableViewCell.swift in Sources */,
+				1A9CC8E91B91BCA8001DBC86 /* NotificationViewController.swift in Sources */,
 				956167951B8C44B3002F3B87 /* HTTPRequest.swift in Sources */,
 				955914FA1B8315670007D860 /* Utinerary.xcdatamodeld in Sources */,
 				1A0722791B87F4BB0047E82C /* MapViewController.swift in Sources */,
@@ -400,7 +506,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rickzon Hagos (4CUM23T45W)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -467,25 +573,40 @@
 		};
 		955915141B8315670007D860 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B783FF075100A2EEF482D7CA /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michelle Hagos (92C4S9B99K)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michelle Hagos (92C4S9B99K)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Utinerary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Utinerary/Flurry",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Utinerary/Utinerary-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		955915151B8315670007D860 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E5B1521FB82A5A9A4A6E0A19 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Utinerary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Utinerary/Flurry",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Utinerary/Utinerary-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -562,12 +683,19 @@
 		};
 		9559151A1B83157E0007D860 /* Adhoc */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E1D668224E6726C49D9EB6EF /* Pods.adhoc.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Utinerary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Utinerary/Flurry",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Utinerary/Utinerary-Bridging-Header.h";
 			};
 			name = Adhoc;
 		};
