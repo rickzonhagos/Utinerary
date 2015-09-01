@@ -69,7 +69,7 @@ class MapViewController: BaseViewController{
     
     // MARK: Map View
     private func initMapView(){
-        mapView.showsUserLocation = true
+        //mapView.showsUserLocation = true
         mapView.mapType = MKMapType.Standard
         mapView.zoomEnabled = true
         mapView.scrollEnabled = true
@@ -97,20 +97,23 @@ class MapViewController: BaseViewController{
             [unowned self](address, success) -> Void in
 
             if success {
-                self.createAnotationWithTitle(address, coordinate: location.coordinate, subTitle: nil, shouldZoom: true)
+                self.createAnotationWithTitle(address, coordinate: location.coordinate, subTitle: nil, shouldZoom: true , isSelectedAnnotation : true)
             }else {
-                self.createAnotationWithTitle(nil, coordinate: location.coordinate, subTitle: nil, shouldZoom: true)
+                self.createAnotationWithTitle(nil, coordinate: location.coordinate, subTitle: nil, shouldZoom: true , isSelectedAnnotation : true)
             }
             self.view.hideProgressIndicator()
         }
         
     }
     
-    func createAnotationWithTitle(title : String? , coordinate : CLLocationCoordinate2D! , subTitle : String?, shouldZoom : Bool){
+    func createAnotationWithTitle(title : String? , coordinate : CLLocationCoordinate2D! , subTitle : String?, shouldZoom : Bool ,isSelectedAnnotation : Bool){
         let anotation : MKAnnotation = LocationManager.createMapAnotationWithTitle(title, coordinate: coordinate , subTitle : subTitle)
         mapView.addAnnotation(anotation)
         
-        self.selectedAnotation = anotation
+        if isSelectedAnnotation {
+            self.selectedAnotation = anotation
+        }
+        
         
         
         mapView.selectAnnotation(anotation, animated: true)
@@ -121,7 +124,12 @@ class MapViewController: BaseViewController{
     }
     
     func zoomToLocation(location: CLLocationCoordinate2D){
+        let region = MKCoordinateRegion(center: location, span: MKCoordinateSpanMake(0.112872, 0.109863))
+        let  adjustedRegion : MKCoordinateRegion = self.mapView.regionThatFits(region)
+        
         mapView.centerCoordinate = location
+        self.mapView.setRegion(adjustedRegion, animated: true)
+  
     }
     
     func extractFullAddress(address : [NSObject : AnyObject]!)->String?{
@@ -226,7 +234,7 @@ extension MapViewController : UITableViewDelegate , UITableViewDataSource{
             
             let fullAddress = self.extractFullAddress(item.placemark.addressDictionary)
             
-            self.createAnotationWithTitle(item.name, coordinate: coords, subTitle: fullAddress, shouldZoom: true)
+            self.createAnotationWithTitle(item.name, coordinate: coords, subTitle: fullAddress, shouldZoom: true , isSelectedAnnotation : true)
             
             self.searchDisplayController?.searchResultsTableView.hidden = true
             self.searchDisplayController?.setActive(false, animated: true)
@@ -280,15 +288,31 @@ extension MapViewController : UISearchBarDelegate{
 }
 extension MapViewController : MKMapViewDelegate {
     func mapView(mapView: MKMapView!, didFailToLocateUserWithError : NSError!) {
-        
+        self.view.hideProgressIndicator()
     }
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
         
         self.view.hideProgressIndicator()
         
         self.userLocation = userLocation.coordinate
+        
+        /*
         let coords = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
         self.zoomToLocation(coords)
+*/
+        
+        let location : CLLocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+       
+        self.startGeoCodeWithLocationManager(self.locationManager, location: location) {
+            [unowned self](address, success) -> Void in
+            if success {
+                self.createAnotationWithTitle(address, coordinate: location.coordinate, subTitle: nil, shouldZoom: true , isSelectedAnnotation : false)
+            }else {
+                self.createAnotationWithTitle(nil, coordinate: location.coordinate, subTitle: nil, shouldZoom: true, isSelectedAnnotation : false)
+            }
+            self.zoomToLocation(self.userLocation!)
+            self.view.hideProgressIndicator()
+        }
     }
     
     func mapViewDidFinishLoadingMap(mapView: MKMapView!) {

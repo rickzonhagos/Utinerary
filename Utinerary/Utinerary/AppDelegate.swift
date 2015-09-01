@@ -144,7 +144,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             fetchRequest = NSFetchRequest(entityName: "Itinerary") as NSFetchRequest?{
             var error : NSError?
                 
-            
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAndTime", ascending: false)]
             if let fetchResult = context.executeFetchRequest(fetchRequest, error: &error) {
                 var items  = [[AnyObject]]()
                 
