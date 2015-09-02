@@ -274,24 +274,24 @@ extension MapViewController : UISearchBarDelegate{
   
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         let searchString = searchBar.text
-    
-        let region = MKCoordinateRegionMakeWithDistance(userLocation!,  120701,  120701)
-        
-        /*
-        let span = MKCoordinateSpan(latitudeDelta: 0.112872, longitudeDelta: 0.109863)
-        let region = MKCoordinateRegion(center: userLocation!, span: span)
-        */
-        mapView.setRegion(region, animated: true)
-    
-        
-        locationManager!.startLocationSearchWithSearchString(searchString, region: mapView.region) {
-            [unowned self](mapItems) -> (Void) in
+
+        if let location = userLocation {
+            let region = MKCoordinateRegionMakeWithDistance(userLocation!,  120701,  120701)
             
-            self.searchItems = mapItems
-            self.searchDisplayController?.searchResultsTableView.reloadData()
-            
+ 
+            mapView.setRegion(region, animated: true)
+
+            locationManager!.startLocationSearchWithSearchString(searchString, region: mapView.region) {
+                [unowned self](mapItems) -> (Void) in
+                
+                self.searchItems = mapItems
+                self.searchDisplayController?.searchResultsTableView.reloadData()
+                
+            }
+        }else{
+            //no User Location 
+            self.showAlertMessageWithAlertAction(nil, delegate: nil, message: Constant.CoreLocationMessage.UnknownLocation, title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel")
         }
-        
         searchBar.resignFirstResponder()
         searchBar.endEditing(true)
         

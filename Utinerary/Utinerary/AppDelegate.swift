@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         
-        Flurry.startSession("YKTM2HD2H7SPKY57BMWF")
+        Flurry.startSession(Constant.FlurryAPIKey)
         Flurry.setCrashReportingEnabled(true)
         registerNotification()
         

@@ -144,15 +144,15 @@ extension LocationManager : CLLocationManagerDelegate{
             switch(error.code){
                 case CLError.Denied.hashValue:
                     if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Denied {
-                        message = "User has denied access to Location Services. Please check your settings."
+                        message = Constant.CoreLocationMessage.AuthorizationPrivacySettingsDenied
                     }else{
-                        message = "Turn on Location Services in Settings to allow it to determine your location."
+                        message = Constant.CoreLocationMessage.LocationServiceIsTurnedOff
                     }
             
                 case CLError.LocationUnknown.hashValue:
-                    message = "Unable to determine current location"
+                    message = Constant.CoreLocationMessage.UnknownLocation
                 default:
-                    message = "Unable to determine current location"
+                    message = Constant.CoreLocationMessage.UnknownLocation
             }
             
             if let delegate = myDelegate {
