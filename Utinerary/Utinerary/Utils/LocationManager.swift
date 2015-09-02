@@ -12,6 +12,11 @@ import MapKit
 typealias GeoCodeCompletionHandler =  (address :  String?, success : Bool)->Void
 
 
+protocol LocationManagerDelete {
+    func didGetUserLocation(location : [AnyObject]!)
+    func didFailToGetLocationWithError(message : String!)
+}
+
 class LocationManager: NSObject {
     static let sharedInstance = LocationManager()
 
@@ -20,7 +25,7 @@ class LocationManager: NSObject {
     private  var geoCode : CLGeocoder!
     
     
-    
+    var myDelegate : LocationManagerDelete?
     
     
     private override init(){
@@ -41,12 +46,16 @@ class LocationManager: NSObject {
             locationManager.requestWhenInUseAuthorization()
         }
         
-        locationManager.startUpdatingLocation()
+        
         
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
+    
+    func startRetrieveLocation(){
+        locationManager.startUpdatingLocation()
+    }
     
     // MARK : Geo Code
     private func initGeoCoder(){
@@ -130,9 +139,32 @@ extension LocationManager : CLLocationManagerDelegate{
         }
     }
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        
+        if error.domain == kCLErrorDomain {
+            var message : String?
+            switch(error.code){
+                case CLError.Denied.hashValue:
+                    if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Denied {
+                        message = "User has denied access to Location Services. Please check your settings."
+                    }else{
+                        message = "Turn on Location Services in Settings to allow it to determine your location."
+                    }
+            
+                case CLError.LocationUnknown.hashValue:
+                    message = "Unable to determine current location"
+                default:
+                    message = "Unable to determine current location"
+            }
+            
+            if let delegate = myDelegate {
+                delegate.didFailToGetLocationWithError(message)
+            }
+        }
     }
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        if let delegate = myDelegate {
+            delegate.didGetUserLocation(locations)
+            self.locationManager.stopUpdatingLocation()
+        }
         
     }
 }

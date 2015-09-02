@@ -75,9 +75,12 @@ class BaseViewController: UIViewController {
     // MARK: Geo Code 
     func startGeoCodeWithLocationManager(manager : LocationManager! , location : CLLocation!,
         completionHandler : GeoCodeCompletionHandler){
+        
+            if let currentLocation = location{
+                self.view.showProgressIndicatorWithLoadingMessage()
+                manager!.startGeoCodeWithLocation(currentLocation, completionHandler:completionHandler)
+            }
             
-        self.view.showProgressIndicatorWithLoadingMessage()
-        manager!.startGeoCodeWithLocation(location, completionHandler:completionHandler)
     }
 }
 extension BaseViewController : MBProgressHUDDelegate {

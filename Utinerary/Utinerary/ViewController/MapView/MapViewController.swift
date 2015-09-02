@@ -48,7 +48,7 @@ class MapViewController: BaseViewController{
         // Do any additional setup after loading the view.
         
         locationManager = LocationManager.sharedInstance
-        
+        locationManager?.myDelegate = self
         
         initMapView()
         
@@ -58,6 +58,12 @@ class MapViewController: BaseViewController{
         
         
         self.view.showProgressIndicatorWithLoadingMessage(message: "Retrieving Location")
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        locationManager!.startRetrieveLocation()
         
     }
 
@@ -161,6 +167,12 @@ class MapViewController: BaseViewController{
     // MARK: Button Event
     
     @IBAction private func navigationButtonEvent(sender : UIBarButtonItem){
+        
+        if sender.tag == 1000 {
+            //This is Done Button
+            return
+        }
+        
         var location : CLLocation?
         if let anotations = selectedAnotation {
             
@@ -292,31 +304,36 @@ extension MapViewController : MKMapViewDelegate {
     }
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
         
-        self.view.hideProgressIndicator()
         
-        self.userLocation = userLocation.coordinate
-        
-        /*
-        let coords = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-        self.zoomToLocation(coords)
-*/
-        
-        let location : CLLocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-       
-        self.startGeoCodeWithLocationManager(self.locationManager, location: location) {
-            [unowned self](address, success) -> Void in
-            if success {
-                self.createAnotationWithTitle(address, coordinate: location.coordinate, subTitle: nil, shouldZoom: true , isSelectedAnnotation : false)
-            }else {
-                self.createAnotationWithTitle(nil, coordinate: location.coordinate, subTitle: nil, shouldZoom: true, isSelectedAnnotation : false)
-            }
-            self.zoomToLocation(self.userLocation!)
-            self.view.hideProgressIndicator()
-        }
     }
     
     func mapViewDidFinishLoadingMap(mapView: MKMapView!) {
         
     }
     
+}
+
+extension MapViewController : LocationManagerDelete{
+    func didFailToGetLocationWithError(message : String!) {
+        self.view.hideProgressIndicator()
+        self.showAlertMessageWithAlertAction(nil, delegate: nil, message: message, title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel")
+    }
+    func didGetUserLocation(location: [AnyObject]!) {
+       
+        if let locations: [AnyObject]  = location  , currentLocation = location.last as? CLLocation where location.count > 0 {
+            println(currentLocation)
+            self.userLocation = currentLocation.coordinate
+            self.startGeoCodeWithLocationManager(self.locationManager, location: currentLocation) {
+                [unowned self](address, success) -> Void in
+                if success {
+                    self.createAnotationWithTitle(address, coordinate: currentLocation.coordinate, subTitle: nil, shouldZoom: true , isSelectedAnnotation : false)
+                }else {
+                    self.createAnotationWithTitle(nil, coordinate: currentLocation.coordinate, subTitle: nil, shouldZoom: true, isSelectedAnnotation : false)
+                }
+                self.zoomToLocation(self.userLocation!)
+                self.view.hideProgressIndicator()
+            }
+        }
+        self.view.hideProgressIndicator()
+    }
 }
