@@ -10,7 +10,8 @@
         <scene sceneID="4Cc-R6-Apn">
             <objects>
                 <navigationController id="6UZ-6S-LVA" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="c40-XP-bWC">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="c40-XP-bWC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -49,27 +50,31 @@
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Omy-zZ-R2M" userLabel="Random Color">
                                                             <rect key="frame" x="0.0" y="0.0" width="11" height="80"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <color key="backgroundColor" red="1" green="0.83417751600000001" blue="0.29841405630000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="250" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="UIy-dp-zI7" userLabel="Date and Time">
                                                             <rect key="frame" x="16" y="5" width="574" height="20"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                            <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="P06-yN-7yf" userLabel="Destination">
-                                                            <rect key="frame" x="-59" y="-44" width="0.0" height="0.0"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                            <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="P06-yN-7yf" userLabel="Destination">
+                                                            <rect key="frame" x="16" y="30" width="574" height="50"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="P06-yN-7yf" secondAttribute="bottom" id="3qW-O7-Lvr"/>
+                                                        <constraint firstItem="P06-yN-7yf" firstAttribute="top" secondItem="UIy-dp-zI7" secondAttribute="top" constant="25" id="60A-C8-0Xw"/>
                                                         <constraint firstItem="Omy-zZ-R2M" firstAttribute="leading" secondItem="2Tm-4e-IVC" secondAttribute="leading" id="BZq-Y1-5al"/>
+                                                        <constraint firstItem="P06-yN-7yf" firstAttribute="leading" secondItem="UIy-dp-zI7" secondAttribute="leading" id="K5k-Yw-Agb"/>
                                                         <constraint firstItem="UIy-dp-zI7" firstAttribute="top" secondItem="2Tm-4e-IVC" secondAttribute="top" constant="5" id="OkX-OF-emg"/>
                                                         <constraint firstItem="UIy-dp-zI7" firstAttribute="height" secondItem="2Tm-4e-IVC" secondAttribute="height" multiplier="0.25" id="PJS-sc-lPF"/>
                                                         <constraint firstItem="Omy-zZ-R2M" firstAttribute="height" secondItem="2Tm-4e-IVC" secondAttribute="height" id="Uot-O2-gfW"/>
+                                                        <constraint firstItem="P06-yN-7yf" firstAttribute="width" secondItem="UIy-dp-zI7" secondAttribute="width" id="agH-r4-gil"/>
                                                         <constraint firstAttribute="trailing" secondItem="UIy-dp-zI7" secondAttribute="trailing" id="gxA-hW-T8Z"/>
                                                         <constraint firstAttribute="centerY" secondItem="Omy-zZ-R2M" secondAttribute="centerY" id="iiy-6Q-iz0"/>
                                                         <constraint firstItem="UIy-dp-zI7" firstAttribute="leading" secondItem="Omy-zZ-R2M" secondAttribute="trailing" constant="5" id="vbM-Sc-Sig"/>
@@ -93,6 +98,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isRoundedCorder" value="NO"/>
                                         </userDefinedRuntimeAttributes>
@@ -119,6 +125,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="PFr-mM-W46">
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="compose" id="Qkb-b1-qO5">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="goItineraryAction:" destination="6Xl-Ci-2PK" id="da4-Jb-26P"/>
                             </connections>

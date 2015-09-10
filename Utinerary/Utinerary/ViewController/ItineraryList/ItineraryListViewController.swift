@@ -20,8 +20,23 @@ class ItineraryListViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        self.listView.backgroundColor = UIColor.blackColor()
+    
+        self.title = "Schedules"
+        
+        var barShadow: NSShadow = NSShadow()
+        barShadow.shadowColor = UIColor.grayColor()
+        barShadow.shadowOffset = CGSize(width: 1, height: 2)
+
+        if let navFont = UIFont(name: "Gill Sans", size: 20.0) {
+            let navBarAttributesDictionary: [NSObject: AnyObject]? = [
+                NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSFontAttributeName: navFont,
+                NSShadowAttributeName: barShadow
+            ]
+            navigationController?.navigationBar.titleTextAttributes = navBarAttributesDictionary
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -80,7 +95,7 @@ class ItineraryListViewController: BaseViewController {
             if (key == "PASSED"){
                 title = "Passed Event"
             }else{
-                title = "Up Coming Event"
+                title = "Upcoming Event"
             }
             
             return (title : title , array : (myDict[key] as? [[AnyObject]])!)
@@ -111,7 +126,7 @@ extension ItineraryListViewController : UITableViewDelegate{
         
         let (title , _) = self.getItemsPer(section)!
         label.text  = title
-        label.textColor = UIColor.whiteColor()
+        label.textColor = UIColor.grayColor()
         label.font = UIFont.boldSystemFontOfSize(12)
         view.addSubview(label)
         label.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -133,8 +148,6 @@ extension ItineraryListViewController : UITableViewDataSource{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let cell : ItineraryTableViewCell = tableView.dequeueReusableCellWithIdentifier("ItineraryCellIdentifier") as! ItineraryTableViewCell
-        
-        
         return cell
         
     }

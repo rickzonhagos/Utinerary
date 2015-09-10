@@ -47,5 +47,8 @@ import UIKit
         
         dateAndTimeLbl.text = "\(date) \(time)"
         destinationLbl.text = destination
+        dateAndTimeLbl.textColor = UIColor.whiteColor()
+        destinationLbl.textColor = UIColor.grayColor()
+        holder.backgroundColor = UIColor(red: 34/255.0, green: 34/255.0, blue: 34/255.0, alpha: 1)
     }
 }
