@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-typealias GeoCodeCompletionHandler =  (address :  String?, success : Bool)->Void
+typealias GeoCodeCompletionHandler =  (address :  String?, success : Bool , placeMark : CLPlacemark?)->Void
 
 
 protocol LocationManagerDelete {
@@ -65,10 +65,10 @@ class LocationManager: NSObject {
     
     
     func startGeoCodeWithLocation(location : CLLocation , completionHandler : GeoCodeCompletionHandler){
-        geoCode.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+        geoCode.reverseGeocodeLocation(location, completionHandler: { (placemarks, error  ) -> Void in
             
             if error != nil {
-                completionHandler(address: nil, success: false)
+                completionHandler(address: nil, success: false , placeMark : nil )
             }
             
             if let pm = placemarks as? [CLPlacemark] where pm.count > 0 {
@@ -92,7 +92,7 @@ class LocationManager: NSObject {
                     fullAdress = fullAdress + " "+postalCode
                 }
                 
-                completionHandler(address: fullAdress, success: true)
+                completionHandler(address: fullAdress, success: true, placeMark : placeMark)
             }
         })
     }

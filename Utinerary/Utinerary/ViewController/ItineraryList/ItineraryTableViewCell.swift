@@ -8,15 +8,29 @@
 
 import UIKit
 
-class ItineraryTableViewCell: UITableViewCell {
+@IBDesignable class ItineraryTableViewCell: UITableViewCell {
 
     @IBOutlet private weak var dateAndTimeLbl: UILabel!
     @IBOutlet private weak var destinationLbl: UILabel!
     
+    @IBOutlet weak var holder: UIView!
+    
+    @IBInspectable var isRoundedCorder: Bool = false {
+        didSet {
+            /*
+            let layer = self.holder.layer
+            layer.cornerRadius = 5.0
+            layer.borderColor = UIColor.clearColor().CGColor
+            layer.borderWidth = 1.0
+            layer.masksToBounds = true
+*/ 
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -29,7 +43,9 @@ class ItineraryTableViewCell: UITableViewCell {
         
         let sharedInstance = UtinerarySharedInstance.sharedInstance
         
-        dateAndTimeLbl.text = sharedInstance.reformatDateToString(dateAndTime)
+        let (date , time ,day ) = sharedInstance.splitDate(dateAndTime)
+        
+        dateAndTimeLbl.text = "\(date) \(time)"
         destinationLbl.text = destination
     }
 }

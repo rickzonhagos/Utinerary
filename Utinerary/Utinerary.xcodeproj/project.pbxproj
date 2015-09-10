@@ -36,6 +36,7 @@
 		9561679B1B8C4BD0002F3B87 /* SearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9561679A1B8C4BD0002F3B87 /* SearchItem.swift */; };
 		95666C791B8D505E000C604A /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95666C781B8D505E000C604A /* UserLocation.swift */; };
 		959523801B8EB7610034DFCF /* Itinerary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9595237F1B8EB7610034DFCF /* Itinerary.swift */; };
+		95DEB6F91B96920E00B4DAA5 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DEB6F81B96920E00B4DAA5 /* Constant.swift */; };
 		967B95E72DCDFF6E8E7E4176 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F65B08F642D2F6132D99F7 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		9561679A1B8C4BD0002F3B87 /* SearchItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchItem.swift; sourceTree = "<group>"; };
 		95666C781B8D505E000C604A /* UserLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
 		9595237F1B8EB7610034DFCF /* Itinerary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Itinerary.swift; sourceTree = "<group>"; };
+		95DEB6F81B96920E00B4DAA5 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B783FF075100A2EEF482D7CA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D3F65B08F642D2F6132D99F7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1D668224E6726C49D9EB6EF /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				9561679A1B8C4BD0002F3B87 /* SearchItem.swift */,
 				95666C781B8D505E000C604A /* UserLocation.swift */,
 				9595237F1B8EB7610034DFCF /* Itinerary.swift */,
+				95DEB6F81B96920E00B4DAA5 /* Constant.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 		955914E91B8315670007D860 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = RHMH;
 				TargetAttributes = {
@@ -446,6 +450,7 @@
 				9557A92A1B8C217A00144E79 /* SearchTableViewCell.swift in Sources */,
 				1A9CC8E91B91BCA8001DBC86 /* NotificationViewController.swift in Sources */,
 				956167951B8C44B3002F3B87 /* HTTPRequest.swift in Sources */,
+				95DEB6F91B96920E00B4DAA5 /* Constant.swift in Sources */,
 				955914FA1B8315670007D860 /* Utinerary.xcdatamodeld in Sources */,
 				1A0722791B87F4BB0047E82C /* MapViewController.swift in Sources */,
 			);

@@ -17,8 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        
-        
+       
         
         Flurry.startSession(Constant.FlurryAPIKey)
         Flurry.setCrashReportingEnabled(true)
@@ -139,14 +138,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    func fetchItineraryList()->[[AnyObject]]?{
+    func fetchItineraryList()->[String : AnyObject]?{
         if let context : NSManagedObjectContext =  self.managedObjectContext,
             fetchRequest = NSFetchRequest(entityName: "Itinerary") as NSFetchRequest?{
             var error : NSError?
                 
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAndTime", ascending: false)]
             if let fetchResult = context.executeFetchRequest(fetchRequest, error: &error) {
-                var items  = [[AnyObject]]()
+                var items  = [String : AnyObject]()
+                
+                var passedItems = [[AnyObject]]()
+                var upComingItems = [[AnyObject]]()
                 
                 for  result in fetchResult {
                     if result is NSManagedObject {
@@ -165,9 +167,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 item.origin = origin 
                         }
                        
-                        item.dateAndTime = result.valueForKey("dateAndTime") as? NSDate
+                        if let dateAndTime = result.valueForKey("dateAndTime") as? NSDate {
+                            item.dateAndTime = dateAndTime
+                            
+                            
+                            if (dateAndTime.timeIntervalSinceNow < 0.0){
+                                //passed
+                                passedItems.append([item, result])
+                            }else{
+                                //
+                                upComingItems.append([item, result])
+                            }
+                        }
                         
-                        items.append([item, result])
+                        items["PASSED"] = passedItems
+                        items["UPCOMING"] = upComingItems
                         
                     }
                 }
@@ -228,7 +242,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                     item.origin = origin
                             }
                             
-                            item.dateAndTime = result.valueForKey("dateAndTime") as? NSDate
+                            
+                            if let dateAndTime = result.valueForKey("dateAndTime") as? NSDate {
+                                item.dateAndTime = dateAndTime
+                            }
+                            
                             completionHandler(success: true, item: item)
                         }
                     }
@@ -281,21 +299,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             bookToUber.activationMode = UIUserNotificationActivationMode.Foreground
             bookToUber.destructive = true
             
+            /*
             let view = UIMutableUserNotificationAction()
             view.identifier = LocationNotificationAction.View.rawValue
             view.title = "View"
             view.activationMode = UIUserNotificationActivationMode.Foreground
             view.destructive = true
-            
+            */
             
             let category = UIMutableUserNotificationCategory()
             category.identifier = categoryID
             
             // A. Set actions for the default context
-            category.setActions([bookToUber, view], forContext: UIUserNotificationActionContext.Default)
+            category.setActions([bookToUber], forContext: UIUserNotificationActionContext.Default)
             
             // B. Set actions for the minimal context
-            category.setActions([bookToUber, view],
+            category.setActions([bookToUber],
                 forContext: UIUserNotificationActionContext.Minimal)
             
             
@@ -349,7 +368,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Schedule the notification ********************************************
         let notification = UILocalNotification()
-        notification.alertBody = "Notification ;) \(notifID)"
+        notification.alertBody = "Notification ;) "
         notification.soundName = UILocalNotificationDefaultSoundName
         notification.fireDate = fireDate
         

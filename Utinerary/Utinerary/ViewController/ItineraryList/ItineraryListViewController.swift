@@ -12,7 +12,7 @@ class ItineraryListViewController: BaseViewController {
 
     @IBOutlet weak var listView: UITableView!
     
-    private var itineraryList : [[AnyObject]]?
+    private var itineraryList : [String : AnyObject]?
     
     // MARK:
     // MARK: Life Cycle
@@ -34,7 +34,7 @@ class ItineraryListViewController: BaseViewController {
     func fetchListAndReloadData(){
     
         self.itineraryList =  self.appDelegate!.fetchItineraryList()
-    
+        //self.appDelegate!.fetchItineraryList()
         listView.reloadData()
     }
     
@@ -49,10 +49,10 @@ class ItineraryListViewController: BaseViewController {
                 type = ItineraryActionType.ViewItinerary
                 
                 
-                let item = self.getItemByIndex(row)
+                //let item = self.getItemByIndex(row)
                 
                 
-                viewController.itineraryItem = (item.item, item.managedObject)
+                //viewController.itineraryItem = (item.item, item.managedObject)
             }
             
             viewController.itineraryAction = type
@@ -64,26 +64,69 @@ class ItineraryListViewController: BaseViewController {
         self.goToIteneraryPageWithRow(0,sender : sender)
         
     }
-    //
-    func getItemByIndex(row : Int)->(item : Itinerary , managedObject : NSManagedObject){
-
-        return (item : self.itineraryList![row][0] as! Itinerary , managedObject : self.itineraryList![row][1] as! NSManagedObject)
+    
+    func getItemByIndex(section : Int ,row : Int)->(item : Itinerary , managedObject : NSManagedObject){
+        let (_ , array) = getItemsPer(section)!
+        
+        
+        return (item : array[row][0] as! Itinerary , managedObject : array[row][1] as! NSManagedObject)
     }
     
+
+    func getItemsPer(section : Int)->(title : String , array : [[AnyObject]])?{
+        if let myDict = self.itineraryList{
+            var key : String = Array(myDict.keys)[section]
+            var title : String!
+            if (key == "PASSED"){
+                title = "Passed Event"
+            }else{
+                title = "Up Coming Event"
+            }
+            
+            return (title : title , array : (myDict[key] as? [[AnyObject]])!)
+        }
+        return nil
+    }
 }
 
 
 extension ItineraryListViewController : UITableViewDelegate{
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80.0;
+        return 100.0;
     }
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
         if let myCell = cell as? ItineraryTableViewCell {
             let row : Int = indexPath.row
-            let item = getItemByIndex(row)
+            let section : Int = indexPath.section
+            let item = getItemByIndex(section, row: row)
             myCell.setLabelValueForDateAndTime(item.item.dateAndTime, destination: item.item.destination?.stringAddress)
         }
+    }
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        var view = UIView() // The width will be the same as the cell, and the height should be set in tableView:heightForRowAtIndexPath:
+        view.backgroundColor = UIColor.darkTextColor()
+        
+        var label = UILabel()
+        
+        let (title , _) = self.getItemsPer(section)!
+        label.text  = title
+        label.textColor = UIColor.whiteColor()
+        label.font = UIFont.boldSystemFontOfSize(12)
+        view.addSubview(label)
+        label.setTranslatesAutoresizingMaskIntoConstraints(false)
+        let constraints : [String] = ["H:|-10-[label]-0-|","V:|-0-[label]-0-|"]
+        let views = ["label": label,"view": view]
+        
+        for constraint in constraints {
+            let layoutConstraints = NSLayoutConstraint.constraintsWithVisualFormat(constraint, options: NSLayoutFormatOptions.allZeros, metrics: nil, views: views)
+            view.addConstraints(layoutConstraints)
+        }
+        return view
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
     }
 }
 extension ItineraryListViewController : UITableViewDataSource{
@@ -103,11 +146,12 @@ extension ItineraryListViewController : UITableViewDataSource{
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let items = itineraryList {
-            return items.count
-        }
+            let (_ , array) = self.getItemsPer(section)!
+            return array.count
+        }   
         return 0;
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1;
+        return self.itineraryList!.count;
     }
 }

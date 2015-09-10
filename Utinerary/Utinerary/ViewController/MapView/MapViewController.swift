@@ -99,8 +99,8 @@ class MapViewController: BaseViewController{
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         
         
-        self.startGeoCodeWithLocationManager(locationManager!, location: location) {
-            [unowned self](address, success) -> Void in
+        self.startGeoCodeWithLocationManager(locationManager!, location: location!) {
+            [unowned self](address, success , placeMark) -> Void in
 
             if success {
                 self.createAnotationWithTitle(address, coordinate: location.coordinate, subTitle: nil, shouldZoom: true , isSelectedAnnotation : true)
@@ -170,6 +170,10 @@ class MapViewController: BaseViewController{
         
         if sender.tag == 1000 {
             //This is Done Button
+            self.dismissViewControllerAnimated(true, completion: {
+                [unowned self]() -> Void in
+                
+            })
             return
         }
         
@@ -187,12 +191,12 @@ class MapViewController: BaseViewController{
         
         
         self.startGeoCodeWithLocationManager(locationManager!, location: location!) {
-            [unowned self](address, success) -> Void in
+            [unowned self](address, success , placeMark) -> Void in
             var userDesiredLocation : UserLocation?
             if success {
-                userDesiredLocation  = UserLocation(address: address!, currentLocation: location!)
+                userDesiredLocation  = UserLocation(address: address!, currentLocation: location!, placeMark : placeMark)
             }else{
-                userDesiredLocation  = UserLocation(currentLocation: location!)
+                userDesiredLocation  = UserLocation(currentLocation: location!, placeMark : placeMark)
             }
             
             self.view.hideProgressIndicator()
@@ -324,7 +328,7 @@ extension MapViewController : LocationManagerDelete{
             println(currentLocation)
             self.userLocation = currentLocation.coordinate
             self.startGeoCodeWithLocationManager(self.locationManager, location: currentLocation) {
-                [unowned self](address, success) -> Void in
+                [unowned self](address, success , placeMark) -> Void in
                 if success {
                     self.createAnotationWithTitle(address, coordinate: currentLocation.coordinate, subTitle: nil, shouldZoom: true , isSelectedAnnotation : false)
                 }else {
