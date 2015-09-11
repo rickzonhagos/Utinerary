@@ -540,7 +540,7 @@
                                             <action selector="barButtonActions:" destination="AE7-Eb-wh1" eventType="touchUpInside" id="489-wJ-mHh"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZ9-1e-eBx">
+                                    <button opaque="NO" tag="2000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZ9-1e-eBx">
                                         <rect key="frame" x="210" y="12" width="210" height="30"/>
                                         <color key="backgroundColor" red="1" green="0.83417751600000001" blue="0.29841405630000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Book To Uber">
@@ -628,7 +628,9 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="destination" destination="b60-38-K0v" id="CYN-hw-wIf"/>
+                        <outlet property="doneButton" destination="C9u-xl-GbV" id="Zr7-Cm-jEd"/>
                         <outlet property="origin" destination="qIV-3i-Hcb" id="RGX-L5-wC0"/>
+                        <outlet property="uberButton" destination="XZ9-1e-eBx" id="P7e-oS-YXw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GJb-5s-hPc" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -22,6 +22,8 @@ class NotificationViewController: BaseViewController {
     
     @IBOutlet weak var origin: UILabel!
     @IBOutlet weak var destination: UILabel!
+    @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var uberButton: UIButton!
     
     
     var actionType : String?
@@ -30,7 +32,12 @@ class NotificationViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Utinerary Reminder"
         
+        doneButton.layer.cornerRadius = 5
+        doneButton.layer.masksToBounds = true
+        uberButton.layer.cornerRadius = 5
+        uberButton.layer.masksToBounds = true
         
         initNavItems()
         
@@ -69,9 +76,22 @@ class NotificationViewController: BaseViewController {
                 self.destination.text = itinerary.destination?.stringAddress
                 self.currentItinerary = itinerary
                 
-                //TextColor
+                //TextFormat
+                self.origin.font = Config.Theme.textDetail
                 self.origin.textColor = Config.Theme.textSubColor
+                self.origin.font = Config.Theme.textDetail
                 self.destination.textColor = Config.Theme.textSubColor
+                
+                //Background Color
+               // self.origin.backgroundColor = Config.Theme.tableCellBackground
+               // self.destination.backgroundColor = Config.Theme.tableCellBackground
+                
+                //Rounded Corner
+                self.origin.layer.cornerRadius = 10
+                self.origin.layer.masksToBounds = true
+                self.destination.layer.cornerRadius = 10
+                self.destination.layer.masksToBounds = true
+                
                 if let action = self.actionType where action == LocationNotificationAction.BookToUber.rawValue{
                     Utils.bookToUber(itinerary ,sender : self)
                 }

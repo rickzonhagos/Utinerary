@@ -93,9 +93,9 @@ class ItineraryListViewController: BaseViewController {
             var key : String = Array(myDict.keys)[section]
             var title : String!
             if (key == "PASSED"){
-                title = "Passed Event"
+                title = "PASSED EVENT"
             }else{
-                title = "Incoming Event"
+                title = "INCOMING EVENT"
             }
             
             return (title : title , array : (myDict[key] as? [[AnyObject]])!)
@@ -128,7 +128,7 @@ extension ItineraryListViewController : UITableViewDelegate{
         let (title , _) = self.getItemsPer(section)!
         label.text  = title
         label.textColor = UIColor.grayColor()
-        label.font = UIFont.boldSystemFontOfSize(12)
+        label.font = UIFont.boldSystemFontOfSize(14)
         view.addSubview(label)
         label.setTranslatesAutoresizingMaskIntoConstraints(false)
         let constraints : [String] = ["H:|-10-[label]-0-|","V:|-0-[label]-0-|"]

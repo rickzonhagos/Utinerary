@@ -25,18 +25,10 @@ struct Config {
         static let textMain = UIFont(name: "Helvetica-Bold", size:18.0)
         static let textSubBold = UIFont(name: "Helvetica-Bold", size:12.0)
         static let textSub = UIFont(name: "Helvetica", size:12.0)
+        static let textDetail = UIFont(name: "Helvetica", size:14.0)
         static let textNavBar = UIFont(name: "Gill Sans", size: 20.0)
         static let cellDescFont = UIFont(name: "Helvetica", size: 14.0)
-        static let cellMonthFont = UIFont(name: "GillSans", size: 10.0)
-        static let cellDateFont = UIFont(name: "GillSans-Bold", size: 12.0)
         
     }
     
-    struct CVCell {
-        
-        // Buttons
-        static let cellDefaultWidth =  140
-        static let cellDefaultHeight = 180
-        
-    }
 }
