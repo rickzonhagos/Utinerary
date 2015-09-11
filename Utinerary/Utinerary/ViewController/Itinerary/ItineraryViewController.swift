@@ -37,6 +37,10 @@ class ItineraryViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = Config.appTitle
+        self.navigationController?.navigationBar.topItem?.title = ""
+    
+        //navigationItem.leftBarButtonItem?.title = "";
         
         if let datePicker = self.getDatePicker(){
             datePicker.timeZone = NSTimeZone(name: "Asia/Manila")
@@ -232,7 +236,8 @@ extension ItineraryViewController : MapViewControllerDelegate{
         if let cell = self.getCellByRow(locationType.rawValue),
             label = cell.viewWithTag(1) as? UILabel {
            label.text = user.stringAddress
-                
+            label.textColor = Config.Theme.textSubColor
+            label.font = Config.Theme.cellDescFont
                 if locationType == LocationType.Origin{
                     self.originLocation = user
                 }else{
@@ -254,7 +259,7 @@ extension ItineraryViewController : UITableViewDelegate {
         let row : NSInteger = indexPath.row
         
         if row == 0 || row == 1 {
-            return 70
+            return 100
         }else{
             return 200
         }
@@ -296,7 +301,10 @@ extension ItineraryViewController : UITableViewDataSource{
         }else{
             cell = tableView.dequeueReusableCellWithIdentifier("DateAndTimeViewCellIdentifier") as? UITableViewCell
         }
-        
+        cell?.viewWithTag(2)?.backgroundColor = Config.Theme.tableCellBackground
+        cell?.viewWithTag(2)?.layer.cornerRadius = 10
+        cell?.viewWithTag(2)?.layer.masksToBounds = true
+        //cell?.viewWithTag(2)?.roundCorners(.TopRight | .BottomRight, radius: 10)
         return cell!
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -320,5 +328,14 @@ extension ItineraryViewController : UIAlertViewDelegate{
             self.navigationController?.popToRootViewControllerAnimated(true)
         }
         
+    }
+}
+
+extension UIView {
+    func roundCorners(corners:UIRectCorner, radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.CGPath
+        self.layer.mask = mask
     }
 }

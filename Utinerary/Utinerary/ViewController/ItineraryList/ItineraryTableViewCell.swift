@@ -12,6 +12,8 @@ import UIKit
 
     @IBOutlet private weak var dateAndTimeLbl: UILabel!
     @IBOutlet private weak var destinationLbl: UILabel!
+    @IBOutlet weak var randomView: UIView!
+    //@IBOutlet weak var itineraryDetails: UITextView!
     
     @IBOutlet weak var holder: UIView!
     
@@ -39,16 +41,43 @@ import UIKit
         // Configure the view for the selected state
     }
     
-    func setLabelValueForDateAndTime(dateAndTime : NSDate!, destination: String!){
+    func randomColor() -> UIColor{
+        
+        var randomRed:CGFloat = CGFloat(drand48())
+        var randomGreen:CGFloat = CGFloat(drand48())
+        var randomBlue:CGFloat = CGFloat(drand48())
+        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+        
+    }
+    
+    func setLabelValueForDateAndTime(dateAndTime : NSDate!, origin: String!, destination: String!){
         
         let sharedInstance = UtinerarySharedInstance.sharedInstance
         
         let (date , time ,day ) = sharedInstance.splitDate(dateAndTime)
         
         dateAndTimeLbl.text = "\(date) \(time)"
-        destinationLbl.text = destination
-        dateAndTimeLbl.textColor = UIColor.whiteColor()
-        destinationLbl.textColor = UIColor.grayColor()
-        holder.backgroundColor = UIColor(red: 34/255.0, green: 34/255.0, blue: 34/255.0, alpha: 1)
+        
+        let subTitleAttributes = [NSFontAttributeName : Config.Theme.textSubBold!, NSForegroundColorAttributeName : Config.Theme.hightlightTextColor]
+        let subTitleDetails = [NSFontAttributeName : Config.Theme.textSub!, NSForegroundColorAttributeName : Config.Theme.textSubColor]
+        
+        let mutableAttributedString = NSMutableAttributedString()
+        var attributedFromString = NSAttributedString(string: "FROM :", attributes: subTitleAttributes as [NSObject : AnyObject])
+        mutableAttributedString.appendAttributedString(attributedFromString)
+        var attributedFromAddressString = NSAttributedString(string: origin, attributes: subTitleDetails as [NSObject : AnyObject])
+        mutableAttributedString.appendAttributedString(attributedFromAddressString)
+        var attributedToString = NSAttributedString(string: "\nTO :", attributes: subTitleAttributes as [NSObject : AnyObject])
+        mutableAttributedString.appendAttributedString(attributedToString)
+        var attributedToAddressString = NSAttributedString(string: destination, attributes: subTitleDetails as [NSObject : AnyObject])
+        mutableAttributedString.appendAttributedString(attributedToAddressString)
+        
+        
+        destinationLbl.attributedText = mutableAttributedString
+        dateAndTimeLbl.textColor = Config.Theme.textMainColor
+        dateAndTimeLbl.font = Config.Theme.textMain
+        holder.backgroundColor = Config.Theme.tableCellBackground
+        //let randomColor = RandomColor()
+       // var theColor = randomColor.randomColor()
+        randomView.backgroundColor = randomColor()
     }
 }

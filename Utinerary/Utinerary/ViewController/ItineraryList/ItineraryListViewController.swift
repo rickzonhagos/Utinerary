@@ -23,13 +23,13 @@ class ItineraryListViewController: BaseViewController {
         // Do any additional setup after loading the view.
         self.listView.backgroundColor = UIColor.blackColor()
     
-        self.title = "Schedules"
+        self.title = Config.appTitle
         
         var barShadow: NSShadow = NSShadow()
         barShadow.shadowColor = UIColor.grayColor()
         barShadow.shadowOffset = CGSize(width: 1, height: 2)
 
-        if let navFont = UIFont(name: "Gill Sans", size: 20.0) {
+        if let navFont = Config.Theme.textNavBar {
             let navBarAttributesDictionary: [NSObject: AnyObject]? = [
                 NSForegroundColorAttributeName: UIColor.whiteColor(),
                 NSFontAttributeName: navFont,
@@ -115,7 +115,8 @@ extension ItineraryListViewController : UITableViewDelegate{
             let row : Int = indexPath.row
             let section : Int = indexPath.section
             let item = getItemByIndex(section, row: row)
-            myCell.setLabelValueForDateAndTime(item.item.dateAndTime, destination: item.item.destination?.stringAddress)
+
+            myCell.setLabelValueForDateAndTime(item.item.dateAndTime, origin: item.item.origin?.stringAddress, destination: item.item.destination?.stringAddress)
         }
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
