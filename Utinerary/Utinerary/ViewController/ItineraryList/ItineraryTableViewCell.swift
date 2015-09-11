@@ -17,6 +17,15 @@ import UIKit
     
     @IBOutlet weak var holder: UIView!
     
+    private var randomColor : UIColor {
+        get{
+            var randomRed:CGFloat = CGFloat(drand48())
+            var randomGreen:CGFloat = CGFloat(drand48())
+            var randomBlue:CGFloat = CGFloat(drand48())
+            return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+        }
+    }
+    
     @IBInspectable var isRoundedCorder: Bool = false {
         didSet {
             /*
@@ -32,7 +41,9 @@ import UIKit
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
+        //let randomColor = RandomColor()
+        // var theColor = randomColor.randomColor()
+        randomView.backgroundColor = randomColor
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -41,15 +52,7 @@ import UIKit
         // Configure the view for the selected state
     }
     
-    func randomColor() -> UIColor{
-        
-        var randomRed:CGFloat = CGFloat(drand48())
-        var randomGreen:CGFloat = CGFloat(drand48())
-        var randomBlue:CGFloat = CGFloat(drand48())
-        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
-        
-    }
-    
+  
     func setLabelValueForDateAndTime(dateAndTime : NSDate!, origin: String!, destination: String!){
         
         let sharedInstance = UtinerarySharedInstance.sharedInstance
@@ -62,11 +65,11 @@ import UIKit
         let subTitleDetails = [NSFontAttributeName : Config.Theme.textSub!, NSForegroundColorAttributeName : Config.Theme.textSubColor]
         
         let mutableAttributedString = NSMutableAttributedString()
-        var attributedFromString = NSAttributedString(string: "FROM :", attributes: subTitleAttributes as [NSObject : AnyObject])
+        var attributedFromString = NSAttributedString(string: "FROM : ", attributes: subTitleAttributes as [NSObject : AnyObject])
         mutableAttributedString.appendAttributedString(attributedFromString)
         var attributedFromAddressString = NSAttributedString(string: origin, attributes: subTitleDetails as [NSObject : AnyObject])
         mutableAttributedString.appendAttributedString(attributedFromAddressString)
-        var attributedToString = NSAttributedString(string: "\nTO :", attributes: subTitleAttributes as [NSObject : AnyObject])
+        var attributedToString = NSAttributedString(string: "\nTO : ", attributes: subTitleAttributes as [NSObject : AnyObject])
         mutableAttributedString.appendAttributedString(attributedToString)
         var attributedToAddressString = NSAttributedString(string: destination, attributes: subTitleDetails as [NSObject : AnyObject])
         mutableAttributedString.appendAttributedString(attributedToAddressString)
@@ -76,8 +79,6 @@ import UIKit
         dateAndTimeLbl.textColor = Config.Theme.textMainColor
         dateAndTimeLbl.font = Config.Theme.textMain
         holder.backgroundColor = Config.Theme.tableCellBackground
-        //let randomColor = RandomColor()
-       // var theColor = randomColor.randomColor()
-        randomView.backgroundColor = randomColor()
+   
     }
 }

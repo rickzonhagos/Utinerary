@@ -267,7 +267,7 @@
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DateAndTimeViewCellIdentifier" rowHeight="200" id="6xV-vN-3E1">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6xV-vN-3E1" id="OJf-K7-Nnl">
+                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6xV-vN-3E1" id="OJf-K7-Nnl">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Date And Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bd3-s7-74t">
@@ -276,25 +276,44 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <datePicker tag="3000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="p8b-Dx-144">
-                                                    <rect key="frame" x="10" y="31" width="580" height="162"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <date key="date" timeIntervalSinceReferenceDate="461892799.57854801">
-                                                        <!--2015-08-21 23:33:19 +0000-->
-                                                    </date>
-                                                    <date key="maximumDate" timeIntervalSinceReferenceDate="1167562800">
-                                                        <!--2037-12-31 11:00:00 +0000-->
-                                                    </date>
-                                                </datePicker>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cvi-eX-GEP">
+                                                    <rect key="frame" x="10" y="29" width="580" height="166"/>
+                                                    <subviews>
+                                                        <datePicker tag="3000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="p8b-Dx-144">
+                                                            <rect key="frame" x="0.0" y="2" width="580" height="162"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <date key="date" timeIntervalSinceReferenceDate="461892799.57854801">
+                                                                <!--2015-08-21 23:33:19 +0000-->
+                                                            </date>
+                                                            <date key="maximumDate" timeIntervalSinceReferenceDate="1167562800">
+                                                                <!--2037-12-31 11:00:00 +0000-->
+                                                            </date>
+                                                        </datePicker>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="300" id="4LM-J5-Dx6"/>
+                                                        <constraint firstAttribute="centerY" secondItem="p8b-Dx-144" secondAttribute="centerY" id="7Cw-ef-GYX"/>
+                                                        <constraint firstItem="p8b-Dx-144" firstAttribute="width" secondItem="cvi-eX-GEP" secondAttribute="width" id="avi-T9-G06"/>
+                                                        <constraint firstItem="p8b-Dx-144" firstAttribute="height" secondItem="cvi-eX-GEP" secondAttribute="height" id="kIk-Zg-f0u"/>
+                                                        <constraint firstAttribute="centerX" secondItem="p8b-Dx-144" secondAttribute="centerX" id="oWH-ql-OlB"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="4LM-J5-Dx6"/>
+                                                        </mask>
+                                                    </variation>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstItem="p8b-Dx-144" firstAttribute="leading" secondItem="OJf-K7-Nnl" secondAttribute="leading" constant="10" id="21r-uh-tnW"/>
+                                                <constraint firstAttribute="bottom" secondItem="cvi-eX-GEP" secondAttribute="bottom" constant="5" id="A6P-m0-PJt"/>
+                                                <constraint firstAttribute="trailing" secondItem="cvi-eX-GEP" secondAttribute="trailing" constant="10" id="Adx-1S-fez"/>
                                                 <constraint firstItem="Bd3-s7-74t" firstAttribute="top" secondItem="OJf-K7-Nnl" secondAttribute="top" constant="5" id="Hky-Vl-ZWz"/>
-                                                <constraint firstItem="p8b-Dx-144" firstAttribute="top" secondItem="Bd3-s7-74t" secondAttribute="bottom" constant="5" id="MJ4-cJ-56d"/>
+                                                <constraint firstItem="cvi-eX-GEP" firstAttribute="leading" secondItem="OJf-K7-Nnl" secondAttribute="leading" constant="10" id="IhO-2F-GNh"/>
                                                 <constraint firstItem="Bd3-s7-74t" firstAttribute="leading" secondItem="OJf-K7-Nnl" secondAttribute="leading" constant="10" id="WXZ-2j-3bS"/>
-                                                <constraint firstAttribute="trailing" secondItem="p8b-Dx-144" secondAttribute="trailing" constant="10" id="drB-4Q-GRb"/>
-                                                <constraint firstAttribute="bottom" secondItem="p8b-Dx-144" secondAttribute="bottom" constant="5" id="kMr-Yu-30I"/>
+                                                <constraint firstItem="cvi-eX-GEP" firstAttribute="top" secondItem="Bd3-s7-74t" secondAttribute="bottom" constant="5" id="Wpx-dn-qNC"/>
                                                 <constraint firstAttribute="trailing" secondItem="Bd3-s7-74t" secondAttribute="trailing" constant="10" id="paC-rS-fL5"/>
                                             </constraints>
                                         </tableViewCellContentView>

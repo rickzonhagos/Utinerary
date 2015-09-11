@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Utinerary/ViewController/ItineraryList/ItineraryListViewController.swift"
-            timestampString = "463551341.831786"
+            timestampString = "463551349.806386"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
-            landmarkName = "tableView(_:willDisplayCell:forRowAtIndexPath:)"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "goToIteneraryPageWithRow(_:row:sender:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Utinerary/ViewController/ItineraryList/ItineraryListViewController.swift"
-            timestampString = "463551349.806386"
+            timestampString = "463640641.747272"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
-            landmarkName = "getItemByIndex(_:row:)"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "goItineraryAction(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

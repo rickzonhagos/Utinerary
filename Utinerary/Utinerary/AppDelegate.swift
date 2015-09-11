@@ -180,8 +180,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             }
                         }
                         
+                        items["INCOMING"] = upComingItems
                         items["PASSED"] = passedItems
-                        items["UPCOMING"] = upComingItems
                         
                     }
                 }

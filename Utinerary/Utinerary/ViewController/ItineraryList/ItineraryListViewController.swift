@@ -53,7 +53,7 @@ class ItineraryListViewController: BaseViewController {
         listView.reloadData()
     }
     
-    func goToIteneraryPageWithRow(row : Int , sender : AnyObject? ){
+    func goToIteneraryPageWithRow(section : Int , row : Int , sender : AnyObject? ){
         if let viewController = self.getViewController("ItineraryViewController") as? ItineraryViewController  {
             var  type : ItineraryActionType?
             if let button : UIBarButtonItem = sender as? UIBarButtonItem {
@@ -64,10 +64,10 @@ class ItineraryListViewController: BaseViewController {
                 type = ItineraryActionType.ViewItinerary
                 
                 
-                //let item = self.getItemByIndex(row)
+                let item = self.getItemByIndex(section, row: row)
                 
                 
-                //viewController.itineraryItem = (item.item, item.managedObject)
+                viewController.itineraryItem = (item.item, item.managedObject)
             }
             
             viewController.itineraryAction = type
@@ -76,7 +76,7 @@ class ItineraryListViewController: BaseViewController {
     }
     
     @IBAction func goItineraryAction(sender : AnyObject?){
-        self.goToIteneraryPageWithRow(0,sender : sender)
+        self.goToIteneraryPageWithRow(0, row : 0,sender : sender)
         
     }
     
@@ -95,7 +95,7 @@ class ItineraryListViewController: BaseViewController {
             if (key == "PASSED"){
                 title = "Passed Event"
             }else{
-                title = "Upcoming Event"
+                title = "Incoming Event"
             }
             
             return (title : title , array : (myDict[key] as? [[AnyObject]])!)
@@ -154,8 +154,9 @@ extension ItineraryListViewController : UITableViewDataSource{
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let row : Int = indexPath.row
-
-        self.goToIteneraryPageWithRow(row, sender: nil)
+        let section : Int = indexPath.section;
+        
+        self.goToIteneraryPageWithRow(section , row : row, sender: nil)
       
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
