@@ -69,6 +69,9 @@ class NotificationViewController: BaseViewController {
                 self.destination.text = itinerary.destination?.stringAddress
                 self.currentItinerary = itinerary
                 
+                //TextColor
+                self.origin.textColor = Config.Theme.textSubColor
+                self.destination.textColor = Config.Theme.textSubColor
                 if let action = self.actionType where action == LocationNotificationAction.BookToUber.rawValue{
                     Utils.bookToUber(itinerary ,sender : self)
                 }
