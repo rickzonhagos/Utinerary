@@ -94,6 +94,7 @@ class NotificationViewController: BaseViewController {
                 
                 let fromStr = itinerary.origin?.stringAddress
                 let toStr = itinerary.destination?.stringAddress
+                let dateAndTime = itinerary.dateAndTime
                 
                 self.currentItinerary = itinerary
                 
@@ -112,6 +113,16 @@ class NotificationViewController: BaseViewController {
                 
                 self.routeLabel.attributedText = mutableAttributedString
                 
+                
+                let sharedInstance = UtinerarySharedInstance.sharedInstance
+                let (date , time ,dayName , shortDate , monthShort ) = sharedInstance.splitDate(dateAndTime)
+                //self.dateLabel.text = dateShort
+                //dayLabel.text = day
+                self.timeLabel.text = "\(dayName) \(time)"
+                self.dayLabel.text = "\(monthShort)"
+                self.dateLabel.text = "\(shortDate)"
+                
+
                 if let action = self.actionType where action == LocationNotificationAction.BookToUber.rawValue{
                     Utils.bookToUber(itinerary ,sender : self)
                 }

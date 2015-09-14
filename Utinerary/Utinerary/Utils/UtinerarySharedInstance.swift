@@ -16,7 +16,10 @@ class UtinerarySharedInstance: NSObject {
     
     var dateOnly : NSDateFormatter!
     var timeOnly : NSDateFormatter!
-    var dayOnly : NSDateFormatter!
+    var dayName : NSDateFormatter!
+    
+    var monthShort : NSDateFormatter!
+    var dateShort : NSDateFormatter!
     private override init(){
         super.init()
         
@@ -32,8 +35,16 @@ class UtinerarySharedInstance: NSObject {
         self.timeOnly = NSDateFormatter()
         timeOnly.timeStyle = NSDateFormatterStyle.ShortStyle
         
-        self.dayOnly = NSDateFormatter()
-        dayOnly.dateFormat = "EEE"
+        self.dayName = NSDateFormatter()
+        dayName.dateFormat = "EEEE"
+        
+        
+        self.monthShort = NSDateFormatter()
+        monthShort.dateFormat = "MMM"
+        
+        
+        self.dateShort = NSDateFormatter()
+        dateShort.dateFormat = "dd"
         
     }
     
@@ -43,15 +54,18 @@ class UtinerarySharedInstance: NSObject {
         return dateFormaterToString!.stringFromDate(date)
     }
     
-    func splitDate(date : NSDate!)->(date : NSString! , time : NSString! , day : NSString!)!{
+    func splitDate(date : NSDate!)->(date : NSString! , time : NSString! , dayName : NSString!,shortDate : NSString! , monthShort : NSString!)!{
         
         let shortDate : String = dateOnly.stringFromDate(date)
         
         let time : String = timeOnly.stringFromDate(date)
         
-        let day : String = dayOnly.stringFromDate(date)
+        let resultDayName : String = dayName.stringFromDate(date)
         
-        return (date : shortDate , time : time , day : day)
+        let resultShortMonth : String = monthShort.stringFromDate(date)
+        let resultShortDate : String = dateShort.stringFromDate(date)
+        
+        return (date : shortDate , time : time , dayName : resultDayName, shortDate : resultShortDate , monthShort : resultShortMonth )
     }
     
     func reformatDateString(date : String!)->NSDate{

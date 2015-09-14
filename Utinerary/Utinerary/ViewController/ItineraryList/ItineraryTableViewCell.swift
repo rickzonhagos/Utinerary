@@ -57,7 +57,7 @@ import UIKit
         
         let sharedInstance = UtinerarySharedInstance.sharedInstance
         
-        let (date , time ,day ) = sharedInstance.splitDate(dateAndTime)
+        let (date , time ,day , _ , _ ) = sharedInstance.splitDate(dateAndTime)
         
         dateAndTimeLbl.text = "\(date) \(time)"
         
