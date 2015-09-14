@@ -28,6 +28,10 @@ struct Config {
         static let textDetail = UIFont(name: "Helvetica", size:14.0)
         static let textNavBar = UIFont(name: "Gill Sans", size: 20.0)
         static let cellDescFont = UIFont(name: "Helvetica", size: 14.0)
+        static let routeTitle = UIFont(name: "Helvetica-Bold", size:13.0)
+        static let routeValue = UIFont(name: "Helvetica-Bold", size:15.0)
+
+        
         
     }
     

@@ -12,7 +12,11 @@ import MapKit
 typealias GeoCodeCompletionHandler =  (address :  String?, success : Bool , placeMark : CLPlacemark?)->Void
 
 
+<<<<<<< HEAD
 protocol LocationManagerDelete : class {
+=======
+protocol LocationManagerDelete: NSObjectProtocol {
+>>>>>>> origin/master
     func didGetUserLocation(location : [AnyObject]!)
     func didFailToGetLocationWithError(message : String!)
 }
