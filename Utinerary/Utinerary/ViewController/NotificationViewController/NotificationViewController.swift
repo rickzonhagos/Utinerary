@@ -20,10 +20,18 @@ enum LocationNotificationAction:String{
 class NotificationViewController: BaseViewController {
     var notifID : String?
     
-    @IBOutlet weak var origin: UILabel!
-    @IBOutlet weak var destination: UILabel!
+   // @IBOutlet weak var origin: UILabel!
+   // @IBOutlet weak var destination: UILabel!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var uberButton: UIButton!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var routeLabel: UILabel!
+    @IBOutlet weak var notificationView: UIView!
+    @IBOutlet weak var dateDayView: UIView!
+    @IBOutlet weak var originDestinationView: UIView!
+
     
     
     var actionType : String?
@@ -39,13 +47,28 @@ class NotificationViewController: BaseViewController {
         uberButton.layer.cornerRadius = 5
         uberButton.layer.masksToBounds = true
         
-        initNavItems()
-        
+        //initNavItems()
+        formatView()
         getNotificationDetail()
         
     
     }
     
+    func formatView(){
+        notificationView.layer.cornerRadius = 10
+        notificationView.layer.masksToBounds = true
+        notificationView.backgroundColor = Config.Theme.tableCellBackground
+        
+        dateDayView.layer.cornerRadius = dateDayView.frame.size.width/2
+        dateDayView.layer.masksToBounds = true
+        
+        var border = CALayer()
+        border.backgroundColor = UIColor.grayColor().CGColor
+        border.frame = CGRect(x: 0, y: 0, width: originDestinationView.frame.width, height: 0.5)
+        
+        originDestinationView.layer.addSublayer(border)
+        
+    }
     func initNavItems(){
         self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "barButtonActions:")
         self.navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Book To Uber", style: UIBarButtonItemStyle.Bordered, target: self, action: "barButtonActions:")
@@ -72,25 +95,28 @@ class NotificationViewController: BaseViewController {
             self.view.hideProgressIndicator()
             
             if let itinerary = item{
-                self.origin.text =  itinerary.origin?.stringAddress
-                self.destination.text = itinerary.destination?.stringAddress
+               // self.origin.text =  itinerary.origin?.stringAddress
+              //  self.destination.text = itinerary.destination?.stringAddress
+                
+                let fromStr = itinerary.origin?.stringAddress
+                let toStr = itinerary.destination?.stringAddress
+                
                 self.currentItinerary = itinerary
                 
-                //TextFormat
-                self.origin.font = Config.Theme.textDetail
-                self.origin.textColor = Config.Theme.textSubColor
-                self.origin.font = Config.Theme.textDetail
-                self.destination.textColor = Config.Theme.textSubColor
+                let titleAttributes = [NSFontAttributeName : Config.Theme.routeTitle!, NSForegroundColorAttributeName : Config.Theme.hightlightTextColor]
+                let valueAttributes = [NSFontAttributeName : Config.Theme.routeValue!, NSForegroundColorAttributeName : Config.Theme.textSubColor]
                 
-                //Background Color
-               // self.origin.backgroundColor = Config.Theme.tableCellBackground
-               // self.destination.backgroundColor = Config.Theme.tableCellBackground
+                let mutableAttributedString = NSMutableAttributedString()
+                var attributedFromString = NSAttributedString(string: "ORIGIN : ", attributes: titleAttributes as [NSObject : AnyObject])
+                mutableAttributedString.appendAttributedString(attributedFromString)
+                var attributedFromAddressString = NSAttributedString(string: fromStr!, attributes: valueAttributes as [NSObject : AnyObject])
+                mutableAttributedString.appendAttributedString(attributedFromAddressString)
+                var attributedToString = NSAttributedString(string: "\n\nDESTINATION : ", attributes: titleAttributes as [NSObject : AnyObject])
+                mutableAttributedString.appendAttributedString(attributedToString)
+                var attributedToAddressString = NSAttributedString(string: toStr!, attributes: valueAttributes as [NSObject : AnyObject])
+                mutableAttributedString.appendAttributedString(attributedToAddressString)
                 
-                //Rounded Corner
-                self.origin.layer.cornerRadius = 10
-                self.origin.layer.masksToBounds = true
-                self.destination.layer.cornerRadius = 10
-                self.destination.layer.masksToBounds = true
+                self.routeLabel.attributedText = mutableAttributedString
                 
                 if let action = self.actionType where action == LocationNotificationAction.BookToUber.rawValue{
                     Utils.bookToUber(itinerary ,sender : self)

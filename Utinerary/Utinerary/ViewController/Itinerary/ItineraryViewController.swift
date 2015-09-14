@@ -301,10 +301,12 @@ extension ItineraryViewController : UITableViewDataSource{
         }else{
             cell = tableView.dequeueReusableCellWithIdentifier("DateAndTimeViewCellIdentifier") as? UITableViewCell
         }
+        
+        
         cell?.viewWithTag(2)?.backgroundColor = Config.Theme.tableCellBackground
         cell?.viewWithTag(2)?.layer.cornerRadius = 10
         cell?.viewWithTag(2)?.layer.masksToBounds = true
-        //cell?.viewWithTag(2)?.roundCorners(.TopRight | .BottomRight, radius: 10)
+    
         return cell!
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -328,14 +330,5 @@ extension ItineraryViewController : UIAlertViewDelegate{
             self.navigationController?.popToRootViewControllerAnimated(true)
         }
         
-    }
-}
-
-extension UIView {
-    func roundCorners(corners:UIRectCorner, radius: CGFloat) {
-        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        let mask = CAShapeLayer()
-        mask.path = path.CGPath
-        self.layer.mask = mask
     }
 }
