@@ -16,7 +16,7 @@ enum LocationType : Int{
     case Destination = 1
 }
 
-protocol MapViewControllerDelegate {
+protocol MapViewControllerDelegate : class{
     func didFinishWithUserLocation(user : UserLocation! , locationType : LocationType)
 }
 
@@ -41,7 +41,7 @@ class MapViewController: BaseViewController{
     
     
     
-     var myDelegate : MapViewControllerDelegate?
+    weak var myDelegate : MapViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,7 +113,8 @@ class MapViewController: BaseViewController{
     }
     
     func createAnotationWithTitle(title : String? , coordinate : CLLocationCoordinate2D! , subTitle : String?, shouldZoom : Bool ,isSelectedAnnotation : Bool){
-        let anotation : MKAnnotation = LocationManager.createMapAnotationWithTitle(title, coordinate: coordinate , subTitle : subTitle)
+        
+        let anotation : MKAnnotation = Utils.createMapAnotationWithTitle(title, coordinate: coordinate , subTitle : subTitle)
         mapView.addAnnotation(anotation)
         
         if isSelectedAnnotation {
@@ -323,7 +324,7 @@ extension MapViewController : LocationManagerDelete{
         self.showAlertMessageWithAlertAction(nil, delegate: nil, message: message, title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel")
     }
     func didGetUserLocation(location: [AnyObject]!) {
-       
+        
         if let locations: [AnyObject]  = location  , currentLocation = location.last as? CLLocation where location.count > 0 {
             println(currentLocation)
             self.userLocation = currentLocation.coordinate
@@ -339,5 +340,6 @@ extension MapViewController : LocationManagerDelete{
             }
         }
         self.view.hideProgressIndicator()
+
     }
 }

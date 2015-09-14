@@ -179,9 +179,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 upComingItems.append([item, result])
                             }
                         }
+                        if upComingItems.count > 0 {
+                            items["INCOMING"] = upComingItems
+                        }
                         
-                        items["INCOMING"] = upComingItems
-                        items["PASSED"] = passedItems
+                        if passedItems.count > 0{
+                            items["PASSED"] = passedItems
+                        }
                         
                     }
                 }
@@ -284,11 +288,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    var categoryID:String {
-        get{
-            return "CATEGORY"
-        }
-    }
+    let categoryID : String = "CATEGORY"
+   
     
     // MARK: Notification
     func registerNotification() {
@@ -368,7 +369,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Schedule the notification ********************************************
         let notification = UILocalNotification()
-        notification.alertBody = "Notification ;) "
+        notification.alertBody = "Utinerary Alert"
         notification.soundName = UILocalNotificationDefaultSoundName
         notification.fireDate = fireDate
         

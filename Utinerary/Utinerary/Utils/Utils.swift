@@ -51,6 +51,12 @@ class Utils: NSObject {
             
         }
     }
+    
+    class func createMapAnotationWithTitle(title : String? , coordinate : CLLocationCoordinate2D! , subTitle : String?)->MKAnnotation{
+        let anotation : MKAnnotation  = MapAnotation(title: title, coordinate: coordinate, subTitle : subTitle)
+        
+        return anotation
+    }
 }
 
 

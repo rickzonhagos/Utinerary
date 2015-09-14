@@ -12,7 +12,7 @@ import MapKit
 typealias GeoCodeCompletionHandler =  (address :  String?, success : Bool , placeMark : CLPlacemark?)->Void
 
 
-protocol LocationManagerDelete {
+protocol LocationManagerDelete : class {
     func didGetUserLocation(location : [AnyObject]!)
     func didFailToGetLocationWithError(message : String!)
 }
@@ -25,7 +25,7 @@ class LocationManager: NSObject {
     private  var geoCode : CLGeocoder!
     
     
-    var myDelegate : LocationManagerDelete?
+    weak var myDelegate : LocationManagerDelete?
     
     
     private override init(){
@@ -65,7 +65,8 @@ class LocationManager: NSObject {
     
     
     func startGeoCodeWithLocation(location : CLLocation , completionHandler : GeoCodeCompletionHandler){
-        geoCode.reverseGeocodeLocation(location, completionHandler: { (placemarks, error  ) -> Void in
+        geoCode.reverseGeocodeLocation(location, completionHandler: {
+            [unowned self](placemarks, error  ) -> Void in
             
             if error != nil {
                 completionHandler(address: nil, success: false , placeMark : nil )
@@ -123,11 +124,7 @@ class LocationManager: NSObject {
     }
     
     
-    class func createMapAnotationWithTitle(title : String? , coordinate : CLLocationCoordinate2D! , subTitle : String?)->MKAnnotation{
-        let anotation : MKAnnotation  = MapAnotation(title: title, coordinate: coordinate, subTitle : subTitle)
-        
-        return anotation
-    }
+    
     
 }
 
