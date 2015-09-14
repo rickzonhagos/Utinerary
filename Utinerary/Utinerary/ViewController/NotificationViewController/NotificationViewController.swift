@@ -42,12 +42,6 @@ class NotificationViewController: BaseViewController {
         super.viewDidLoad()
         self.title = "Utinerary Reminder"
         
-        doneButton.layer.cornerRadius = 5
-        doneButton.layer.masksToBounds = true
-        uberButton.layer.cornerRadius = 5
-        uberButton.layer.masksToBounds = true
-        
-        //initNavItems()
         formatView()
         getNotificationDetail()
         
@@ -68,11 +62,13 @@ class NotificationViewController: BaseViewController {
         
         originDestinationView.layer.addSublayer(border)
         
+        doneButton.layer.cornerRadius = 5
+        doneButton.layer.masksToBounds = true
+        uberButton.layer.cornerRadius = 5
+        uberButton.layer.masksToBounds = true
+        
     }
-    func initNavItems(){
-        self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "barButtonActions:")
-        self.navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Book To Uber", style: UIBarButtonItemStyle.Bordered, target: self, action: "barButtonActions:")
-    }
+
     
     @IBAction func barButtonActions(sender : UIButton?){
         if let button = sender {
@@ -95,8 +91,6 @@ class NotificationViewController: BaseViewController {
             self.view.hideProgressIndicator()
             
             if let itinerary = item{
-               // self.origin.text =  itinerary.origin?.stringAddress
-              //  self.destination.text = itinerary.destination?.stringAddress
                 
                 let fromStr = itinerary.origin?.stringAddress
                 let toStr = itinerary.destination?.stringAddress
