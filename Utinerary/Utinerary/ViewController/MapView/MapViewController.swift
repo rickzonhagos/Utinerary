@@ -29,7 +29,7 @@ class MapViewController: BaseViewController{
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private  weak var mapView: MKMapView!
     
-    var locationManager : LocationManager?
+    var locationManager : LocationManager = LocationManager.sharedInstance
     
     private var searchItems : [MKMapItem]?
     
@@ -47,8 +47,7 @@ class MapViewController: BaseViewController{
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        locationManager = LocationManager.sharedInstance
-        locationManager?.myDelegate = self
+        locationManager.myDelegate = self
         
         initMapView()
         
@@ -63,9 +62,11 @@ class MapViewController: BaseViewController{
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        locationManager!.startRetrieveLocation()
+        locationManager.startRetrieveLocation()
         
     }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -99,7 +100,7 @@ class MapViewController: BaseViewController{
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         
         
-        self.startGeoCodeWithLocationManager(locationManager!, location: location!) {
+        self.startGeoCodeWithLocationManager(location!) {
             [unowned self](address, success , placeMark) -> Void in
 
             if success {
@@ -191,7 +192,7 @@ class MapViewController: BaseViewController{
         }
         
         
-        self.startGeoCodeWithLocationManager(locationManager!, location: location!) {
+        self.startGeoCodeWithLocationManager( location!) {
             [unowned self](address, success , placeMark) -> Void in
             var userDesiredLocation : UserLocation?
             if success {
@@ -207,6 +208,17 @@ class MapViewController: BaseViewController{
                 self.myDelegate!.didFinishWithUserLocation(userDesiredLocation ,locationType : self.locationType!)
             })
         }
+    }
+    
+    // MARK: Geo Code
+    func startGeoCodeWithLocationManager( location : CLLocation!,
+        completionHandler : GeoCodeCompletionHandler){
+            
+            if let currentLocation = location{
+                self.view.showProgressIndicatorWithLoadingMessage()
+                locationManager.startGeoCodeWithLocation(currentLocation, completionHandler:completionHandler)
+            }
+            
     }
 }
 
@@ -286,7 +298,7 @@ extension MapViewController : UISearchBarDelegate{
  
             mapView.setRegion(region, animated: true)
 
-            locationManager!.startLocationSearchWithSearchString(searchString, region: mapView.region) {
+            locationManager.startLocationSearchWithSearchString(searchString, region: mapView.region) {
                 [unowned self](mapItems) -> (Void) in
                 
                 self.searchItems = mapItems
@@ -301,6 +313,8 @@ extension MapViewController : UISearchBarDelegate{
         searchBar.endEditing(true)
         
     }
+    
+    
     
 }
 extension MapViewController : MKMapViewDelegate {
@@ -328,7 +342,7 @@ extension MapViewController : LocationManagerDelete{
         if let locations: [AnyObject]  = location  , currentLocation = location.last as? CLLocation where location.count > 0 {
             println(currentLocation)
             self.userLocation = currentLocation.coordinate
-            self.startGeoCodeWithLocationManager(self.locationManager, location: currentLocation) {
+            self.startGeoCodeWithLocationManager(currentLocation) {
                 [unowned self](address, success , placeMark) -> Void in
                 if success {
                     self.createAnotationWithTitle(address, coordinate: currentLocation.coordinate, subTitle: nil, shouldZoom: true , isSelectedAnnotation : false)

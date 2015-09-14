@@ -47,7 +47,7 @@ class NotificationViewController: BaseViewController {
         
     
     }
-    
+
     func formatView(){
         notificationView.layer.cornerRadius = 10
         notificationView.layer.masksToBounds = true
