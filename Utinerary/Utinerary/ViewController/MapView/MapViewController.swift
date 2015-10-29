@@ -33,12 +33,7 @@ class MapViewController: BaseViewController{
     
     private var searchItems : [MKMapItem]?
     
-    private var userLocation : CLLocationCoordinate2D?
-    
-    
-    private var selectedAnotation : MKAnnotation?
     var locationType : LocationType?
-    
     
     
     weak var myDelegate : MapViewControllerDelegate?
@@ -56,7 +51,7 @@ class MapViewController: BaseViewController{
         self.searchDisplayController?.searchResultsTableView.registerNib(nib, forCellReuseIdentifier: cellReuseIdentifier)
         
         
-        self.view.showProgressIndicatorWithLoadingMessage(message: "Retrieving Location")
+        self.view.showProgressIndicatorWithLoadingMessage("Retrieving Location")
         
     }
     
@@ -92,7 +87,10 @@ class MapViewController: BaseViewController{
         if (gestureRecognizer.state == UIGestureRecognizerState.Began){
             return
         }
-        
+       
+        for anot in  mapView.selectedAnnotations {
+            mapView.removeAnnotation(anot)
+        }
     
         let touchPoint = gestureRecognizer.locationInView(mapView)
         let coordinate = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
@@ -100,7 +98,7 @@ class MapViewController: BaseViewController{
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         
         
-        self.startGeoCodeWithLocationManager(location!) {
+        self.startGeoCodeWithLocationManager(location) {
             [unowned self](address, success , placeMark) -> Void in
 
             if success {
@@ -118,21 +116,18 @@ class MapViewController: BaseViewController{
         let anotation : MKAnnotation = Utils.createMapAnotationWithTitle(title, coordinate: coordinate , subTitle : subTitle)
         mapView.addAnnotation(anotation)
         
-        if isSelectedAnnotation {
-            self.selectedAnotation = anotation
-        }
-        
-        
-        
+
         mapView.selectAnnotation(anotation, animated: true)
         mapView.centerCoordinate = coordinate
         if shouldZoom{
+           //mapView.centerCoordinate
             self.zoomToLocation(coordinate)
+           
         }
     }
     
     func zoomToLocation(location: CLLocationCoordinate2D){
-        let region = MKCoordinateRegion(center: location, span: MKCoordinateSpanMake(0.112872, 0.109863))
+        let region = MKCoordinateRegion(center: location, span: MKCoordinateSpanMake(0.02, 0.02))
         let  adjustedRegion : MKCoordinateRegion = self.mapView.regionThatFits(region)
         
         mapView.centerCoordinate = location
@@ -140,8 +135,10 @@ class MapViewController: BaseViewController{
   
     }
     
-    func extractFullAddress(address : [NSObject : AnyObject]!)->String?{
-        
+    func extractFullAddress(address : [NSObject : AnyObject]?)->String?{
+        guard let address = address else {
+            return nil
+        }
         var subHeader : String = String()
         
         if let street = address["Street"] as? String {
@@ -154,7 +151,7 @@ class MapViewController: BaseViewController{
             subHeader = subHeader + " " + state
         }
         
-        println("\(address)")
+        print("\(address)", terminator: "")
         
         return subHeader
     }
@@ -172,23 +169,17 @@ class MapViewController: BaseViewController{
         
         if sender.tag == 1000 {
             //This is Done Button
-            self.dismissViewControllerAnimated(true, completion: {
-                [unowned self]() -> Void in
-                
-            })
+            self.dismissViewControllerAnimated(true, completion: nil)
             return
         }
         
         var location : CLLocation?
-        if let anotations = selectedAnotation {
+        
+        if let anotations : [MKAnnotation] = mapView.selectedAnnotations where anotations.count > 0 {
             
-            let coordinate : CLLocationCoordinate2D = anotations.coordinate
+            let coordinate : CLLocationCoordinate2D = anotations[0].coordinate
             location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
  
-        }else{
-            if let currentLocation  = userLocation{
-                location  = CLLocation(latitude: userLocation!.latitude, longitude: userLocation!.longitude)
-            }
         }
         
         
@@ -257,17 +248,14 @@ extension MapViewController : UITableViewDelegate , UITableViewDataSource{
         
         let row  = indexPath.row
         if let items = searchItems {
-            let item : MKMapItem = items[row]
+            if let item : MKMapItem = items[row]{
+                let fullAddress = self.extractFullAddress(item.placemark.addressDictionary)
             
-            let coords = item.placemark.location.coordinate
-            
-            let fullAddress = self.extractFullAddress(item.placemark.addressDictionary)
-            
-            self.createAnotationWithTitle(item.name, coordinate: coords, subTitle: fullAddress, shouldZoom: true , isSelectedAnnotation : true)
-            
-            self.searchDisplayController?.searchResultsTableView.hidden = true
-            self.searchDisplayController?.setActive(false, animated: true)
-            
+                self.createAnotationWithTitle(item.name, coordinate: item.placemark.location?.coordinate, subTitle: fullAddress, shouldZoom: true , isSelectedAnnotation : true)
+               
+                self.searchDisplayController?.searchResultsTableView.hidden = true
+                self.searchDisplayController?.setActive(false, animated: true)
+            }
         }
     }
 }
@@ -291,24 +279,26 @@ extension MapViewController : UISearchBarDelegate{
   
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         let searchString = searchBar.text
-
-        if let location = userLocation {
-            let region = MKCoordinateRegionMakeWithDistance(userLocation!,  120701,  120701)
+        
+        if let anotations : [MKAnnotation] = mapView.selectedAnnotations where anotations.count > 0 {
+            let region = MKCoordinateRegionMakeWithDistance(anotations[0].coordinate,  120701,  120701)
             
- 
+            
             mapView.setRegion(region, animated: true)
-
+            self.view.showProgressIndicatorWithLoadingMessage("Searching...")
             locationManager.startLocationSearchWithSearchString(searchString, region: mapView.region) {
                 [unowned self](mapItems) -> (Void) in
                 
                 self.searchItems = mapItems
                 self.searchDisplayController?.searchResultsTableView.reloadData()
-                
+                self.view.hideProgressIndicator()
             }
         }else{
-            //no User Location 
-            self.showAlertMessageWithAlertAction(nil, delegate: nil, message: Constant.CoreLocationMessage.UnknownLocation, title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel")
+            //no User Location
+            self.showAlertMessageWithAlertAction(nil, delegate: nil, message: Constant.CoreLocationMessage.UnknownLocation, title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel" , dimissBlock : nil)
         }
+        
+        
         searchBar.resignFirstResponder()
         searchBar.endEditing(true)
         
@@ -318,15 +308,15 @@ extension MapViewController : UISearchBarDelegate{
     
 }
 extension MapViewController : MKMapViewDelegate {
-    func mapView(mapView: MKMapView!, didFailToLocateUserWithError : NSError!) {
+    func mapView(mapView: MKMapView, didFailToLocateUserWithError : NSError) {
         self.view.hideProgressIndicator()
     }
-    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
+    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         
         
     }
     
-    func mapViewDidFinishLoadingMap(mapView: MKMapView!) {
+    func mapViewDidFinishLoadingMap(mapView: MKMapView) {
         
     }
     
@@ -335,13 +325,13 @@ extension MapViewController : MKMapViewDelegate {
 extension MapViewController : LocationManagerDelete{
     func didFailToGetLocationWithError(message : String!) {
         self.view.hideProgressIndicator()
-        self.showAlertMessageWithAlertAction(nil, delegate: nil, message: message, title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel")
+        self.showAlertMessageWithAlertAction(nil, delegate: nil, message: message, title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel", dimissBlock : nil)
     }
     func didGetUserLocation(location: [AnyObject]!) {
         
-        if let locations: [AnyObject]  = location  , currentLocation = location.last as? CLLocation where location.count > 0 {
-            println(currentLocation)
-            self.userLocation = currentLocation.coordinate
+        if let _ : [AnyObject]  = location  , currentLocation = location.last as? CLLocation where location.count > 0 {
+            print(currentLocation, terminator: "")
+            
             self.startGeoCodeWithLocationManager(currentLocation) {
                 [unowned self](address, success , placeMark) -> Void in
                 if success {
@@ -349,7 +339,7 @@ extension MapViewController : LocationManagerDelete{
                 }else {
                     self.createAnotationWithTitle(nil, coordinate: currentLocation.coordinate, subTitle: nil, shouldZoom: true, isSelectedAnnotation : false)
                 }
-                self.zoomToLocation(self.userLocation!)
+                self.zoomToLocation(currentLocation.coordinate)
                 self.view.hideProgressIndicator()
             }
         }

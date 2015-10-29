@@ -25,12 +25,12 @@ class ItineraryListViewController: BaseViewController {
     
         self.title = Config.appTitle
         
-        var barShadow: NSShadow = NSShadow()
+        let barShadow: NSShadow = NSShadow()
         barShadow.shadowColor = UIColor.grayColor()
         barShadow.shadowOffset = CGSize(width: 1, height: 2)
 
         if let navFont = Config.Theme.textNavBar {
-            let navBarAttributesDictionary: [NSObject: AnyObject]? = [
+            let navBarAttributesDictionary: [String: AnyObject]? = [
                 NSForegroundColorAttributeName: UIColor.whiteColor(),
                 NSFontAttributeName: navFont,
                 NSShadowAttributeName: barShadow
@@ -56,7 +56,7 @@ class ItineraryListViewController: BaseViewController {
     func goToIteneraryPageWithRow(section : Int , row : Int , sender : AnyObject? ){
         if let viewController = self.getViewController("ItineraryViewController") as? ItineraryViewController  {
             var  type : ItineraryActionType?
-            if let button : UIBarButtonItem = sender as? UIBarButtonItem {
+            if let _ : UIBarButtonItem = sender as? UIBarButtonItem {
                 //button event add
                 type = ItineraryActionType.CreateItinerary
             }else{
@@ -90,12 +90,12 @@ class ItineraryListViewController: BaseViewController {
 
     func getItemsPer(section : Int)->(title : String , array : [[AnyObject]])?{
         if let myDict = self.itineraryList{
-            var key : String = Array(myDict.keys)[section]
+            let key : String = Array(myDict.keys)[section]
             var title : String!
             if (key == "PASSED"){
-                title = "PASSED EVENT"
+                title = "Past itineraries"
             }else{
-                title = "INCOMING EVENT"
+                title = "Upcoming itineraries"
             }
             
             return (title : title , array : (myDict[key] as? [[AnyObject]])!)
@@ -120,22 +120,22 @@ extension ItineraryListViewController : UITableViewDelegate{
         }
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var view = UIView() // The width will be the same as the cell, and the height should be set in tableView:heightForRowAtIndexPath:
+        let view = UIView() // The width will be the same as the cell, and the height should be set in tableView:heightForRowAtIndexPath:
         view.backgroundColor = UIColor.darkTextColor()
         
-        var label = UILabel()
+        let label = UILabel()
         
         let (title , _) = self.getItemsPer(section)!
         label.text  = title
         label.textColor = UIColor.grayColor()
         label.font = UIFont.boldSystemFontOfSize(14)
         view.addSubview(label)
-        label.setTranslatesAutoresizingMaskIntoConstraints(false)
+        label.translatesAutoresizingMaskIntoConstraints = false
         let constraints : [String] = ["H:|-10-[label]-0-|","V:|-0-[label]-0-|"]
         let views = ["label": label,"view": view]
         
         for constraint in constraints {
-            let layoutConstraints = NSLayoutConstraint.constraintsWithVisualFormat(constraint, options: NSLayoutFormatOptions.allZeros, metrics: nil, views: views)
+            let layoutConstraints = NSLayoutConstraint.constraintsWithVisualFormat(constraint, options: NSLayoutFormatOptions(), metrics: nil, views: views)
             view.addConstraints(layoutConstraints)
         }
         return view
@@ -160,7 +160,7 @@ extension ItineraryListViewController : UITableViewDataSource{
       
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let items = itineraryList {
+        if let _ = itineraryList {
             let (_ , array) = self.getItemsPer(section)!
             return array.count
         }   

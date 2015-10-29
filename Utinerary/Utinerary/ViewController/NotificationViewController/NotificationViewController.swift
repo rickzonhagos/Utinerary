@@ -56,7 +56,7 @@ class NotificationViewController: BaseViewController {
         dateDayView.layer.cornerRadius = dateDayView.frame.size.width/2
         dateDayView.layer.masksToBounds = true
         
-        var border = CALayer()
+        let border = CALayer()
         border.backgroundColor = UIColor.grayColor().CGColor
         border.frame = CGRect(x: 0, y: 0, width: originDestinationView.frame.width, height: 0.5)
         
@@ -102,14 +102,14 @@ class NotificationViewController: BaseViewController {
                 let valueAttributes = [NSFontAttributeName : Config.Theme.routeValue!, NSForegroundColorAttributeName : Config.Theme.textSubColor]
                 
                 let mutableAttributedString = NSMutableAttributedString()
-                var attributedFromString = NSAttributedString(string: "ORIGIN : ", attributes: titleAttributes as [NSObject : AnyObject])
-                mutableAttributedString.appendAttributedString(attributedFromString)
-                var attributedFromAddressString = NSAttributedString(string: fromStr!, attributes: valueAttributes as [NSObject : AnyObject])
-                mutableAttributedString.appendAttributedString(attributedFromAddressString)
-                var attributedToString = NSAttributedString(string: "\n\nDESTINATION : ", attributes: titleAttributes as [NSObject : AnyObject])
-                mutableAttributedString.appendAttributedString(attributedToString)
-                var attributedToAddressString = NSAttributedString(string: toStr!, attributes: valueAttributes as [NSObject : AnyObject])
-                mutableAttributedString.appendAttributedString(attributedToAddressString)
+                
+                mutableAttributedString.appendAttributedString(NSAttributedString(string: "ORIGIN : ", attributes: titleAttributes as [String : AnyObject]))
+           
+                mutableAttributedString.appendAttributedString(NSAttributedString(string: fromStr!, attributes: valueAttributes as [String : AnyObject]))
+                
+                mutableAttributedString.appendAttributedString(NSAttributedString(string: "\n\n You're scheduled to travel to : ", attributes: titleAttributes as [String : AnyObject]))
+                
+                mutableAttributedString.appendAttributedString(NSAttributedString(string: toStr!, attributes: valueAttributes as [String : AnyObject]))
                 
                 self.routeLabel.attributedText = mutableAttributedString
                 

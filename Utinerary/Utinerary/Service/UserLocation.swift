@@ -31,8 +31,7 @@ class UserLocation: NSObject , NSCoding {
         aCoder.encodeObject(self.stringAddress, forKey: "stringAddress")
         aCoder.encodeObject(self.placeMark, forKey: "placeMark")
     }
-    convenience required init(coder aDecoder: NSCoder) {
-        self.init()
+     required init?(coder aDecoder: NSCoder) {
         self.location = aDecoder.decodeObjectForKey("location") as? CLLocation
         self.stringAddress = aDecoder.decodeObjectForKey("stringAddress") as? String
         self.placeMark = aDecoder.decodeObjectForKey("placeMark") as? CLPlacemark

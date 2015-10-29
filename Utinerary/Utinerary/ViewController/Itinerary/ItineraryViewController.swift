@@ -65,7 +65,7 @@ class ItineraryViewController: BaseViewController {
         if itineraryAction == ItineraryActionType.ViewItinerary {
             if let item = itineraryItem!.item  {
                 let stringAdress : [String] = [(item.origin?.stringAddress)!, (item.destination?.stringAddress)! ]
-                for (index , element) in enumerate(stringAdress) {
+                for (index , element) in stringAdress.enumerate() {
                     if let cell = getCellByRow(index) ,label =  cell.viewWithTag(1) as? UILabel{
                         label.text = element
                     }
@@ -80,7 +80,7 @@ class ItineraryViewController: BaseViewController {
             }
         }else {
             if !deleteButtonHasBeenHidden {
-                if var items : [AnyObject] = myToolBar.items  where items.count > 0{
+                if var items : [UIBarButtonItem] = myToolBar.items  where items.count > 0{
                     items.removeAtIndex(0)
                     self.myToolBar.setItems(items, animated: true)
                     self.deleteButtonHasBeenHidden = true
@@ -123,7 +123,7 @@ class ItineraryViewController: BaseViewController {
                 let result = self.validateLocationFields()
                 
                 if !result.isSuccess {
-                    self.showAlertMessageWithAlertAction(nil, delegate: nil, message: result.message, title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel")
+                    self.showAlertMessageWithAlertAction(nil, delegate: nil, message: result.message, title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel" , dimissBlock : nil)
                     return
                 }
                 
@@ -151,7 +151,7 @@ class ItineraryViewController: BaseViewController {
                             let result = self.validateLocationFields()
                             
                             if !result.isSuccess {
-                                self.showAlertMessageWithAlertAction(nil, delegate: nil, message: result.message, title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel")
+                                self.showAlertMessageWithAlertAction(nil, delegate: nil, message: result.message, title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel", dimissBlock : nil)
                                 return
                             }
 
@@ -173,7 +173,7 @@ class ItineraryViewController: BaseViewController {
                         if action == AlertAction.Ok {
                             self.deleteItem()
                         }
-                    }, delegate: self, message: "Are you sure you want to delete this item", title: "Delete Confirmation", withCancelButton: true, okButtonTitle: "Proceed", alertTag: AlertTagType.DeleteAlert, cancelTitle: "Cancel")
+                    }, delegate: self, message: "Are you sure you want to delete this item", title: "Delete Confirmation", withCancelButton: true, okButtonTitle: "Proceed", alertTag: AlertTagType.DeleteAlert, cancelTitle: "Cancel", dimissBlock : nil)
                 }
                 
             }
@@ -184,9 +184,9 @@ class ItineraryViewController: BaseViewController {
     // MARK: Core Data Add / Edit / Delete
     
     func updateItem(managedObject : NSManagedObject!){
-        self.view.showProgressIndicatorWithLoadingMessage(message: "Updating Data")
+        self.view.showProgressIndicatorWithLoadingMessage("Updating Data")
         
-        if let cell = self.getCellByRow(2) , datePicker = cell.viewWithTag(3000) as? UIDatePicker{
+        if let cell = self.getCellByRow(2) , _ = cell.viewWithTag(3000) as? UIDatePicker{
 
             self.appDelegate?.updateItinerary(managedObject,  completionHandler: { (success) -> Void in
                 self.view.hideProgressIndicator()
@@ -195,16 +195,26 @@ class ItineraryViewController: BaseViewController {
                     if action == AlertAction.Ok {
                         self.navigationController?.popToRootViewControllerAnimated(true)
                     }
-                    }, delegate: self, message: "Item has been Updated", title: "", withCancelButton: false, okButtonTitle: "Done", alertTag: AlertTagType.UpdatedItemAlert, cancelTitle: "")
+                    }, delegate: self,
+                    message: "Itinerary updated",
+                    title: "",
+                    withCancelButton: false,
+                    okButtonTitle: "",
+                    alertTag: AlertTagType.UpdatedItemAlert,
+                    cancelTitle: "",
+                    dimissBlock :{
+                        ()-> Void in
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    }, fadeDismiss: true)
             })
         }
         
     }
     
     func addItem(item : Itinerary!){
-        self.view.showProgressIndicatorWithLoadingMessage(message: "Saving Data")
+        self.view.showProgressIndicatorWithLoadingMessage("Saving Data")
         
-        self.appDelegate?.insertItinerary(item, notifID: Utils.randomStringWithLength() as? String, completionHandler: {
+        self.appDelegate?.insertItinerary(item, notifID: Utils.randomStringWithLength() as String , completionHandler: {
             [unowned self](success) -> Void in
             self.view.hideProgressIndicator()
             self.showAlertMessageWithAlertAction({
@@ -212,23 +222,62 @@ class ItineraryViewController: BaseViewController {
                 if action == AlertAction.Ok {
                     self.navigationController?.popToRootViewControllerAnimated(true)
                 }
-                }, delegate: self, message: "Item has been added", title: "", withCancelButton: false, okButtonTitle: "Done", alertTag: AlertTagType.AddedItemAlert, cancelTitle: "")
+                },
+                delegate: self,
+                message: "Itinerary created",
+                title: "",
+                withCancelButton: false,
+                okButtonTitle: "",
+                alertTag: AlertTagType.AddedItemAlert,
+                cancelTitle: "" ,
+                dimissBlock : {
+                    ()->Void in
+                    
+                }, fadeDismiss : true)
             
         })
     }
     func deleteItem(){
-        self.view.showProgressIndicatorWithLoadingMessage(message: "Deleting Item")
+        self.view.showProgressIndicatorWithLoadingMessage("Deleting Item")
         self.appDelegate?.deleteItineraryItem(self.itineraryItem!.managedObject , completionHandler: {
             [unowned self](success) -> Void in
             self.view.hideProgressIndicator()
             
             self.showAlertMessageWithAlertAction({
                 [unowned self](action) -> Void in
-                if action == AlertAction.Ok {
+                    if action == AlertAction.Ok {
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    }
+                },
+                delegate: self,
+                message: "Itinerary removed",
+                title: "",
+                withCancelButton: false,
+                okButtonTitle: "",
+                alertTag: AlertTagType.DeletedItemAlert,
+                cancelTitle: "",
+                dimissBlock : {
+                    ()->Void in
                     self.navigationController?.popToRootViewControllerAnimated(true)
-                }
-                }, delegate: self, message: "Item has been deleted", title: "", withCancelButton: false, okButtonTitle: "Done", alertTag: AlertTagType.DeletedItemAlert, cancelTitle: "")
+                } ,
+                fadeDismiss: true)
         })
+    }
+    
+    // MARK: Alert View Delegate
+    override func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        super.alertView(alertView, clickedButtonAtIndex: buttonIndex)
+        if alertView.tag == AlertTagType.DeleteAlert.rawValue {
+            if buttonIndex == 1 {
+                self.deleteItem()
+            }
+            
+        }else if alertView.tag ==  AlertTagType.DeletedItemAlert.rawValue ||
+            alertView.tag == AlertTagType.AddedItemAlert.rawValue ||
+            alertView.tag == AlertTagType.UpdatedItemAlert.rawValue {
+                self.navigationController?.popToRootViewControllerAnimated(true)
+        }
+        
     }
 }
 extension ItineraryViewController : MapViewControllerDelegate{
@@ -295,11 +344,11 @@ extension ItineraryViewController : UITableViewDataSource{
         var cell : UITableViewCell?
         
         if row == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("OriginCellViewIdentifier") as? UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier("OriginCellViewIdentifier")
         }else if row == 1 {
-            cell = tableView.dequeueReusableCellWithIdentifier("DestinationViewCellIdentifier") as? UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier("DestinationViewCellIdentifier")
         }else{
-            cell = tableView.dequeueReusableCellWithIdentifier("DateAndTimeViewCellIdentifier") as? UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier("DateAndTimeViewCellIdentifier")
         }
         
         
@@ -314,21 +363,5 @@ extension ItineraryViewController : UITableViewDataSource{
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
-    }
-}
-extension ItineraryViewController : UIAlertViewDelegate{
-    override func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        super.alertView(alertView, clickedButtonAtIndex: buttonIndex)
-        if alertView.tag == AlertTagType.DeleteAlert.rawValue {
-            if buttonIndex == 1 {
-                self.deleteItem()
-            }
-            
-        }else if alertView.tag ==  AlertTagType.DeletedItemAlert.rawValue ||
-            alertView.tag == AlertTagType.AddedItemAlert.rawValue ||
-            alertView.tag == AlertTagType.UpdatedItemAlert.rawValue {
-            self.navigationController?.popToRootViewControllerAnimated(true)
-        }
-        
     }
 }

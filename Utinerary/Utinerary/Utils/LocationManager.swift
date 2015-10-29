@@ -43,11 +43,7 @@ class LocationManager: NSObject {
         locationManager.delegate = self
         
         
-        if (UIDevice.currentDevice().systemVersion as? NSString)?.floatValue >= 8.0 {
-            locationManager.requestWhenInUseAuthorization()
-        }
-        
-        
+        locationManager.requestWhenInUseAuthorization()
         
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -73,10 +69,10 @@ class LocationManager: NSObject {
                 completionHandler(address: nil, success: false , placeMark : nil )
             }
             
-            if let pm = placemarks as? [CLPlacemark] where pm.count > 0 {
+            if let pm = placemarks where pm.count > 0 {
                 
                 let placeMark = pm[0]
-                let location = placeMark.location
+                let _ = placeMark.location
                 
                 var fullAdress : String = String()
                 
@@ -117,9 +113,8 @@ class LocationManager: NSObject {
                 return
             }
             
-            if let item = response.mapItems {
-                println("\(response.mapItems)")
-                completionBlock(mapItems: response.mapItems as? [MKMapItem])
+            if let result = response, mapItems = result.mapItems as? [MKMapItem] {
+                completionBlock(mapItems: mapItems)
             }
         }
     }
@@ -130,13 +125,12 @@ class LocationManager: NSObject {
 }
 
 extension LocationManager : CLLocationManagerDelegate{
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == CLAuthorizationStatus.AuthorizedWhenInUse {
-            
             
         }
     }
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         if error.domain == kCLErrorDomain {
             var message : String?
             switch(error.code){
@@ -158,7 +152,7 @@ extension LocationManager : CLLocationManagerDelegate{
             }
         }
     }
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let delegate = myDelegate {
             delegate.didGetUserLocation(locations)
             self.locationManager.stopUpdatingLocation()

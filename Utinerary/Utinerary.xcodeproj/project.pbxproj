@@ -14,7 +14,6 @@
 		1A409FAE1B9167EF00971D96 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A409FAD1B9167EF00971D96 /* test.m */; };
 		1A409FB31B9168DA00971D96 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A409FB21B9168DA00971D96 /* Extensions.swift */; };
 		1A9CC8E91B91BCA8001DBC86 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CC8E81B91BCA8001DBC86 /* NotificationViewController.swift */; };
-		1A9CC8EE1B91D425001DBC86 /* libFlurry_6.5.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9CC8ED1B91D425001DBC86 /* libFlurry_6.5.0.a */; };
 		1A9CC8F01B91D606001DBC86 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9CC8EF1B91D606001DBC86 /* SystemConfiguration.framework */; };
 		48E60FA31BA26CA000A37332 /* RandomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E60FA21BA26CA000A37332 /* RandomColor.swift */; };
 		48EA15E91BA260CE00A8E02B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EA15E81BA260CE00A8E02B /* Config.swift */; };
@@ -32,13 +31,13 @@
 		955915261B831AF30007D860 /* ItineraryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955915251B831AF30007D860 /* ItineraryTableViewCell.swift */; };
 		955915281B831FD90007D860 /* ItineraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955915271B831FD90007D860 /* ItineraryViewController.swift */; };
 		955F06CA1B90465700BA407A /* UtinerarySharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955F06C91B90465700BA407A /* UtinerarySharedInstance.swift */; };
-		956167951B8C44B3002F3B87 /* HTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956167941B8C44B3002F3B87 /* HTTPRequest.swift */; };
 		956167971B8C44D6002F3B87 /* UtineraryModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956167961B8C44D6002F3B87 /* UtineraryModelData.swift */; };
 		956167991B8C4A6E002F3B87 /* SearchModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956167981B8C4A6E002F3B87 /* SearchModelData.swift */; };
 		9561679B1B8C4BD0002F3B87 /* SearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9561679A1B8C4BD0002F3B87 /* SearchItem.swift */; };
 		95666C791B8D505E000C604A /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95666C781B8D505E000C604A /* UserLocation.swift */; };
 		959523801B8EB7610034DFCF /* Itinerary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9595237F1B8EB7610034DFCF /* Itinerary.swift */; };
 		95DEB6F91B96920E00B4DAA5 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DEB6F81B96920E00B4DAA5 /* Constant.swift */; };
+		95FA49091BE1B8F3000CCA4F /* libFlurry_7.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95FA49081BE1B8F3000CCA4F /* libFlurry_7.2.1.a */; };
 		967B95E72DCDFF6E8E7E4176 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F65B08F642D2F6132D99F7 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -62,9 +61,6 @@
 		1A409FAD1B9167EF00971D96 /* test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
 		1A409FB21B9168DA00971D96 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1A9CC8E81B91BCA8001DBC86 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
-		1A9CC8EB1B91D425001DBC86 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		1A9CC8EC1B91D425001DBC86 /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
-		1A9CC8ED1B91D425001DBC86 /* libFlurry_6.5.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_6.5.0.a; sourceTree = "<group>"; };
 		1A9CC8EF1B91D606001DBC86 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		48E60FA21BA26CA000A37332 /* RandomColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomColor.swift; sourceTree = "<group>"; };
 		48EA15E81BA260CE00A8E02B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -86,13 +82,15 @@
 		955915251B831AF30007D860 /* ItineraryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryTableViewCell.swift; sourceTree = "<group>"; };
 		955915271B831FD90007D860 /* ItineraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryViewController.swift; sourceTree = "<group>"; };
 		955F06C91B90465700BA407A /* UtinerarySharedInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtinerarySharedInstance.swift; sourceTree = "<group>"; };
-		956167941B8C44B3002F3B87 /* HTTPRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPRequest.swift; sourceTree = "<group>"; };
 		956167961B8C44D6002F3B87 /* UtineraryModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtineraryModelData.swift; sourceTree = "<group>"; };
 		956167981B8C4A6E002F3B87 /* SearchModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchModelData.swift; sourceTree = "<group>"; };
 		9561679A1B8C4BD0002F3B87 /* SearchItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchItem.swift; sourceTree = "<group>"; };
 		95666C781B8D505E000C604A /* UserLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
 		9595237F1B8EB7610034DFCF /* Itinerary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Itinerary.swift; sourceTree = "<group>"; };
 		95DEB6F81B96920E00B4DAA5 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		95FA49061BE1B8F3000CCA4F /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		95FA49071BE1B8F3000CCA4F /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
+		95FA49081BE1B8F3000CCA4F /* libFlurry_7.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.2.1.a; sourceTree = "<group>"; };
 		B783FF075100A2EEF482D7CA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D3F65B08F642D2F6132D99F7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1D668224E6726C49D9EB6EF /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
@@ -104,9 +102,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95FA49091BE1B8F3000CCA4F /* libFlurry_7.2.1.a in Frameworks */,
 				1A9CC8F01B91D606001DBC86 /* SystemConfiguration.framework in Frameworks */,
 				1A07227B1B87F5AB0047E82C /* MapKit.framework in Frameworks */,
-				1A9CC8EE1B91D425001DBC86 /* libFlurry_6.5.0.a in Frameworks */,
 				967B95E72DCDFF6E8E7E4176 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -165,9 +163,9 @@
 		1A9CC8EA1B91D425001DBC86 /* Flurry */ = {
 			isa = PBXGroup;
 			children = (
-				1A9CC8EB1B91D425001DBC86 /* Flurry.h */,
-				1A9CC8EC1B91D425001DBC86 /* FlurryWatch.h */,
-				1A9CC8ED1B91D425001DBC86 /* libFlurry_6.5.0.a */,
+				95FA49061BE1B8F3000CCA4F /* Flurry.h */,
+				95FA49071BE1B8F3000CCA4F /* FlurryWatch.h */,
+				95FA49081BE1B8F3000CCA4F /* libFlurry_7.2.1.a */,
 			);
 			path = Flurry;
 			sourceTree = "<group>";
@@ -289,7 +287,6 @@
 		956167931B8C44B3002F3B87 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				956167941B8C44B3002F3B87 /* HTTPRequest.swift */,
 				956167961B8C44D6002F3B87 /* UtineraryModelData.swift */,
 				956167981B8C4A6E002F3B87 /* SearchModelData.swift */,
 				9561679A1B8C4BD0002F3B87 /* SearchItem.swift */,
@@ -346,8 +343,9 @@
 		955914E91B8315670007D860 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0710;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Sherwin De Jesus";
 				TargetAttributes = {
 					955914F01B8315670007D860 = {
@@ -459,7 +457,6 @@
 				9557A92A1B8C217A00144E79 /* SearchTableViewCell.swift in Sources */,
 				1A9CC8E91B91BCA8001DBC86 /* NotificationViewController.swift in Sources */,
 				48EA15E91BA260CE00A8E02B /* Config.swift in Sources */,
-				956167951B8C44B3002F3B87 /* HTTPRequest.swift in Sources */,
 				95DEB6F91B96920E00B4DAA5 /* Constant.swift in Sources */,
 				955914FA1B8315670007D860 /* Utinerary.xcdatamodeld in Sources */,
 				1A0722791B87F4BB0047E82C /* MapViewController.swift in Sources */,
@@ -526,6 +523,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -541,10 +539,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "1f118980-754b-4138-a0d6-872bd21ea534";
+				PROVISIONING_PROFILE = "088c645b-afe7-4197-b4bb-7d0b9da186e1";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -581,7 +579,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "3be38c61-b2cd-4a30-90af-75a2506b68ae";
 				SDKROOT = iphoneos;
@@ -597,15 +595,17 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Sherwin De Jesus (AQDSP3NDC3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sherwin De Jesus (AQDSP3NDC3)";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Utinerary/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Utinerary/Flurry",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ph.com.sherwindejesus.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1f118980-754b-4138-a0d6-872bd21ea534";
+				PROVISIONING_PROFILE = "088c645b-afe7-4197-b4bb-7d0b9da186e1";
 				SWIFT_OBJC_BRIDGING_HEADER = "Utinerary/Utinerary-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -618,13 +618,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Sherwin De Jesus (8U7L8Q4BQG)";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Utinerary/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Utinerary/Flurry",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ph.com.sherwindejesus.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "3be38c61-b2cd-4a30-90af-75a2506b68ae";
 				SWIFT_OBJC_BRIDGING_HEADER = "Utinerary/Utinerary-Bridging-Header.h";
@@ -647,6 +649,7 @@
 				);
 				INFOPLIST_FILE = UtineraryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ph.com.sherwindejesus.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Utinerary.app/Utinerary";
@@ -665,6 +668,7 @@
 				);
 				INFOPLIST_FILE = UtineraryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ph.com.sherwindejesus.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Utinerary.app/Utinerary";
@@ -702,9 +706,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "88d61853-7d8b-45bb-9625-dbb9b86c450a";
+				PROVISIONING_PROFILE = "46b53871-8225-4958-827b-5f3819429331";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -717,14 +721,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Sherwin De Jesus (8U7L8Q4BQG)";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Utinerary/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Utinerary/Flurry",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ph.com.sherwindejesus.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "46b53871-8225-4958-827b-5f3819429331";
 				SWIFT_OBJC_BRIDGING_HEADER = "Utinerary/Utinerary-Bridging-Header.h";
 			};
 			name = Adhoc;
@@ -741,6 +748,7 @@
 				);
 				INFOPLIST_FILE = UtineraryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ph.com.sherwindejesus.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Utinerary.app/Utinerary";

@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "ph.com.Utinerary" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as! NSURL
+        return urls[urls.count-1] 
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
@@ -64,37 +64,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return NSManagedObjectModel(contentsOfURL: modelURL)!
     }()
 
-    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
-        // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
+    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
+        // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
-        var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Utinerary.sqlite")
-        var error: NSError? = nil
+        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("SingleViewCoreData.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
-            coordinator = nil
+        do {
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+        } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
-            dict[NSUnderlyingErrorKey] = error
-            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
+            
+            dict[NSUnderlyingErrorKey] = error as NSError
+            let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog("Unresolved error \(error), \(error!.userInfo)")
+            NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
             abort()
         }
         
         return coordinator
     }()
 
-    lazy var managedObjectContext: NSManagedObjectContext? = {
+    lazy var managedObjectContext: NSManagedObjectContext = {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
-        if coordinator == nil {
-            return nil
-        }
-        var managedObjectContext = NSManagedObjectContext()
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()
@@ -102,12 +100,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Core Data Saving support
 
     func saveContext () {
-        if let moc = self.managedObjectContext {
-            var error: NSError? = nil
-            if moc.hasChanges && !moc.save(&error) {
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+            } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
+                let nserror = error as NSError
+                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
                 abort()
             }
         }
@@ -116,24 +116,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK : Core Data
     func insertItinerary(user : Itinerary!, notifID : String!, completionHandler : completionBlock){
-        if let context : NSManagedObjectContext =  self.managedObjectContext,
-             itineraryEntity  =  NSEntityDescription.insertNewObjectForEntityForName("Itinerary", inManagedObjectContext: context) as? NSManagedObject{
+        if let  itineraryEntity : NSManagedObject  =  NSEntityDescription.insertNewObjectForEntityForName("Itinerary", inManagedObjectContext: self.managedObjectContext){
                 
                 itineraryEntity.setValue(user.dateAndTime, forKey: "dateAndTime")
                 itineraryEntity.setValue(user.destination?.archive(), forKey: "destination")
                 itineraryEntity.setValue(user.origin?.archive(), forKey: "origin")
                 itineraryEntity.setValue(notifID, forKey: "notifID")
-                var error : NSError?
-                if !context.save(&error){
-                    println("save Error \(error?.localizedDescription)")
+                do{
+                    try self.managedObjectContext.save()
+                    self.scheduleNotificationWithFireDate(user.dateAndTime, notifID: notifID, destinationAddress : (user.destination?.stringAddress)!)
+                    completionHandler(success: true)
+                }catch let error as NSError{
+                    print("Could not save \(error), \(error.userInfo)")
                     completionHandler(success: false);
-                    return;
                 }
-                
-                
-                self.scheduleNotificationWithFireDate(user.dateAndTime, notifID: notifID)
-                
-                completionHandler(success: true)
         }
     }
     
@@ -141,95 +137,103 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func fetchItineraryList()->[String : AnyObject]?{
         if let context : NSManagedObjectContext =  self.managedObjectContext,
             fetchRequest = NSFetchRequest(entityName: "Itinerary") as NSFetchRequest?{
-            var error : NSError?
-                
+            
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAndTime", ascending: false)]
-            if let fetchResult = context.executeFetchRequest(fetchRequest, error: &error) {
-                var items  = [String : AnyObject]()
                 
-                var passedItems = [[AnyObject]]()
-                var upComingItems = [[AnyObject]]()
-                
-                for  result in fetchResult {
-                    if result is NSManagedObject {
-                        
-                        let item = Itinerary()
-                        if let data = result.valueForKey("destination") as? NSData ,
-                            unArchievedData : AnyObject = data.unArchived() ,
-                            destination = unArchievedData as? UserLocation {
-                            item.destination = destination
+                do {
+                    let fetchResult = try context.executeFetchRequest(fetchRequest)
+                    var items  = [String : AnyObject]()
+                    
+                    var passedItems = [[AnyObject]]()
+                    var upComingItems = [[AnyObject]]()
+                    
+                    for  result in fetchResult {
+                        if result is NSManagedObject {
                             
-                        }
-                        
-                        if let data = result.valueForKey("origin") as? NSData,
-                            unArchievedData : AnyObject  = data.unArchived(),
-                            origin = unArchievedData as? UserLocation {
-                                item.origin = origin 
-                        }
-                       
-                        if let dateAndTime = result.valueForKey("dateAndTime") as? NSDate {
-                            item.dateAndTime = dateAndTime
-                            
-                            
-                            if (dateAndTime.timeIntervalSinceNow < 0.0){
-                                //passed
-                                passedItems.append([item, result])
-                            }else{
-                                //
-                                upComingItems.append([item, result])
+                            let item = Itinerary()
+                            if let data = result.valueForKey("destination") as? NSData ,
+                                unArchievedData : AnyObject = data.unArchived() ,
+                                destination = unArchievedData as? UserLocation {
+                                    item.destination = destination
+                                    
                             }
+                            
+                            if let data = result.valueForKey("origin") as? NSData,
+                                unArchievedData : AnyObject  = data.unArchived(),
+                                origin = unArchievedData as? UserLocation {
+                                    item.origin = origin
+                            }
+                            
+                            if let dateAndTime = result.valueForKey("dateAndTime") as? NSDate {
+                                item.dateAndTime = dateAndTime
+                                
+                                
+                                if (dateAndTime.timeIntervalSinceNow < 0.0){
+                                    //passed
+                                    passedItems.append([item, result])
+                                }else{
+                                    //
+                                    upComingItems.append([item, result])
+                                }
+                            }
+                            if upComingItems.count > 0 {
+                                items["INCOMING"] = upComingItems
+                            }
+                            
+                            if passedItems.count > 0{
+                                items["PASSED"] = passedItems
+                            }
+                            
                         }
-                        if upComingItems.count > 0 {
-                            items["INCOMING"] = upComingItems
-                        }
-                        
-                        if passedItems.count > 0{
-                            items["PASSED"] = passedItems
-                        }
-                        
                     }
+                    return items
+                } catch let error as NSError  {
+                    print("Could not save \(error), \(error.userInfo)")
+                    return nil
                 }
-                return items
-            }
-            return nil
         }
         return nil
     }
     
     func updateItinerary(managedObject : NSManagedObject! ,  completionHandler : completionBlock){
         if let context  : NSManagedObjectContext = self.managedObjectContext {
-            var error : NSError?
-            
-            
-            if !context.save(&error){
-                println("Update Error \(error?.localizedDescription)")
-                completionHandler(success: false)
-              
-                return
-            }
-            
-            if let notifID = managedObject.valueForKey("notifID") as? String{
-                cancelNotificationWith(notifID)
-                
-                if let date = managedObject.valueForKey("dateAndTime") as? NSDate {
-                    self.scheduleNotificationWithFireDate(date, notifID: notifID)
+           
+            do{
+                try context.save()
+                if let notifID = managedObject.valueForKey("notifID") as? String{
+                    cancelNotificationWith(notifID)
+                    managedObject.valueForKey("destination")
+                    
+                    
+                    
+                    
+                    if let date = managedObject.valueForKey("dateAndTime") as? NSDate ,
+                        destinationObject = managedObject.valueForKey("destination") as? NSData,
+                    unArchievedData : AnyObject = destinationObject.unArchived(),
+                    destination = unArchievedData as? UserLocation {
+                        
+                        self.scheduleNotificationWithFireDate(date, notifID: notifID, destinationAddress : destination.stringAddress)
+                    }
+                    
                 }
-                
+                completionHandler(success: true)
+            }catch let error as NSError {
+                print("Could not save \(error), \(error.userInfo)")
+                completionHandler(success: false)
             }
-            completionHandler(success: true)
         }
     }
     
     func fetchItineraryItemBy(notifID : String! , completionHandler : fetchCompletionBlock){
         if let context : NSManagedObjectContext =  self.managedObjectContext,
             fetchRequest = NSFetchRequest(entityName: "Itinerary") as NSFetchRequest?{
-                var error : NSError?
                 
                 
                 let predicate = NSPredicate(format: "notifID == %@",notifID)
                 fetchRequest.predicate = predicate
                 
-                if let fetchResult = context.executeFetchRequest(fetchRequest, error: &error) {
+                do{
+                    let fetchResult = try context.executeFetchRequest(fetchRequest)
                     for  result in fetchResult {
                         if result is NSManagedObject {
                             let item = Itinerary()
@@ -254,9 +258,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             completionHandler(success: true, item: item)
                         }
                     }
+                }catch let error as NSError{
+                    print("Could not save \(error), \(error.userInfo)")
                     completionHandler(success: false, item: nil)
                 }
-                completionHandler(success: false, item: nil)
         }
         completionHandler(success: false, item: nil)
     }
@@ -265,26 +270,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let context  : NSManagedObjectContext = self.managedObjectContext {
             
             let notifID = object.valueForKey("notifID") as? String
-                
-            
             
             context.deleteObject(object)
-            var error : NSError?
-            if !context.save(&error){
-                println("Delete Error \(error?.localizedDescription)")
+            
+            do{
+                try context.save()
+                
+                if let id = notifID {
+                    cancelNotificationWith(id)
+                }
+                
+                completionHandler(success: true)
+            }catch let error as NSError{
                 completionHandler(success: false)
-                
-                return
-                
+                print("Could not save \(error), \(error.userInfo)")
             }
-            
-            if let id = notifID {
-                cancelNotificationWith(id)
-            }
-            
-    
-
-            completionHandler(success: true)
         }
     }
     
@@ -292,11 +292,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
    
     
     // MARK: Notification
+    @available(iOS 8.0, *)
     func registerNotification() {
-        if objc_getClass("UIMutableUserNotificationAction") != nil {
+       
             let bookToUber = UIMutableUserNotificationAction()
             bookToUber.identifier = LocationNotificationAction.BookToUber.rawValue
-            bookToUber.title = "Book to Uber"
+            bookToUber.title = "Get an Uber ride"
             bookToUber.activationMode = UIUserNotificationActivationMode.Foreground
             bookToUber.destructive = true
             
@@ -318,12 +319,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             category.setActions([bookToUber],
                 forContext: UIUserNotificationActionContext.Minimal)
             
-            
-            
-            let types = UIUserNotificationType.Alert | UIUserNotificationType.Sound
-            let settings = UIUserNotificationSettings(forTypes: types, categories: NSSet(object: category) as Set<NSObject>)
+        
+            let settings = UIUserNotificationSettings(forTypes: [.Alert,.Sound], categories: (NSSet(array: [category])) as? Set<UIUserNotificationCategory>)
             UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-        }
+        
     }
     
     
@@ -360,22 +359,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             rootView.presentViewController(viewController!, animated: true, completion: nil)
         }
     }
+    @available(iOS 8.0, *)
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
         
     }
     
-    func scheduleNotificationWithFireDate(fireDate : NSDate!, notifID : String!) {
+    func scheduleNotificationWithFireDate(fireDate : NSDate!, notifID : String!, destinationAddress : String?) {
         //UIApplication.sharedApplication().cancelAllLocalNotifications()
         
         // Schedule the notification ********************************************
         let notification = UILocalNotification()
-        notification.alertBody = "Utinerary Alert"
+        var message : String!
+        if let destinationAddress = destinationAddress {
+            message =  "You’re scheduled to travel to \(destinationAddress)"
+        }else{
+            message =  "You’re scheduled to travel"
+        }
+        
+        notification.alertBody = message
         notification.soundName = UILocalNotificationDefaultSoundName
         notification.fireDate = fireDate
         
-        if (UIDevice.currentDevice().systemVersion as? NSString)?.floatValue >= 8.0 {
-            notification.category = categoryID
-        }
+       notification.category = categoryID
         
         notification.userInfo = ["notifID":notifID]
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
@@ -383,14 +388,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func cancelNotificationWith(notifID : String!){
-        var app:UIApplication = UIApplication.sharedApplication()
-        for oneEvent in app.scheduledLocalNotifications {
-            var notification = oneEvent as! UILocalNotification
-            let userInfoCurrent = notification.userInfo! as! [String:AnyObject]
+        let app:UIApplication = UIApplication.sharedApplication()
+        for oneEvent in app.scheduledLocalNotifications! {
+            let userInfoCurrent = oneEvent.userInfo! as! [String:AnyObject]
             let uid = userInfoCurrent["notifID"]! as! String
             if uid == notifID {
                 //Cancelling local notification
-                app.cancelLocalNotification(notification)
+                app.cancelLocalNotification(oneEvent)
                 break;
             }
         }

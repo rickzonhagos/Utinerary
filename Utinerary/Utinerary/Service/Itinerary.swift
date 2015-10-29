@@ -18,12 +18,14 @@ class Itinerary: NSObject , NSCoding {
         aCoder.encodeObject(self.destination, forKey: "destination")
         aCoder.encodeObject(self.dateAndTime, forKey: "dateAndTime")
     }
-    convenience required init(coder aDecoder: NSCoder) {
-        self.init()
+    override init() {
+        
+    }
+     required init?(coder aDecoder: NSCoder) {
         self.origin = aDecoder.decodeObjectForKey("origin") as? UserLocation
         self.destination = aDecoder.decodeObjectForKey("destination") as? UserLocation
         self.dateAndTime = aDecoder.decodeObjectForKey("dateAndTime") as? NSDate
-        
-        
+
     }
+    
 }

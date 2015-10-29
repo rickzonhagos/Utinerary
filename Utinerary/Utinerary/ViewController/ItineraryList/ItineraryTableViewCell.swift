@@ -19,9 +19,9 @@ import UIKit
     
     private var randomColor : UIColor {
         get{
-            var randomRed:CGFloat = CGFloat(drand48())
-            var randomGreen:CGFloat = CGFloat(drand48())
-            var randomBlue:CGFloat = CGFloat(drand48())
+            let randomRed:CGFloat = CGFloat(drand48())
+            let randomGreen:CGFloat = CGFloat(drand48())
+            let randomBlue:CGFloat = CGFloat(drand48())
             return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
         }
     }
@@ -57,7 +57,7 @@ import UIKit
         
         let sharedInstance = UtinerarySharedInstance.sharedInstance
         
-        let (date , time ,day , _ , _ ) = sharedInstance.splitDate(dateAndTime)
+        let (date , time ,_ , _ , _ ) = sharedInstance.splitDate(dateAndTime)
         
         dateAndTimeLbl.text = "\(date) \(time)"
         
@@ -65,14 +65,15 @@ import UIKit
         let subTitleDetails = [NSFontAttributeName : Config.Theme.textSub!, NSForegroundColorAttributeName : Config.Theme.textSubColor]
         
         let mutableAttributedString = NSMutableAttributedString()
-        var attributedFromString = NSAttributedString(string: "FROM : ", attributes: subTitleAttributes as [NSObject : AnyObject])
-        mutableAttributedString.appendAttributedString(attributedFromString)
-        var attributedFromAddressString = NSAttributedString(string: origin, attributes: subTitleDetails as [NSObject : AnyObject])
-        mutableAttributedString.appendAttributedString(attributedFromAddressString)
-        var attributedToString = NSAttributedString(string: "\nTO : ", attributes: subTitleAttributes as [NSObject : AnyObject])
-        mutableAttributedString.appendAttributedString(attributedToString)
-        var attributedToAddressString = NSAttributedString(string: destination, attributes: subTitleDetails as [NSObject : AnyObject])
-        mutableAttributedString.appendAttributedString(attributedToAddressString)
+        
+        mutableAttributedString.appendAttributedString( NSAttributedString(string: "FROM : ", attributes: subTitleAttributes as [String : AnyObject]))
+        
+       
+        mutableAttributedString.appendAttributedString(NSAttributedString(string: origin, attributes: subTitleDetails as [String : AnyObject]))
+        
+        mutableAttributedString.appendAttributedString(NSAttributedString(string: "\nTO : ", attributes: subTitleAttributes as [String : AnyObject]))
+   
+        mutableAttributedString.appendAttributedString(NSAttributedString(string: destination, attributes: subTitleDetails as [String : AnyObject]))
         
         
         destinationLbl.attributedText = mutableAttributedString

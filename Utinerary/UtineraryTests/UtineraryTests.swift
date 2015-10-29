@@ -8,7 +8,6 @@
 
 import UIKit
 import XCTest
-
 class UtineraryTests: XCTestCase {
     
     override func setUp() {

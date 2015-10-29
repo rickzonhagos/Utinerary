@@ -20,11 +20,11 @@ class Utils: NSObject {
         
         let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         
-        var randomString : NSMutableString = NSMutableString(capacity: len)
+        let randomString : NSMutableString = NSMutableString(capacity: len)
         
         for (var i=0; i < len; i++){
-            var length = UInt32 (letters.length)
-            var rand = arc4random_uniform(length)
+            let length = UInt32 (letters.length)
+            let rand = arc4random_uniform(length)
             randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
         }
         
@@ -39,14 +39,14 @@ class Utils: NSObject {
                 stringLocation = stringLocation + "&pickup[latitude]=\(origin.latitude)&pickup[longitude]=\(origin.longitude)"
             }
             if let destination : CLLocationCoordinate2D =  itinerary.destination?.location?.coordinate {
-                stringLocation = stringLocation + "&dropoff[latitude]=\(destination.latitude)&dropoff[longitude]=\(destination.longitude)"
+                stringLocation = stringLocation + "&dropoff[latitude]=\(destination.latitude)&dropoff[longitude]=\(destination.longitude)&dropoff[formatted_address]=\(itinerary.destination?.stringAddress)"
             }
             
             let myURL = NSURL(string : "uber://?\(stringLocation)")
             UIApplication.sharedApplication().openURL(myURL!)
         }else{
             if let viewController = sender {
-                viewController.showAlertMessageWithAlertAction(nil, delegate: nil, message: "Please install Uber", title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel")
+                viewController.showAlertMessageWithAlertAction(nil, delegate: nil, message: "Please install Uber", title: " ", withCancelButton: false, okButtonTitle: "Ok", alertTag: AlertTagType.Nothing, cancelTitle: "Cancel", dimissBlock : nil)
             }
             
         }
