@@ -38,11 +38,16 @@ class Utils: NSObject {
             if let origin : CLLocationCoordinate2D =  itinerary.origin?.location?.coordinate {
                 stringLocation = stringLocation + "&pickup[latitude]=\(origin.latitude)&pickup[longitude]=\(origin.longitude)"
             }
-            if let destination : CLLocationCoordinate2D =  itinerary.destination?.location?.coordinate {
-                stringLocation = stringLocation + "&dropoff[latitude]=\(destination.latitude)&dropoff[longitude]=\(destination.longitude)&dropoff[formatted_address]=\(itinerary.destination?.stringAddress)"
+            if let destination : CLLocationCoordinate2D =  itinerary.destination?.location?.coordinate , stringAddress = itinerary.destination?.stringAddress  {
+                let removedSpace = stringAddress.stringByReplacingOccurrencesOfString(" ", withString: "%20")
+                removedSpace.stringByReplacingOccurrencesOfString(".", withString: "")
+                removedSpace.stringByReplacingOccurrencesOfString("-", withString: "")
+                removedSpace.stringByReplacingOccurrencesOfString("'", withString: "")
+                stringLocation = stringLocation + "&dropoff[latitude]=\(destination.latitude)&dropoff[longitude]=\(destination.longitude)&dropoff[nickname]=\(removedSpace)"
             }
             
-            let myURL = NSURL(string : "uber://?\(stringLocation)")
+            let urlString = "uber://?" + stringLocation
+            let myURL = NSURL(string : urlString)
             UIApplication.sharedApplication().openURL(myURL!)
         }else{
             if let viewController = sender {

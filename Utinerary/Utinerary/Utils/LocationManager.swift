@@ -76,20 +76,29 @@ class LocationManager: NSObject {
                 
                 var fullAdress : String = String()
                 
-                
-                if let name = placeMark.name{
-                    fullAdress = name
-                }
-                if let locality = placeMark.locality{
-                    fullAdress = fullAdress + " "+locality
+             
+                if let street = placeMark.thoroughfare{
+                    if street.containsString("Street") || street.containsString("street"){
+                        fullAdress = street
+                    }else{
+                        fullAdress = street + " Street"
+                    }
                 }
                 if let subLocality = placeMark.subLocality{
                     fullAdress = fullAdress + " "+subLocality
                 }
+                if let locality = placeMark.locality{
+                    fullAdress = fullAdress + " "+locality
+                }
+                if let region = placeMark.administrativeArea{
+                    fullAdress = fullAdress + " "+region
+                }
+                if let country = placeMark.country{
+                    fullAdress = fullAdress + " "+country
+                }
                 if let postalCode = placeMark.postalCode{
                     fullAdress = fullAdress + " "+postalCode
                 }
-                
                 completionHandler(address: fullAdress, success: true, placeMark : placeMark)
             }
         })

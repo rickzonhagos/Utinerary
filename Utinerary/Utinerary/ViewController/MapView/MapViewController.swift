@@ -75,6 +75,13 @@ class MapViewController: BaseViewController{
         mapView.mapType = MKMapType.Standard
         mapView.zoomEnabled = true
         mapView.scrollEnabled = true
+        mapView.showsUserLocation = false
+        if #available(iOS 9.0, *) {
+            mapView.showsCompass = true
+            mapView.showsScale = true
+        } else {
+            // Fallback on earlier versions
+        }
         
         
         let longPress = UILongPressGestureRecognizer(target: self, action: Selector("longPress:"))
@@ -87,10 +94,8 @@ class MapViewController: BaseViewController{
         if (gestureRecognizer.state == UIGestureRecognizerState.Began){
             return
         }
-       
-        for anot in  mapView.selectedAnnotations {
-            mapView.removeAnnotation(anot)
-        }
+        
+        
     
         let touchPoint = gestureRecognizer.locationInView(mapView)
         let coordinate = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
@@ -102,9 +107,9 @@ class MapViewController: BaseViewController{
             [unowned self](address, success , placeMark) -> Void in
 
             if success {
-                self.createAnotationWithTitle(address, coordinate: location.coordinate, subTitle: nil, shouldZoom: true , isSelectedAnnotation : true)
+                self.createAnotationWithTitle(address, coordinate: location.coordinate, subTitle: nil, shouldZoom: false , isSelectedAnnotation : true)
             }else {
-                self.createAnotationWithTitle(nil, coordinate: location.coordinate, subTitle: nil, shouldZoom: true , isSelectedAnnotation : true)
+                self.createAnotationWithTitle(nil, coordinate: location.coordinate, subTitle: nil, shouldZoom: false , isSelectedAnnotation : true)
             }
             self.view.hideProgressIndicator()
         }
@@ -112,6 +117,10 @@ class MapViewController: BaseViewController{
     }
     
     func createAnotationWithTitle(title : String? , coordinate : CLLocationCoordinate2D! , subTitle : String?, shouldZoom : Bool ,isSelectedAnnotation : Bool){
+        if mapView.annotations.count > 0 {
+            mapView.removeAnnotations(mapView.annotations)
+        }
+        
         
         let anotation : MKAnnotation = Utils.createMapAnotationWithTitle(title, coordinate: coordinate , subTitle : subTitle)
         mapView.addAnnotation(anotation)
@@ -206,7 +215,7 @@ class MapViewController: BaseViewController{
         completionHandler : GeoCodeCompletionHandler){
             
             if let currentLocation = location{
-                self.view.showProgressIndicatorWithLoadingMessage()
+                //self.view.showProgressIndicatorWithLoadingMessage()
                 locationManager.startGeoCodeWithLocation(currentLocation, completionHandler:completionHandler)
             }
             
@@ -319,7 +328,27 @@ extension MapViewController : MKMapViewDelegate {
     func mapViewDidFinishLoadingMap(mapView: MKMapView) {
         
     }
-    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+    }
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        
+        if let annotationView = self.mapView.dequeueReusableAnnotationViewWithIdentifier("Pin") {
+            return annotationView
+        }else{
+            let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Pin")
+            annotationView.pinColor = MKPinAnnotationColor.Purple
+            annotationView.canShowCallout = true
+            annotationView.rightCalloutAccessoryView = UIButton(type: UIButtonType.DetailDisclosure)
+            annotationView.rightCalloutAccessoryView!.tintColor = UIColor.blackColor()
+            annotationView.animatesDrop = true
+            annotationView.enabled = true
+            
+            return annotationView
+        }
+        
+    }
 }
 
 extension MapViewController : LocationManagerDelete{
@@ -339,7 +368,6 @@ extension MapViewController : LocationManagerDelete{
                 }else {
                     self.createAnotationWithTitle(nil, coordinate: currentLocation.coordinate, subTitle: nil, shouldZoom: true, isSelectedAnnotation : false)
                 }
-                self.zoomToLocation(currentLocation.coordinate)
                 self.view.hideProgressIndicator()
             }
         }
