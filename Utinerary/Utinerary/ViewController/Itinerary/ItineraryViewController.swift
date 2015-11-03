@@ -231,8 +231,8 @@ class ItineraryViewController: BaseViewController {
                 alertTag: AlertTagType.AddedItemAlert,
                 cancelTitle: "" ,
                 dimissBlock : {
-                    ()->Void in
-                    
+                    [unowned self]()->Void in
+                    self.navigationController?.popToRootViewControllerAnimated(true)
                 }, fadeDismiss : true)
             
         })

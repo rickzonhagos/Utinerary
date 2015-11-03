@@ -92,22 +92,19 @@ class NotificationViewController: BaseViewController {
             
             if let itinerary = item{
                 
-                let fromStr = itinerary.origin?.stringAddress
+                //let fromStr = itinerary.origin?.stringAddress
                 let toStr = itinerary.destination?.stringAddress
                 let dateAndTime = itinerary.dateAndTime
                 
                 self.currentItinerary = itinerary
                 
-                let titleAttributes = [NSFontAttributeName : Config.Theme.routeTitle!, NSForegroundColorAttributeName : Config.Theme.hightlightTextColor]
+                //let titleAttributes = [NSFontAttributeName : Config.Theme.routeTitle!, NSForegroundColorAttributeName : Config.Theme.hightlightTextColor]
                 let valueAttributes = [NSFontAttributeName : Config.Theme.routeValue!, NSForegroundColorAttributeName : Config.Theme.textSubColor]
                 
                 let mutableAttributedString = NSMutableAttributedString()
                 
-                mutableAttributedString.appendAttributedString(NSAttributedString(string: "ORIGIN : ", attributes: titleAttributes as [String : AnyObject]))
-           
-                mutableAttributedString.appendAttributedString(NSAttributedString(string: fromStr!, attributes: valueAttributes as [String : AnyObject]))
-                
-                mutableAttributedString.appendAttributedString(NSAttributedString(string: "\n\n You're scheduled to travel to : ", attributes: titleAttributes as [String : AnyObject]))
+      
+                mutableAttributedString.appendAttributedString(NSAttributedString(string: "\n\n You're scheduled to travel to ", attributes: valueAttributes as [String : AnyObject]))
                 
                 mutableAttributedString.appendAttributedString(NSAttributedString(string: toStr!, attributes: valueAttributes as [String : AnyObject]))
                 
@@ -115,7 +112,7 @@ class NotificationViewController: BaseViewController {
                 
                 
                 let sharedInstance = UtinerarySharedInstance.sharedInstance
-                let (date , time ,dayName , shortDate , monthShort ) = sharedInstance.splitDate(dateAndTime)
+                let (_ , time ,dayName , shortDate , monthShort ) = sharedInstance.splitDate(dateAndTime)
                 //self.dateLabel.text = dateShort
                 //dayLabel.text = day
                 self.timeLabel.text = "\(dayName) \(time)"

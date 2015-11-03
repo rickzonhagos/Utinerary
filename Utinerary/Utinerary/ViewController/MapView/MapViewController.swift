@@ -182,23 +182,25 @@ class MapViewController: BaseViewController{
             return
         }
         
-        var location : CLLocation?
+        var myLocation : CLLocation?
         
         if let anotations : [MKAnnotation] = mapView.selectedAnnotations where anotations.count > 0 {
             
             let coordinate : CLLocationCoordinate2D = anotations[0].coordinate
-            location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
  
         }
         
+        guard let location = myLocation else { return}
         
-        self.startGeoCodeWithLocationManager( location!) {
+        
+        self.startGeoCodeWithLocationManager( location) {
             [unowned self](address, success , placeMark) -> Void in
             var userDesiredLocation : UserLocation?
             if success {
-                userDesiredLocation  = UserLocation(address: address!, currentLocation: location!, placeMark : placeMark)
+                userDesiredLocation  = UserLocation(address: address!, currentLocation: location, placeMark : placeMark)
             }else{
-                userDesiredLocation  = UserLocation(currentLocation: location!, placeMark : placeMark)
+                userDesiredLocation  = UserLocation(currentLocation: location, placeMark : placeMark)
             }
             
             self.view.hideProgressIndicator()

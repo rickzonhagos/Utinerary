@@ -144,8 +144,39 @@ extension ItineraryListViewController : UITableViewDelegate{
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete{
+            
+            
+            
+            let (_ , itemManagedObject) = self.getItemByIndex(indexPath.section, row: indexPath.row)
+            self.appDelegate?.deleteItineraryItem(itemManagedObject , completionHandler: {
+                [unowned self](success) -> Void in
+                self.view.hideProgressIndicator()
+                
+                self.showAlertMessageWithAlertAction(nil,
+                    delegate: self,
+                    message: "Itinerary removed",
+                    title: "",
+                    withCancelButton: false,
+                    okButtonTitle: "",
+                    alertTag: AlertTagType.DeletedItemAlert,
+                    cancelTitle: "",
+                    dimissBlock : {
+                        [unowned self]()->Void in
+                        self.fetchListAndReloadData()
+                    } ,
+                    fadeDismiss: true)
+                })
+           
+        }
+    }
 }
 extension ItineraryListViewController : UITableViewDataSource{
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let cell : ItineraryTableViewCell = tableView.dequeueReusableCellWithIdentifier("ItineraryCellIdentifier") as! ItineraryTableViewCell
