@@ -80,15 +80,37 @@ class ItineraryListViewController: BaseViewController {
         
     }
     
-    func getItemByIndex(section : Int ,row : Int)->(item : Itinerary , managedObject : NSManagedObject){
+    func getItemByIndex(section : Int ,row : Int)->(item : Itinerary , managedObject : ItineraryManagedObjectModel){
         let (_ , array) = getItemsPer(section)!
         
         
-        return (item : array[row][0] as! Itinerary , managedObject : array[row][1] as! NSManagedObject)
+        let managedObjectItem = array[row]
+        
+        
+        let item = Itinerary()
+        if let data = managedObjectItem.destination ,
+            unArchievedData : AnyObject = data.unArchived() ,
+            destination = unArchievedData as? UserLocation {
+                item.destination = destination
+                
+        }
+        
+        if let data = managedObjectItem.origin,
+            unArchievedData : AnyObject  = data.unArchived(),
+            origin = unArchievedData as? UserLocation {
+                item.origin = origin
+        }
+        
+        if let dateAndTime = managedObjectItem.dateAndTime {
+            item.dateAndTime = dateAndTime
+            
+        }
+        
+        return (item : item , managedObject :  managedObjectItem)
     }
     
 
-    func getItemsPer(section : Int)->(title : String , array : [[AnyObject]])?{
+    func getItemsPer(section : Int)->(title : String , array : [ItineraryManagedObjectModel])?{
         if let myDict = self.itineraryList{
             let key : String = Array(myDict.keys)[section]
             var title : String!
@@ -98,7 +120,7 @@ class ItineraryListViewController: BaseViewController {
                 title = "Upcoming itineraries"
             }
             
-            return (title : title , array : (myDict[key] as? [[AnyObject]])!)
+            return (title : title , array : (myDict[key] as? [ItineraryManagedObjectModel])!)
         }
         return nil
     }

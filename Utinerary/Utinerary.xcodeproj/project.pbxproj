@@ -38,6 +38,8 @@
 		959523801B8EB7610034DFCF /* Itinerary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9595237F1B8EB7610034DFCF /* Itinerary.swift */; };
 		95DEB6F91B96920E00B4DAA5 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DEB6F81B96920E00B4DAA5 /* Constant.swift */; };
 		95FA49091BE1B8F3000CCA4F /* libFlurry_7.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95FA49081BE1B8F3000CCA4F /* libFlurry_7.2.1.a */; };
+		95FA54E61BE9AE6600959FEF /* ItineraryManagedObjectModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FA54E41BE9AE6600959FEF /* ItineraryManagedObjectModel+CoreDataProperties.swift */; };
+		95FA54E71BE9AE6600959FEF /* ItineraryManagedObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FA54E51BE9AE6600959FEF /* ItineraryManagedObjectModel.swift */; };
 		967B95E72DCDFF6E8E7E4176 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F65B08F642D2F6132D99F7 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +93,8 @@
 		95FA49061BE1B8F3000CCA4F /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		95FA49071BE1B8F3000CCA4F /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
 		95FA49081BE1B8F3000CCA4F /* libFlurry_7.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.2.1.a; sourceTree = "<group>"; };
+		95FA54E41BE9AE6600959FEF /* ItineraryManagedObjectModel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItineraryManagedObjectModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		95FA54E51BE9AE6600959FEF /* ItineraryManagedObjectModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryManagedObjectModel.swift; sourceTree = "<group>"; };
 		B783FF075100A2EEF482D7CA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D3F65B08F642D2F6132D99F7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1D668224E6726C49D9EB6EF /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
@@ -293,6 +297,8 @@
 				95666C781B8D505E000C604A /* UserLocation.swift */,
 				9595237F1B8EB7610034DFCF /* Itinerary.swift */,
 				95DEB6F81B96920E00B4DAA5 /* Constant.swift */,
+				95FA54E41BE9AE6600959FEF /* ItineraryManagedObjectModel+CoreDataProperties.swift */,
+				95FA54E51BE9AE6600959FEF /* ItineraryManagedObjectModel.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -443,6 +449,7 @@
 				955915241B83174B0007D860 /* ItineraryListViewController.swift in Sources */,
 				48E60FA31BA26CA000A37332 /* RandomColor.swift in Sources */,
 				1A0722801B8AF1FB0047E82C /* LocationManager.swift in Sources */,
+				95FA54E71BE9AE6600959FEF /* ItineraryManagedObjectModel.swift in Sources */,
 				1A07227E1B89BCF30047E82C /* Utils.swift in Sources */,
 				955915221B8316D90007D860 /* BaseViewController.swift in Sources */,
 				95666C791B8D505E000C604A /* UserLocation.swift in Sources */,
@@ -451,6 +458,7 @@
 				1A409FAE1B9167EF00971D96 /* test.m in Sources */,
 				956167991B8C4A6E002F3B87 /* SearchModelData.swift in Sources */,
 				955915281B831FD90007D860 /* ItineraryViewController.swift in Sources */,
+				95FA54E61BE9AE6600959FEF /* ItineraryManagedObjectModel+CoreDataProperties.swift in Sources */,
 				9561679B1B8C4BD0002F3B87 /* SearchItem.swift in Sources */,
 				956167971B8C44D6002F3B87 /* UtineraryModelData.swift in Sources */,
 				1A409FB31B9168DA00971D96 /* Extensions.swift in Sources */,

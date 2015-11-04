@@ -316,7 +316,12 @@ extension MapViewController : UISearchBarDelegate{
     }
     
     
-    
+    func isMainView()->Bool {
+        if (self.presentingViewController != nil) {
+            return true
+        }
+        return false
+    }
 }
 extension MapViewController : MKMapViewDelegate {
     func mapView(mapView: MKMapView, didFailToLocateUserWithError : NSError) {
@@ -362,15 +367,19 @@ extension MapViewController : LocationManagerDelete{
         
         if let _ : [AnyObject]  = location  , currentLocation = location.last as? CLLocation where location.count > 0 {
             print(currentLocation, terminator: "")
-            
-            self.startGeoCodeWithLocationManager(currentLocation) {
-                [unowned self](address, success , placeMark) -> Void in
-                if success {
-                    self.createAnotationWithTitle(address, coordinate: currentLocation.coordinate, subTitle: nil, shouldZoom: true , isSelectedAnnotation : false)
-                }else {
-                    self.createAnotationWithTitle(nil, coordinate: currentLocation.coordinate, subTitle: nil, shouldZoom: true, isSelectedAnnotation : false)
+            if self.isMainView() {
+                self.startGeoCodeWithLocationManager(currentLocation) {
+                    [weak myWeakSelf = self  ](address, success , placeMark) -> Void in
+                    guard let mySelf  = myWeakSelf else {
+                        return
+                    }
+                    if success {
+                        mySelf.createAnotationWithTitle(address, coordinate: currentLocation.coordinate, subTitle: nil, shouldZoom: true , isSelectedAnnotation : false)
+                    }else {
+                        mySelf.createAnotationWithTitle(nil, coordinate: currentLocation.coordinate, subTitle: nil, shouldZoom: true, isSelectedAnnotation : false)
+                    }
+                    mySelf.view.hideProgressIndicator()
                 }
-                self.view.hideProgressIndicator()
             }
         }
         self.view.hideProgressIndicator()

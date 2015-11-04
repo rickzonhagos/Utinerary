@@ -36,13 +36,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Utinerary/Utils/Utils.swift"
-            timestampString = "467875811.329073"
+            filePath = "Utinerary/ViewController/Itinerary/ItineraryViewController.swift"
+            timestampString = "468306177.938147"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "bookToUber(_:sender:)"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
+            landmarkName = "buttonEvent(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -53,44 +53,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Utinerary/ViewController/MapView/MapViewController.swift"
-            timestampString = "467870164.589542"
+            timestampString = "468307319.083806"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "extractFullAddress(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Utinerary/Utils/LocationManager.swift"
-            timestampString = "467878681.786622"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
-            landmarkName = "startGeoCodeWithLocation(_:completionHandler:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Utinerary/Utils/LocationManager.swift"
-            timestampString = "467878682.967838"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "startGeoCodeWithLocation(_:completionHandler:)"
+            startingLineNumber = "374"
+            endingLineNumber = "374"
+            landmarkName = "didGetUserLocation(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

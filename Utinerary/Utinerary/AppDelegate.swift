@@ -141,49 +141,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAndTime", ascending: false)]
                 
                 do {
-                    let fetchResult = try context.executeFetchRequest(fetchRequest)
-                    var items  = [String : AnyObject]()
+                    let fetchResult = try context.executeFetchRequest(fetchRequest) as? [ItineraryManagedObjectModel]
+                    var items  = [String : [ItineraryManagedObjectModel]]()
                     
-                    var passedItems = [[AnyObject]]()
-                    var upComingItems = [[AnyObject]]()
-                    
-                    for  result in fetchResult {
-                        if result is NSManagedObject {
-                            
-                            let item = Itinerary()
-                            if let data = result.valueForKey("destination") as? NSData ,
-                                unArchievedData : AnyObject = data.unArchived() ,
-                                destination = unArchievedData as? UserLocation {
-                                    item.destination = destination
-                                    
+                    var passedItems = [ItineraryManagedObjectModel]()
+                    var upComingItems = [ItineraryManagedObjectModel]()
+                    if let results = fetchResult where results.count > 0 {
+                        for  item in results {
+                            if (item.dateAndTime!.timeIntervalSinceNow < 0.0){
+                                //passed
+                                passedItems.append(item)
+                            }else{
+                                //
+                                upComingItems.append(item)
                             }
+                        }
+                        if upComingItems.count > 0 {
                             
-                            if let data = result.valueForKey("origin") as? NSData,
-                                unArchievedData : AnyObject  = data.unArchived(),
-                                origin = unArchievedData as? UserLocation {
-                                    item.origin = origin
-                            }
-                            
-                            if let dateAndTime = result.valueForKey("dateAndTime") as? NSDate {
-                                item.dateAndTime = dateAndTime
-                                
-                                
-                                if (dateAndTime.timeIntervalSinceNow < 0.0){
-                                    //passed
-                                    passedItems.append([item, result])
-                                }else{
-                                    //
-                                    upComingItems.append([item, result])
-                                }
-                            }
-                            if upComingItems.count > 0 {
-                                items["INCOMING"] = upComingItems
-                            }
-                            
-                            if passedItems.count > 0{
-                                items["PASSED"] = passedItems
-                            }
-                            
+                            items["INCOMING"] = upComingItems.sort({ $0.dateAndTime!.compare($1.dateAndTime!) == NSComparisonResult.OrderedAscending})
+                        }
+                        
+                        if passedItems.count > 0{
+                            items["PASSED"] = passedItems
                         }
                     }
                     return items
@@ -195,6 +174,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return nil
     }
     
+    
+   
     func updateItinerary(managedObject : NSManagedObject! ,  completionHandler : completionBlock){
         if let context  : NSManagedObjectContext = self.managedObjectContext {
            
