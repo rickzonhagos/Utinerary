@@ -104,13 +104,13 @@ class ItineraryViewController: BaseViewController {
         var message : String?
         var success : Bool = true
         if originLocation == nil && destinationLocation == nil{
-            message = "Please enter your desired Destination and Origin Address"
+            message = "Please select your destination and origin"
             success = false
         }else if originLocation == nil{
-            message = "Please enter your Origin Address"
+            message = "Please select your origin"
             success = false
         }else if destinationLocation == nil {
-            message = "Please enter your Destination Address"
+            message = "Please select your destination"
             success = false
         }
         return (isSuccess : success , message : message)
@@ -173,7 +173,7 @@ class ItineraryViewController: BaseViewController {
                         if action == AlertAction.Ok {
                             self.deleteItem()
                         }
-                    }, delegate: self, message: "Are you sure you want to delete this item", title: "Delete Confirmation", withCancelButton: true, okButtonTitle: "Proceed", alertTag: AlertTagType.DeleteAlert, cancelTitle: "Cancel", dimissBlock : nil)
+                    }, delegate: self, message: "Remove this itinerary?", title: "Delete Confirmation", withCancelButton: true, okButtonTitle: "Proceed", alertTag: AlertTagType.DeleteAlert, cancelTitle: "Cancel", dimissBlock : nil)
                 }
                 
             }
@@ -238,7 +238,7 @@ class ItineraryViewController: BaseViewController {
         })
     }
     func deleteItem(){
-        self.view.showProgressIndicatorWithLoadingMessage("Deleting Item")
+        self.view.showProgressIndicatorWithLoadingMessage("Deleting itinerary")
         self.appDelegate?.deleteItineraryItem(self.itineraryItem!.managedObject , completionHandler: {
             [unowned self](success) -> Void in
             self.view.hideProgressIndicator()
